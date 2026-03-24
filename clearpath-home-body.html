@@ -1,0 +1,579 @@
+<div id="cursor-glow"></div>
+
+<!-- ================================================================
+     INTRO OVERLAY
+================================================================ -->
+<div id="intro">
+  <canvas id="intro-canvas"></canvas>
+  <div class="intro-brand">
+    <div class="intro-title" aria-label="Clearpath">
+      <span class="letter">C</span>
+      <span class="letter">L</span>
+      <span class="letter">E</span>
+      <span class="letter">A</span>
+      <span class="letter">R</span>
+      <span class="letter">P</span>
+      <span class="letter">A</span>
+      <span class="letter">T</span>
+      <span class="letter">H</span>
+    </div>
+    <div class="intro-sub">Solutions</div>
+  </div>
+  <div class="intro-progress-bar"></div>
+</div>
+
+<!-- ================================================================
+     NAVIGATION
+================================================================ -->
+<nav id="nav">
+  <a href="#" class="nav-logo">
+    <div class="logo-mark">CS</div>
+    <span class="logo-text">Clearpath <em>Solutions</em></span>
+  </a>
+  <ul class="nav-links">
+    <li><a href="#services" data-i18n="nav.services">Services</a></li>
+    <li><a href="#about" data-i18n="nav.about">About</a></li>
+    <li><a href="/team/" data-i18n="nav.team">Team</a></li>
+    <li><a href="/process/" data-i18n="nav.process">Process</a></li>
+    <li><a href="#contact" class="nav-cta" data-i18n="nav.cta">Get Started</a></li>
+  </ul>
+  <div class="lang-toggle" id="lang-toggle">
+    <button type="button" id="lang-en" class="active" onclick="setLang('en')">EN</button>
+    <div class="lang-sep"></div>
+    <button type="button" id="lang-no" onclick="setLang('no')">NO</button>
+  </div>
+  <button type="button" class="menu-btn" id="menu-btn" aria-label="Open menu">
+    <span></span><span></span>
+  </button>
+</nav>
+
+<div class="nav-mobile" id="nav-mobile">
+  <a href="#services" onclick="closeMenu()" data-i18n="nav.services">Services</a>
+  <a href="#about" onclick="closeMenu()" data-i18n="nav.about">About</a>
+  <a href="/team/" onclick="closeMenu()" data-i18n="nav.team">Team</a>
+  <a href="/process/" onclick="closeMenu()" data-i18n="nav.process">Process</a>
+  <a href="#contact" onclick="closeMenu()" data-i18n="nav.cta">Get Started</a>
+</div>
+
+<!-- ================================================================
+     HERO — dark
+================================================================ -->
+<section id="hero">
+  <canvas id="hero-canvas"></canvas>
+  <div class="hero-inner" id="hero-content">
+
+    <div class="hero-eyebrow-row">
+      <span class="eyebrow" data-i18n="hero.eyebrow">Est. 2024 · Clearpath Solutions</span>
+    </div>
+
+    <div class="hero-headline-row">
+      <h1 class="hero-title" data-i18n="hero.h1top">Nordic Web Design</h1>
+      <span class="hero-amp">&amp;</span>
+      <h1 class="hero-title hero-title-right" data-i18n="hero.h1bottom"><span class="accent">AI Automation</span></h1>
+    </div>
+
+    <div class="hero-visuals-row">
+    <div class="hero-visual">
+    <div class="orb orb-1" id="orb1"></div>
+    <div class="orb orb-2" id="orb2"></div>
+    <div class="macbook-wrap" id="macbook-wrap">
+      <svg class="macbook-svg" viewBox="0 0 600 308" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <linearGradient id="mb-body" x1="30%" y1="0%" x2="70%" y2="100%">
+            <stop offset="0%" stop-color="#3C4760"/>
+            <stop offset="100%" stop-color="#1E2535"/>
+          </linearGradient>
+          <linearGradient id="mb-screen-bg" x1="25%" y1="0%" x2="75%" y2="100%">
+            <stop offset="0%" stop-color="#0C1628"/>
+            <stop offset="100%" stop-color="#07101D"/>
+          </linearGradient>
+          <radialGradient id="mb-glow1" cx="68%" cy="22%" r="52%">
+            <stop offset="0%" stop-color="rgba(62,201,255,0.22)"/>
+            <stop offset="100%" stop-color="rgba(62,201,255,0)"/>
+          </radialGradient>
+          <radialGradient id="mb-glow2" cx="18%" cy="80%" r="40%">
+            <stop offset="0%" stop-color="rgba(110,58,240,0.16)"/>
+            <stop offset="100%" stop-color="rgba(110,58,240,0)"/>
+          </radialGradient>
+          <linearGradient id="mb-glass" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stop-color="rgba(255,255,255,0.10)"/>
+            <stop offset="100%" stop-color="rgba(255,255,255,0.03)"/>
+          </linearGradient>
+          <linearGradient id="mb-lid-shine" x1="0%" y1="0%" x2="0%" y2="100%">
+            <stop offset="0%" stop-color="rgba(255,255,255,0.14)"/>
+            <stop offset="35%" stop-color="rgba(255,255,255,0.02)"/>
+            <stop offset="100%" stop-color="rgba(255,255,255,0)"/>
+          </linearGradient>
+          <pattern id="mb-keys" x="0" y="0" width="40" height="22" patternUnits="userSpaceOnUse">
+            <rect x="1.5" y="1.5" width="36" height="18" rx="3.5"
+                  fill="rgba(255,255,255,0.04)" stroke="rgba(255,255,255,0.09)" stroke-width="0.5"/>
+          </pattern>
+          <clipPath id="mb-clip">
+            <rect x="44" y="28" width="512" height="252" rx="6"/>
+          </clipPath>
+        </defs>
+
+        <!-- ══ SCREEN LID ══ -->
+        <rect x="22" y="8"  width="556" height="294" rx="18" fill="url(#mb-body)"/>
+        <rect x="22" y="8"  width="556" height="2"   rx="1"  fill="url(#mb-lid-shine)"/>
+        <rect x="32" y="18" width="536" height="274" rx="14" fill="#0B1220"/>
+        <rect x="44" y="28" width="512" height="252" rx="6"  fill="url(#mb-screen-bg)"/>
+        <rect x="44" y="28" width="512" height="252" rx="6"  fill="url(#mb-glow1)"/>
+        <rect x="44" y="28" width="512" height="252" rx="6"  fill="url(#mb-glow2)"/>
+        <!-- Notch -->
+        <rect x="268" y="18" width="64" height="16" rx="8" fill="#0B1220"/>
+
+        <!-- ══ SCREEN CONTENT ══ -->
+        <g clip-path="url(#mb-clip)">
+          <!-- Browser chrome -->
+          <rect x="44" y="28" width="512" height="28" fill="rgba(0,0,0,0.35)"/>
+          <circle cx="62" cy="42" r="5" fill="#FF5F56"/>
+          <circle cx="78" cy="42" r="5" fill="#FFBD2E"/>
+          <circle cx="94" cy="42" r="5" fill="#27C93F"/>
+          <rect x="156" y="34" width="284" height="16" rx="8" fill="rgba(255,255,255,0.07)"/>
+          <text x="298" y="45" text-anchor="middle"
+                font-family="'DM Sans', Arial, sans-serif"
+                font-size="8" fill="rgba(255,255,255,0.35)">clearpath.solutions</text>
+
+          <!-- Site nav -->
+          <rect x="44" y="56" width="512" height="26" fill="rgba(14,27,46,0.92)"/>
+          <rect x="56"  y="63" width="8"  height="8"  rx="2" fill="#3EC9FF"/>
+          <rect x="68"  y="65" width="56" height="5"  rx="2" fill="rgba(255,255,255,0.65)"/>
+          <rect x="338" y="65" width="26" height="5"  rx="2" fill="rgba(255,255,255,0.28)"/>
+          <rect x="372" y="65" width="26" height="5"  rx="2" fill="rgba(255,255,255,0.28)"/>
+          <rect x="406" y="65" width="26" height="5"  rx="2" fill="rgba(255,255,255,0.28)"/>
+          <rect x="444" y="60" width="58" height="14" rx="7" fill="rgba(62,201,255,0.75)"/>
+          <text x="473" y="70" text-anchor="middle"
+                font-family="'DM Sans', Arial, sans-serif"
+                font-size="7" font-weight="600" fill="#0E1B2E">Get Started</text>
+
+          <!-- ── HEADLINE ── -->
+          <text x="64" y="114"
+                font-family="'Bricolage Grotesque', Georgia, serif"
+                font-size="21" font-weight="800"
+                fill="rgba(255,255,255,0.97)" letter-spacing="-0.5">Let us create</text>
+          <text x="64" y="140"
+                font-family="'Bricolage Grotesque', Georgia, serif"
+                font-size="21" font-weight="800"
+                fill="rgba(255,255,255,0.97)" letter-spacing="-0.5">your website</text>
+          <text x="64" y="166"
+                font-family="'Bricolage Grotesque', Georgia, serif"
+                font-size="21" font-weight="800"
+                fill="rgba(255,255,255,0.97)" letter-spacing="-0.5">today<tspan fill="#3EC9FF">.</tspan></text>
+
+          <!-- Subtext -->
+          <rect x="64" y="176" width="210" height="6" rx="3" fill="rgba(255,255,255,0.24)"/>
+          <rect x="64" y="187" width="164" height="6" rx="3" fill="rgba(255,255,255,0.17)"/>
+
+          <!-- CTA buttons -->
+          <rect x="64"  y="202" width="92" height="22" rx="11" fill="#3EC9FF"/>
+          <text x="110" y="217" text-anchor="middle"
+                font-family="'DM Sans', Arial, sans-serif"
+                font-size="8.5" font-weight="600" fill="#0E1B2E">Get Started →</text>
+          <rect x="164" y="202" width="92" height="22" rx="11"
+                fill="rgba(255,255,255,0.07)" stroke="rgba(255,255,255,0.18)" stroke-width="0.8"/>
+          <text x="210" y="217" text-anchor="middle"
+                font-family="'DM Sans', Arial, sans-serif"
+                font-size="8.5" fill="rgba(255,255,255,0.65)">See Our Work</text>
+
+          <!-- ── FLOATING GLASS CARD ── -->
+          <rect x="370" y="86" width="172" height="108" rx="12"
+                fill="url(#mb-glass)" stroke="rgba(255,255,255,0.12)" stroke-width="0.8"/>
+          <path d="M 382 86 L 530 86" stroke="rgba(255,255,255,0.20)" stroke-width="0.8" fill="none"/>
+          <!-- Icon -->
+          <rect x="382" y="100" width="22" height="22" rx="5" fill="rgba(62,201,255,0.20)"/>
+          <rect x="387" y="107" width="12" height="2"  rx="1" fill="rgba(62,201,255,0.85)"/>
+          <rect x="387" y="112" width="8"  height="2"  rx="1" fill="rgba(62,201,255,0.60)"/>
+          <!-- Text lines -->
+          <rect x="412" y="101" width="106" height="7" rx="3" fill="rgba(255,255,255,0.50)"/>
+          <rect x="412" y="113" width="80"  height="5" rx="2" fill="rgba(255,255,255,0.22)"/>
+          <rect x="412" y="123" width="92"  height="5" rx="2" fill="rgba(255,255,255,0.22)"/>
+          <line x1="382" y1="140" x2="530" y2="140" stroke="rgba(255,255,255,0.08)" stroke-width="0.8"/>
+          <!-- Metric -->
+          <text x="384" y="162"
+                font-family="'DM Mono', monospace"
+                font-size="16" font-weight="600" fill="#3EC9FF">↑ 240%</text>
+          <rect x="436" y="153" width="58" height="5" rx="2" fill="rgba(255,255,255,0.20)"/>
+          <rect x="436" y="163" width="42" height="5" rx="2" fill="rgba(255,255,255,0.14)"/>
+
+          <!-- ── STATS BAR ── -->
+          <rect x="44" y="248" width="512" height="32" fill="rgba(0,0,0,0.28)"/>
+          <line x1="200" y1="252" x2="200" y2="276" stroke="rgba(255,255,255,0.08)" stroke-width="0.8"/>
+          <line x1="356" y1="252" x2="356" y2="276" stroke="rgba(255,255,255,0.08)" stroke-width="0.8"/>
+          <text x="68"  y="270" font-family="'DM Mono', monospace" font-size="11" font-weight="600" fill="#3EC9FF">50+</text>
+          <rect x="92"  y="262" width="56" height="5" rx="2" fill="rgba(255,255,255,0.24)"/>
+          <text x="224" y="270" font-family="'DM Mono', monospace" font-size="11" font-weight="600" fill="#3EC9FF">100%</text>
+          <rect x="264" y="262" width="56" height="5" rx="2" fill="rgba(255,255,255,0.24)"/>
+          <text x="380" y="270" font-family="'DM Mono', monospace" font-size="11" font-weight="600" fill="#3EC9FF">3×</text>
+          <rect x="400" y="262" width="64" height="5" rx="2" fill="rgba(255,255,255,0.24)"/>
+
+          <!-- Subtle glare -->
+          <path d="M 44 28 L 210 28 L 116 148 L 44 96 Z" fill="rgba(255,255,255,0.018)"/>
+        </g>
+
+        <!-- Screen top-edge glint -->
+        <path d="M 44 34 Q 44 28 50 28 L 550 28"
+              stroke="rgba(255,255,255,0.08)" stroke-width="0.8" fill="none"/>
+      </svg>
+    </div>
+  </div>
+
+    <div class="hero-orb-col">
+      <div class="ai-orb-wrap">
+        <canvas id="ai-orb"></canvas>
+      </div>
+    </div>
+    </div><!-- end hero-visuals-row -->
+
+  </div><!-- end hero-inner -->
+
+  <!-- CTAs pinned to bottom centre of hero -->
+  <div class="hero-bottom-cta">
+    <div class="hero-ctas">
+      <a href="#contact" class="btn btn-primary">
+        <span data-i18n="hero.cta1">Get Started</span>
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M3 8h10M9 4l4 4-4 4"/>
+        </svg>
+      </a>
+      <a href="#services" class="btn btn-ghost-dark" data-i18n="hero.cta2">See What We Do</a>
+    </div>
+  </div>
+
+  <div class="hero-scroll">
+    <span data-i18n="hero.scroll">Scroll</span>
+    <div class="scroll-line"></div>
+  </div>
+  <div class="hero-badge">
+    <span class="badge-dot"></span>
+    <span data-i18n="hero.badge">Based in Scandinavia</span>
+  </div>
+</section>
+
+<!-- ================================================================
+     TICKER
+================================================================ -->
+<div class="ticker-wrap" aria-hidden="true">
+  <div class="ticker-track">
+    <span class="ticker-item">Web Design<span class="ticker-sep"> · </span></span>
+    <span class="ticker-item">AI Integration<span class="ticker-sep"> · </span></span>
+    <span class="ticker-item">Nordic SMBs<span class="ticker-sep"> · </span></span>
+    <span class="ticker-item">Conversion Optimization<span class="ticker-sep"> · </span></span>
+    <span class="ticker-item">Workflow Automation<span class="ticker-sep"> · </span></span>
+    <span class="ticker-item">Digital Strategy<span class="ticker-sep"> · </span></span>
+    <span class="ticker-item">E-Commerce<span class="ticker-sep"> · </span></span>
+    <span class="ticker-item">AI Chatbots<span class="ticker-sep"> · </span></span>
+    <span class="ticker-item">Web Design<span class="ticker-sep"> · </span></span>
+    <span class="ticker-item">AI Integration<span class="ticker-sep"> · </span></span>
+    <span class="ticker-item">Nordic SMBs<span class="ticker-sep"> · </span></span>
+    <span class="ticker-item">Conversion Optimization<span class="ticker-sep"> · </span></span>
+    <span class="ticker-item">Workflow Automation<span class="ticker-sep"> · </span></span>
+    <span class="ticker-item">Digital Strategy<span class="ticker-sep"> · </span></span>
+    <span class="ticker-item">E-Commerce<span class="ticker-sep"> · </span></span>
+    <span class="ticker-item">AI Chatbots<span class="ticker-sep"> · </span></span>
+  </div>
+</div>
+
+<!-- ================================================================
+     SERVICES — light
+================================================================ -->
+<section id="services">
+  <div class="section">
+    <div class="section-label label-light reveal" data-i18n="services.label">What We Do</div>
+    <h2 class="section-title reveal reveal-delay-1" data-i18n="services.title">Two powerful services.<br>One clear path forward.</h2>
+
+    <div class="services-grid">
+
+      <div class="service-card reveal reveal-delay-2">
+        <div class="service-num">01</div>
+        <div class="service-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="2" y="3" width="20" height="14" rx="2"/>
+            <path d="M8 21h8M12 17v4"/>
+            <path d="M7 8.5l2.5 2.5-2.5 2.5"/>
+            <line x1="12" y1="13.5" x2="16" y2="13.5"/>
+          </svg>
+        </div>
+        <h3 class="service-title" data-i18n="services.s1.title">Web Design &amp; Development</h3>
+        <p class="service-desc" data-i18n="services.s1.desc">We build high-converting websites with Nordic design sensibility — clean, purposeful, and built to perform for small and medium businesses.</p>
+        <ul class="service-features" data-i18n-list="services.s1.features">
+          <li>Custom website design &amp; development</li>
+          <li>Conversion rate optimization</li>
+          <li>SEO-ready architecture</li>
+          <li>E-commerce &amp; booking solutions</li>
+          <li>Ongoing support &amp; maintenance</li>
+        </ul>
+        <a href="#contact" class="service-link">
+          <span data-i18n="services.s1.cta">Start a project</span>
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M2 7h10M8 3l4 4-4 4"/>
+          </svg>
+        </a>
+      </div>
+
+      <div class="service-card reveal reveal-delay-3">
+        <div class="service-num">02</div>
+        <div class="service-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="5" r="2"/>
+            <circle cx="5" cy="12" r="2"/>
+            <circle cx="19" cy="12" r="2"/>
+            <circle cx="12" cy="19" r="2"/>
+            <line x1="12" y1="7" x2="12" y2="17"/>
+            <line x1="7" y1="12" x2="17" y2="12"/>
+            <line x1="6.8" y1="6.8" x2="10" y2="10"/>
+            <line x1="17.2" y1="6.8" x2="14" y2="10"/>
+            <line x1="6.8" y1="17.2" x2="10" y2="14"/>
+            <line x1="17.2" y1="17.2" x2="14" y2="14"/>
+          </svg>
+        </div>
+        <h3 class="service-title" data-i18n="services.s2.title">AI Integration &amp; Automation</h3>
+        <p class="service-desc" data-i18n="services.s2.desc">We identify where AI can save you time and increase revenue, then implement it cleanly into your existing workflow — no complexity, just results.</p>
+        <ul class="service-features" data-i18n-list="services.s2.features">
+          <li>AI-powered customer support</li>
+          <li>Workflow automation &amp; efficiency</li>
+          <li>Data analysis &amp; smart insights</li>
+          <li>Custom AI tooling for your industry</li>
+          <li>Staff training &amp; smooth adoption</li>
+        </ul>
+        <a href="#contact" class="service-link">
+          <span data-i18n="services.s2.cta">Explore AI for your business</span>
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M2 7h10M8 3l4 4-4 4"/>
+          </svg>
+        </a>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ================================================================
+     ABOUT — light-2
+================================================================ -->
+<section id="about">
+  <div class="section">
+    <div class="about-grid">
+
+      <div class="about-visual reveal">
+        <div class="about-visual-inner">
+          <div class="grid-overlay"></div>
+          <div class="about-visual-text">
+            NORDIC<br>PRECISION
+          </div>
+          <svg class="about-node-diagram" width="100" height="60" viewBox="0 0 100 60" fill="none">
+            <circle cx="10" cy="30" r="4" stroke="#3EC9FF" stroke-width="1"/>
+            <circle cx="50" cy="10" r="4" stroke="#3EC9FF" stroke-width="1"/>
+            <circle cx="50" cy="50" r="4" stroke="#3EC9FF" stroke-width="1"/>
+            <circle cx="90" cy="30" r="4" stroke="#3EC9FF" stroke-width="1"/>
+            <line x1="14" y1="30" x2="46" y2="12" stroke="#3EC9FF" stroke-width="0.5"/>
+            <line x1="14" y1="30" x2="46" y2="48" stroke="#3EC9FF" stroke-width="0.5"/>
+            <line x1="54" y1="10" x2="86" y2="28" stroke="#3EC9FF" stroke-width="0.5"/>
+            <line x1="54" y1="50" x2="86" y2="32" stroke="#3EC9FF" stroke-width="0.5"/>
+          </svg>
+          <div class="about-badge">
+            <div class="about-badge-num">50+</div>
+            <div class="about-badge-label">Projects<br>Delivered</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="about-text">
+        <div class="section-label label-light reveal" data-i18n="about.label">About Us</div>
+        <h2 class="section-title reveal reveal-delay-1" data-i18n="about.title">Built on Nordic<br>values. Driven<br>by results.</h2>
+        <p class="reveal reveal-delay-2" data-i18n="about.p1">We believe SMBs deserve the same quality and innovation that large enterprises get. We combine Nordic design precision with cutting-edge AI to give your business a genuine competitive edge.</p>
+        <p class="reveal reveal-delay-3" data-i18n="about.p2">No bloated agencies, no hidden costs. We work directly with decision makers to deliver digital solutions that move the needle — fast, transparent, and with a long-term vision.</p>
+
+        <a href="/team/" class="btn btn-ghost-light about-team-cta reveal reveal-delay-3">
+          <span data-i18n="about.teamcta">Meet the founders</span>
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M2 7h10M8 3l4 4-4 4"/></svg>
+        </a>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ================================================================
+     PROCESS — light
+================================================================ -->
+<section id="process">
+  <div class="section">
+    <div class="section-label label-light reveal" data-i18n="process.label">How We Work</div>
+    <h2 class="section-title reveal reveal-delay-1" data-i18n="process.title">A clear path from<br>idea to impact.</h2>
+
+    <div class="process-steps">
+
+      <div class="process-step">
+        <div class="step-left">
+          <span class="step-num">01</span>
+          <div class="step-icon">
+            <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.35-4.35"/></svg>
+          </div>
+        </div>
+        <div class="step-right">
+          <div class="step-header-row">
+            <div class="step-title" data-i18n="process.s1.title">Discovery &amp; Strategy</div>
+            <span class="step-tag" data-i18n="process.s1.tag">Week 1–2</span>
+          </div>
+          <div class="step-body" data-i18n="process.s1.body">We start by deeply understanding your business, competitive landscape, and target audience. Together we define exactly what success looks like and map the clearest route to get there — before a single pixel is drawn.</div>
+          <ul class="step-list" data-i18n-list="process.s1.list">
+            <li>Brand &amp; competitor audit</li>
+            <li>Target audience mapping</li>
+            <li>Scope &amp; success metrics</li>
+            <li>Technology stack recommendation</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="process-step">
+        <div class="step-left">
+          <span class="step-num">02</span>
+          <div class="step-icon">
+            <svg viewBox="0 0 24 24"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 013 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
+          </div>
+        </div>
+        <div class="step-right">
+          <div class="step-header-row">
+            <div class="step-title" data-i18n="process.s2.title">Design &amp; Prototype</div>
+            <span class="step-tag" data-i18n="process.s2.tag">Week 3–4</span>
+          </div>
+          <div class="step-body" data-i18n="process.s2.body">Our designers craft a bespoke visual identity and fully interactive prototype. You see and feel exactly what you're getting before a single line of code is written — revisions included until it's perfect.</div>
+          <ul class="step-list" data-i18n-list="process.s2.list">
+            <li>Visual identity &amp; colour system</li>
+            <li>Wireframes &amp; interactive prototype</li>
+            <li>Mobile-first responsive layouts</li>
+            <li>Design review &amp; sign-off</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="process-step">
+        <div class="step-left">
+          <span class="step-num">03</span>
+          <div class="step-icon">
+            <svg viewBox="0 0 24 24"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+          </div>
+        </div>
+        <div class="step-right">
+          <div class="step-header-row">
+            <div class="step-title" data-i18n="process.s3.title">Build &amp; Integrate</div>
+            <span class="step-tag" data-i18n="process.s3.tag">Week 5–8</span>
+          </div>
+          <div class="step-body" data-i18n="process.s3.body">We build your solution with performance, SEO, and long-term scalability in mind. AI and automation integrations are wired cleanly into your existing workflows — zero disruption, immediate impact.</div>
+          <ul class="step-list" data-i18n-list="process.s3.list">
+            <li>Production-grade development</li>
+            <li>CMS &amp; content setup</li>
+            <li>AI &amp; automation integration</li>
+            <li>Performance optimisation</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="process-step">
+        <div class="step-left">
+          <span class="step-num">04</span>
+          <div class="step-icon">
+            <svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="M9 12l2 2 4-4"/></svg>
+          </div>
+        </div>
+        <div class="step-right">
+          <div class="step-header-row">
+            <div class="step-title" data-i18n="process.s4.title">Test &amp; Refine</div>
+            <span class="step-tag" data-i18n="process.s4.tag">Week 9</span>
+          </div>
+          <div class="step-body" data-i18n="process.s4.body">Thorough quality assurance across all devices, browsers, and real-user scenarios. We stress-test every interaction and refine until every detail is exactly right — nothing ships until it's excellent.</div>
+          <ul class="step-list" data-i18n-list="process.s4.list">
+            <li>Cross-browser &amp; device testing</li>
+            <li>Accessibility audit (WCAG 2.1)</li>
+            <li>Load speed &amp; Core Web Vitals</li>
+            <li>Client acceptance testing</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="process-step">
+        <div class="step-left">
+          <span class="step-num">05</span>
+          <div class="step-icon">
+            <svg viewBox="0 0 24 24"><path d="M5 12l7-7 7 7"/><path d="M12 5v14"/></svg>
+          </div>
+        </div>
+        <div class="step-right">
+          <div class="step-header-row">
+            <div class="step-title" data-i18n="process.s5.title">Launch &amp; Grow</div>
+            <span class="step-tag" data-i18n="process.s5.tag">Week 10+</span>
+          </div>
+          <div class="step-body" data-i18n="process.s5.body">We handle the launch end-to-end and stay on as long-term partners. As your business evolves we optimise, expand, and adapt your digital presence — you focus on growth, we handle the technology.</div>
+          <ul class="step-list" data-i18n-list="process.s5.list">
+            <li>Managed deployment &amp; DNS</li>
+            <li>Analytics &amp; conversion tracking</li>
+            <li>Ongoing support &amp; maintenance</li>
+            <li>Quarterly performance reviews</li>
+          </ul>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ================================================================
+     CONTACT / CTA — dark
+================================================================ -->
+<section id="contact">
+  <div class="section">
+    <div class="cta-inner">
+
+      <div class="cta-text-col">
+        <div class="section-label label-dark reveal" data-i18n="contact.label">Let's Talk</div>
+        <h2 class="section-title reveal reveal-delay-1" data-i18n="contact.title">Ready to build<br>something <span class="cta-accent">exceptional?</span></h2>
+        <p class="cta-sub reveal reveal-delay-2" data-i18n="contact.sub">Fill in the form and we'll confirm a time that works. We aim to respond within 24 hours.</p>
+        <div class="cta-direct reveal reveal-delay-3">
+          <div>
+            <div class="cta-direct-label" data-i18n="contact.or">or reach us directly at</div>
+            <a href="mailto:ole@clearpath.no" class="cta-email">ole@clearpath.no</a>
+          </div>
+          <div>
+            <a href="mailto:herman@clearpath.no" class="cta-email">herman@clearpath.no</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="cta-form-col reveal reveal-delay-2">
+        <iframe
+          src="https://api.leadconnectorhq.com/widget/form/g4yeUjLnidn4HImGAZKj"
+          id="form-g4yeUjLnidn4HImGAZKj"
+          title="Book Meeting with Us"
+          scrolling="no">
+        </iframe>
+        <script src="https://link.msgsndr.com/js/form_embed.js"></script>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ================================================================
+     FOOTER — dark
+================================================================ -->
+<footer>
+  <div class="footer-inner">
+    <a href="#" class="nav-logo">
+      <div class="logo-mark">CS</div>
+      <span class="logo-text">Clearpath <em>Solutions</em></span>
+    </a>
+    <span class="footer-copy" data-i18n="footer.copy">© 2024 Clearpath Solutions AS. All rights reserved.</span>
+    <ul class="footer-links">
+      <li><a href="#services" data-i18n="nav.services">Services</a></li>
+      <li><a href="#about" data-i18n="nav.about">About</a></li>
+      <li><a href="/team/" data-i18n="nav.team">Team</a></li>
+      <li><a href="/process/" data-i18n="nav.process">Process</a></li>
+      <li><a href="#contact" data-i18n="footer.contact">Contact</a></li>
+    </ul>
+  </div>
+</footer>
+
+<!-- ================================================================
+     JAVASCRIPT
+================================================================ -->

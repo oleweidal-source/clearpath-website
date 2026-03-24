@@ -1,0 +1,2666 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Clearpath Solutions — Nordic Web Design & AI</title>
+  <meta name="description" content="Nordic web design and AI solutions for small and medium businesses. We build high-converting websites and implement AI that makes your business more efficient and profitable.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,300;12..96,400;12..96,500;12..96,700;12..96,800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&family=DM+Mono:wght@300;400&display=swap" rel="stylesheet">
+
+  <style>
+    /* ======================================================
+       RESET & BASE
+    ====================================================== */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      /* Dark sections (hero, intro, footer, contact) */
+      --dark-bg:    #0E1B2E;
+      --dark-bg-2:  #162540;
+      --dark-fg:    #EEF2FF;
+      --dark-fg-2:  #7A93B8;
+      --dark-fg-3:  #3A5070;
+      --dark-border:rgba(255,255,255,0.08);
+
+      /* Light sections (services, about, process) */
+      --light-bg:   #FFFFFF;
+      --light-bg-2: #F4F7FF;
+      --light-text: #0D1B2E;
+      --light-text-2:#4A5E78;
+      --light-text-3:#A0B0C4;
+      --light-border:rgba(13,27,46,0.09);
+
+      /* Accent */
+      --accent:     #3EC9FF;  /* on dark backgrounds */
+      --accent-ink: #0085B2;  /* on light backgrounds (text) */
+      --accent-low: rgba(62,201,255,0.10);
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: var(--dark-bg);
+      color: var(--dark-fg);
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ======================================================
+       INTRO OVERLAY
+    ====================================================== */
+    #intro {
+      position: fixed;
+      inset: 0;
+      z-index: 1000;
+      background: var(--dark-bg);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      pointer-events: none;
+      transition: transform 0.7s cubic-bezier(0.76, 0, 0.24, 1);
+      overflow: hidden;
+    }
+
+    #intro.exit { transform: translateY(-100%); }
+
+    #intro-canvas {
+      position: absolute;
+      inset: 0;
+      width: 100%; height: 100%;
+      pointer-events: none;
+    }
+
+    .intro-brand {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 18px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .intro-title {
+      display: flex;
+      overflow: hidden;
+      gap: 0.01em;
+    }
+
+    .intro-title .letter {
+      font-family: 'Bricolage Grotesque', sans-serif;
+      font-size: clamp(52px, 11vw, 120px);
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      color: var(--dark-fg);
+      display: inline-block;
+      opacity: 0;
+      transform: translateY(90px);
+      animation: letterRise 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    }
+
+    .intro-title .letter:nth-child(1)  { animation-delay: 0.06s; }
+    .intro-title .letter:nth-child(2)  { animation-delay: 0.11s; }
+    .intro-title .letter:nth-child(3)  { animation-delay: 0.16s; }
+    .intro-title .letter:nth-child(4)  { animation-delay: 0.21s; }
+    .intro-title .letter:nth-child(5)  { animation-delay: 0.26s; }
+    .intro-title .letter:nth-child(6)  { animation-delay: 0.31s; }
+    .intro-title .letter:nth-child(7)  { animation-delay: 0.36s; }
+    .intro-title .letter:nth-child(8)  { animation-delay: 0.41s; }
+    .intro-title .letter:nth-child(9)  { animation-delay: 0.46s; }
+
+    .about-node-diagram {
+      position: absolute;
+      top: 24px;
+      left: 24px;
+      opacity: 0.3;
+    }
+
+    .section-label-centered { justify-content: center; }
+
+    .cta-accent { color: var(--accent); }
+
+    @keyframes letterRise {
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .intro-sub {
+      font-family: 'DM Mono', monospace;
+      font-size: clamp(11px, 1.8vw, 13px);
+      font-weight: 300;
+      letter-spacing: 0.5em;
+      color: var(--accent);
+      text-transform: uppercase;
+      opacity: 0;
+      animation: fadeUp 0.5s ease forwards;
+      animation-delay: 0.6s;
+      position: relative;
+      z-index: 1;
+    }
+
+    .intro-progress-bar {
+      position: absolute;
+      bottom: 48px;
+      width: 180px;
+      height: 1px;
+      background: var(--dark-fg-3);
+      overflow: hidden;
+      z-index: 1;
+    }
+
+    .intro-progress-bar::after {
+      content: '';
+      position: absolute;
+      left: 0; top: 0;
+      height: 100%;
+      background: var(--accent);
+      width: 0%;
+      animation: progressFill 1.5s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+      animation-delay: 0.1s;
+    }
+
+    @keyframes progressFill { to { width: 100%; } }
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(8px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ======================================================
+       CLICK RIPPLE
+    ====================================================== */
+    .click-ripple {
+      position: fixed;
+      border-radius: 50%;
+      pointer-events: none;
+      z-index: 9997;
+      background: radial-gradient(circle, rgba(62,201,255,0.45) 0%, rgba(62,201,255,0.12) 45%, transparent 70%);
+      transform: translate(-50%, -50%) scale(0);
+      animation: rippleOut 0.65s cubic-bezier(0.22, 0.61, 0.36, 1) forwards;
+    }
+
+    @keyframes rippleOut {
+      to { transform: translate(-50%, -50%) scale(1); opacity: 0; }
+    }
+
+    /* ======================================================
+       HERO ENTRANCE (first visit)
+    ====================================================== */
+    .hero-entrance {
+      animation: heroIn 1.1s cubic-bezier(0.16, 1, 0.3, 1) both;
+    }
+
+    @keyframes heroIn {
+      from { opacity: 0; transform: translateY(28px) scale(0.97); }
+      to   { opacity: 1; transform: translateY(0) scale(1); }
+    }
+
+    /* ======================================================
+       NAVIGATION
+    ====================================================== */
+    #nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      padding: 28px 56px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      transition: background 0.4s ease, padding 0.4s ease,
+                  border-color 0.4s ease, box-shadow 0.4s ease;
+      border-bottom: 1px solid transparent;
+    }
+
+    /* Scrolled over dark hero */
+    #nav.scrolled {
+      background: rgba(14, 27, 46, 0.88);
+      -webkit-backdrop-filter: blur(20px);
+      backdrop-filter: blur(20px);
+      padding: 18px 56px;
+      border-color: var(--dark-border);
+    }
+
+    /* Scrolled over light sections */
+    #nav.light {
+      background: rgba(255, 255, 255, 0.94);
+      -webkit-backdrop-filter: blur(20px);
+      backdrop-filter: blur(20px);
+      padding: 18px 56px;
+      border-color: var(--light-border);
+      box-shadow: 0 2px 24px rgba(13,27,46,0.06);
+    }
+
+    #nav.light .logo-text  { color: var(--light-text); }
+    #nav.light .nav-links a { color: var(--light-text-2); }
+    #nav.light .nav-links a:hover { color: var(--light-text); }
+    #nav.light .nav-cta { color: var(--accent-ink) !important; border-color: var(--accent-ink) !important; }
+    #nav.light .nav-cta:hover { background: var(--accent-ink) !important; color: #fff !important; }
+    #nav.light .menu-btn span { background: var(--light-text); }
+
+    .nav-logo {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      text-decoration: none;
+      color: var(--dark-fg);
+    }
+
+    .logo-mark {
+      width: 36px; height: 36px;
+      background: var(--accent);
+      color: var(--dark-bg);
+      font-family: 'Bricolage Grotesque', sans-serif;
+      font-weight: 800;
+      font-size: 13px;
+      letter-spacing: 0.04em;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+      flex-shrink: 0;
+    }
+
+    .logo-text {
+      font-family: 'Bricolage Grotesque', sans-serif;
+      font-weight: 700;
+      font-size: 16px;
+      letter-spacing: -0.02em;
+      transition: color 0.3s;
+    }
+
+    .logo-text em { font-style: normal; color: var(--accent); }
+    #nav.light .logo-text em { color: var(--accent-ink); }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 40px;
+      list-style: none;
+    }
+
+    .nav-links a {
+      font-size: 14px;
+      font-weight: 400;
+      color: var(--dark-fg-2);
+      text-decoration: none;
+      transition: color 0.2s;
+      position: relative;
+    }
+
+    .nav-links a::after {
+      content: '';
+      position: absolute;
+      bottom: -3px; left: 0;
+      width: 0%; height: 1px;
+      background: var(--accent);
+      transition: width 0.3s ease;
+    }
+
+    .nav-links a:hover { color: var(--dark-fg); }
+    .nav-links a:hover::after { width: 100%; }
+    #nav.light .nav-links a::after { background: var(--accent-ink); }
+
+    .nav-cta {
+      padding: 10px 26px;
+      border: 1px solid var(--accent) !important;
+      border-radius: 4px;
+      color: var(--accent) !important;
+      font-weight: 500 !important;
+      transition: background 0.2s, color 0.2s !important;
+    }
+
+    .nav-cta::after { display: none !important; }
+
+    .nav-cta:hover {
+      background: var(--accent) !important;
+      color: var(--dark-bg) !important;
+    }
+
+    .lang-toggle {
+      display: flex;
+      align-items: center;
+      gap: 0;
+      border: 1px solid rgba(255,255,255,0.18);
+      border-radius: 4px;
+      overflow: hidden;
+      flex-shrink: 0;
+    }
+
+    .lang-toggle button {
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 7px 13px;
+      font-family: 'DM Mono', monospace;
+      font-size: 11px;
+      font-weight: 400;
+      letter-spacing: 0.08em;
+      color: var(--dark-fg-2);
+      transition: background 0.2s, color 0.2s;
+    }
+
+    .lang-toggle button.active {
+      background: rgba(62,201,255,0.15);
+      color: var(--accent);
+    }
+
+    .lang-toggle button:hover:not(.active) { color: var(--dark-fg); }
+
+    .lang-sep {
+      width: 1px;
+      height: 28px;
+      background: rgba(255,255,255,0.18);
+      flex-shrink: 0;
+    }
+
+    #nav.light .lang-toggle { border-color: var(--light-border); }
+    #nav.light .lang-toggle button { color: var(--light-text-2); }
+    #nav.light .lang-toggle button.active { background: rgba(0,133,178,0.10); color: var(--accent-ink); }
+    #nav.light .lang-toggle button:hover:not(.active) { color: var(--light-text); }
+    #nav.light .lang-sep { background: var(--light-border); }
+
+    .menu-btn {
+      display: none;
+      background: none;
+      border: none;
+      cursor: pointer;
+      flex-direction: column;
+      gap: 5px;
+      padding: 4px;
+    }
+
+    .menu-btn span {
+      display: block;
+      width: 24px; height: 1.5px;
+      background: var(--dark-fg);
+      transition: transform 0.3s, opacity 0.3s, background 0.3s;
+    }
+
+    .nav-mobile {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: var(--light-bg);
+      z-index: 99;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 36px;
+    }
+
+    .nav-mobile.open { display: flex; }
+
+    .nav-mobile a {
+      font-family: 'Bricolage Grotesque', sans-serif;
+      font-size: 36px;
+      font-weight: 700;
+      color: var(--light-text);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    .nav-mobile a:hover { color: var(--accent-ink); }
+
+    /* ======================================================
+       HERO — dark
+    ====================================================== */
+    #hero {
+      position: relative;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      background: var(--dark-bg);
+      padding-bottom: 100px;
+    }
+
+    #hero-canvas {
+      position: absolute;
+      inset: 0;
+      width: 100%; height: 100%;
+    }
+
+    .hero-inner {
+      position: relative;
+      z-index: 2;
+      max-width: 1280px;
+      width: 100%;
+      margin: 0 auto;
+      padding: 100px 56px 0;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+      pointer-events: none;
+    }
+
+    .hero-eyebrow-row {
+      text-align: center;
+      pointer-events: all;
+    }
+
+    .hero-headline-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      width: 100%;
+      pointer-events: all;
+    }
+
+    .hero-title-right { text-align: right; }
+
+    .hero-amp {
+      font-family: 'Bricolage Grotesque', sans-serif;
+      font-size: clamp(48px, 6vw, 96px);
+      font-weight: 300;
+      color: var(--dark-fg-3);
+      line-height: 1;
+      flex-shrink: 0;
+      padding: 0 48px;
+      pointer-events: all;
+    }
+
+    .hero-visuals-row {
+      display: flex;
+      align-items: center;
+      gap: 40px;
+      width: 100%;
+      pointer-events: none;
+    }
+
+    .hero-orb-col {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      pointer-events: none;
+    }
+
+    .ai-orb-wrap {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      pointer-events: all;
+    }
+
+    #ai-orb {
+      width: 380px;
+      height: 380px;
+      cursor: crosshair;
+      display: block;
+    }
+
+    .ai-orb-label {
+      font-family: 'DM Mono', monospace;
+      font-size: 10px;
+      letter-spacing: 0.32em;
+      text-transform: uppercase;
+      color: var(--dark-fg-3);
+      text-align: center;
+    }
+
+    .hero-bottom-cta {
+      position: absolute;
+      bottom: 52px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      gap: 24px;
+      z-index: 3;
+      pointer-events: all;
+      width: 100%;
+      max-width: 640px;
+      padding: 0 24px;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      font-family: 'DM Mono', monospace;
+      font-size: 11px;
+      letter-spacing: 0.28em;
+      color: var(--accent);
+      text-transform: uppercase;
+      margin-bottom: 20px;
+    }
+
+    .eyebrow::before {
+      content: '';
+      width: 32px; height: 1px;
+      background: var(--accent);
+      display: inline-block;
+    }
+
+    .hero-title {
+      font-family: 'Bricolage Grotesque', sans-serif;
+      font-size: clamp(28px, 4vw, 62px);
+      font-weight: 800;
+      letter-spacing: -0.04em;
+      line-height: 1.1;
+      color: var(--dark-fg);
+    }
+
+    .hero-title .accent { color: var(--accent); }
+
+    .hero-lead {
+      font-size: clamp(15px, 1.3vw, 17px);
+      font-weight: 300;
+      color: var(--dark-fg-2);
+      max-width: 520px;
+      margin: 20px auto 36px;
+      line-height: 1.75;
+    }
+
+    .hero-ctas {
+      display: flex;
+      gap: 16px;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 16px 32px;
+      border-radius: 4px;
+      font-size: 15px;
+      font-weight: 500;
+      text-decoration: none;
+      transition: all 0.25s ease;
+      cursor: pointer;
+      border: none;
+      font-family: 'DM Sans', sans-serif;
+    }
+
+    .btn-primary {
+      background: var(--accent);
+      color: var(--dark-bg);
+    }
+
+    .btn-primary:hover {
+      background: #fff;
+      transform: translateY(-2px);
+      box-shadow: 0 16px 48px rgba(62, 201, 255, 0.25);
+    }
+
+    .btn-ghost-dark {
+      background: transparent;
+      color: var(--dark-fg);
+      border: 1px solid var(--dark-border);
+    }
+
+    .btn-ghost-dark:hover {
+      border-color: var(--dark-fg-2);
+      transform: translateY(-2px);
+    }
+
+    .btn-ghost-light {
+      background: transparent;
+      color: var(--light-text);
+      border: 1px solid var(--light-border);
+    }
+
+    .btn-ghost-light:hover {
+      border-color: var(--light-text-2);
+      transform: translateY(-2px);
+    }
+
+    .btn svg { transition: transform 0.2s; }
+    .btn:hover svg { transform: translateX(4px); }
+
+    .hero-scroll {
+      position: absolute;
+      bottom: 48px; left: 56px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-family: 'DM Mono', monospace;
+      font-size: 10px;
+      letter-spacing: 0.22em;
+      color: var(--dark-fg-3);
+      text-transform: uppercase;
+      z-index: 2;
+    }
+
+    .scroll-line {
+      width: 40px; height: 1px;
+      background: var(--dark-fg-3);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .scroll-line::after {
+      content: '';
+      position: absolute;
+      left: -100%; top: 0;
+      width: 100%; height: 100%;
+      background: var(--accent);
+      animation: scrollPulse 2.2s infinite;
+    }
+
+    @keyframes scrollPulse { to { left: 100%; } }
+
+    .hero-badge {
+      position: absolute;
+      bottom: 48px; right: 56px;
+      z-index: 2;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-family: 'DM Mono', monospace;
+      font-size: 11px;
+      letter-spacing: 0.12em;
+      color: var(--dark-fg-3);
+    }
+
+    .badge-dot {
+      width: 6px; height: 6px;
+      border-radius: 50%;
+      background: var(--accent);
+      animation: blink 2.5s infinite;
+    }
+
+    @keyframes blink {
+      0%, 100% { opacity: 1; }
+      50%       { opacity: 0.3; }
+    }
+
+    /* ======================================================
+       TICKER STRIP
+    ====================================================== */
+    .ticker-wrap {
+      background: var(--accent);
+      overflow: hidden;
+      padding: 14px 0;
+      white-space: nowrap;
+    }
+
+    .ticker-track {
+      display: inline-flex;
+      animation: ticker 28s linear infinite;
+    }
+
+    .ticker-item {
+      font-family: 'Bricolage Grotesque', sans-serif;
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      color: var(--dark-bg);
+      text-transform: uppercase;
+      padding: 0 36px;
+    }
+
+    .ticker-sep { color: rgba(14,27,46,0.35); padding: 0 4px; }
+
+    @keyframes ticker {
+      from { transform: translateX(0); }
+      to   { transform: translateX(-50%); }
+    }
+
+    /* ======================================================
+       SECTION SCAFFOLDING
+    ====================================================== */
+    .section {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 120px 56px;
+    }
+
+    /* Label used in dark AND light sections */
+    .section-label {
+      font-family: 'DM Mono', monospace;
+      font-size: 11px;
+      letter-spacing: 0.32em;
+      text-transform: uppercase;
+      margin-bottom: 20px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .section-label::before {
+      content: '';
+      width: 24px; height: 1px;
+    }
+
+    .label-dark { color: var(--accent); }
+    .label-dark::before { background: var(--accent); }
+    .label-light { color: var(--accent-ink); }
+    .label-light::before { background: var(--accent-ink); }
+
+    .section-title {
+      font-family: 'Bricolage Grotesque', sans-serif;
+      font-size: clamp(34px, 4.5vw, 58px);
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      line-height: 1.05;
+      margin-bottom: 20px;
+    }
+
+    /* Reveal on scroll */
+    .reveal {
+      opacity: 0;
+      transform: translateY(36px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+    .reveal-delay-1 { transition-delay: 0.10s; }
+    .reveal-delay-2 { transition-delay: 0.20s; }
+    .reveal-delay-3 { transition-delay: 0.30s; }
+    .reveal-delay-4 { transition-delay: 0.40s; }
+
+    /* ======================================================
+       SERVICES — light
+    ====================================================== */
+    #services { background: var(--light-bg); }
+
+    #services .section-title { color: var(--light-text); }
+
+    .services-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+      margin-top: 72px;
+      perspective: 1200px;
+    }
+
+    .service-card {
+      background: var(--light-bg);
+      border: 1px solid var(--light-border);
+      border-radius: 16px;
+      padding: 52px 48px;
+      position: relative;
+      overflow: hidden;
+      transition: border-color 0.3s, transform 0.4s ease, box-shadow 0.3s;
+      transform-style: preserve-3d;
+      box-shadow: 0 4px 32px rgba(13,27,46,0.06);
+    }
+
+    .service-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 3px;
+      background: linear-gradient(90deg, var(--accent-ink), transparent);
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+
+    .service-card:hover {
+      border-color: rgba(0,133,178,0.25);
+      box-shadow: 0 20px 72px rgba(13,27,46,0.12);
+      transform: translateY(-6px);
+    }
+
+    .service-card:hover::before { opacity: 1; }
+
+    .service-num {
+      font-family: 'DM Mono', monospace;
+      font-size: 12px;
+      color: var(--light-text-3);
+      letter-spacing: 0.18em;
+      margin-bottom: 32px;
+    }
+
+    .service-icon {
+      width: 54px; height: 54px;
+      background: rgba(62,201,255,0.1);
+      border-radius: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 28px;
+      transition: background 0.3s;
+    }
+
+    .service-card:hover .service-icon { background: rgba(0,133,178,0.12); }
+
+    .service-icon svg {
+      width: 26px; height: 26px;
+      stroke: var(--accent-ink);
+    }
+
+    .service-title {
+      font-family: 'Bricolage Grotesque', sans-serif;
+      font-size: 26px;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      margin-bottom: 14px;
+      color: var(--light-text);
+    }
+
+    .service-desc {
+      font-size: 15px;
+      color: var(--light-text-2);
+      line-height: 1.75;
+      margin-bottom: 32px;
+    }
+
+    .service-features {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin-bottom: 40px;
+    }
+
+    .service-features li {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 14px;
+      color: var(--light-text-2);
+    }
+
+    .service-features li::before {
+      content: '';
+      width: 16px; height: 1px;
+      background: var(--accent-ink);
+      flex-shrink: 0;
+    }
+
+    .service-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--accent-ink);
+      text-decoration: none;
+      transition: gap 0.2s;
+    }
+
+    .service-link:hover { gap: 14px; }
+
+    /* ======================================================
+       ABOUT — light-2
+    ====================================================== */
+    #about {
+      background: var(--light-bg-2);
+      border-top: 1px solid var(--light-border);
+      border-bottom: 1px solid var(--light-border);
+    }
+
+    #about .section-title { color: var(--light-text); }
+
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      align-items: center;
+    }
+
+    /* Visual box keeps the dark colour — contrast element */
+    .about-visual {
+      position: relative;
+      aspect-ratio: 4/3;
+      border-radius: 20px;
+      overflow: hidden;
+      box-shadow: 0 24px 64px rgba(13,27,46,0.18);
+    }
+
+    .about-visual-inner {
+      width: 100%; height: 100%;
+      background: linear-gradient(135deg, #0E1B2E 0%, #162540 50%, #0a1525 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+    }
+
+    .grid-overlay {
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(62,201,255,0.05) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(62,201,255,0.05) 1px, transparent 1px);
+      background-size: 40px 40px;
+    }
+
+    .about-visual-text {
+      font-family: 'Bricolage Grotesque', sans-serif;
+      font-size: 44px;
+      font-weight: 800;
+      letter-spacing: -0.04em;
+      color: rgba(62,201,255,0.12);
+      text-align: center;
+      line-height: 1;
+      position: relative;
+      z-index: 1;
+      -webkit-user-select: none;
+      user-select: none;
+    }
+
+    .about-visual-text strong {
+      display: block;
+      font-size: 11px;
+      font-weight: 400;
+      letter-spacing: 0.4em;
+      font-family: 'DM Mono', monospace;
+      color: rgba(62,201,255,0.5);
+      margin-top: 10px;
+    }
+
+    .about-badge {
+      position: absolute;
+      bottom: 24px; right: 24px;
+      background: rgba(14,27,46,0.85);
+      -webkit-backdrop-filter: blur(12px);
+      backdrop-filter: blur(12px);
+      border: 1px solid rgba(62,201,255,0.2);
+      border-radius: 12px;
+      padding: 14px 20px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      z-index: 2;
+    }
+
+    .about-badge-num {
+      font-family: 'Bricolage Grotesque', sans-serif;
+      font-size: 26px;
+      font-weight: 800;
+      color: var(--accent);
+      line-height: 1;
+    }
+
+    .about-badge-label { font-size: 12px; color: var(--dark-fg-2); line-height: 1.4; }
+
+    .about-team-cta { margin-top: 32px; display: inline-flex; align-items: center; gap: 10px; }
+
+    .about-text p {
+      font-size: 15px;
+      color: var(--light-text-2);
+      line-height: 1.8;
+      margin-bottom: 16px;
+    }
+
+
+    /* ======================================================
+       TEAM — dark
+    ====================================================== */
+    #team {
+      background: var(--dark-bg);
+      border-top: 1px solid var(--dark-border);
+    }
+
+    .team-title { color: var(--dark-fg); text-align: center; }
+    .team-intro {
+      text-align: center;
+      max-width: 540px;
+      margin: 0 auto 72px;
+      font-size: 15px;
+      color: var(--dark-fg-2);
+      line-height: 1.75;
+    }
+
+    .team-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 32px;
+      max-width: 900px;
+      margin: 0 auto;
+    }
+
+    .team-card {
+      background: var(--dark-bg-2);
+      border: 1px solid var(--dark-border);
+      border-radius: 20px;
+      padding: 40px 36px;
+      display: flex;
+      flex-direction: column;
+      gap: 28px;
+      transition: border-color 0.3s, transform 0.3s;
+    }
+
+    .team-card:hover {
+      border-color: rgba(62,201,255,0.28);
+      transform: translateY(-4px);
+    }
+
+    .team-avatar {
+      position: relative;
+      width: 72px;
+      height: 72px;
+    }
+
+    .avatar-ring {
+      position: absolute;
+      inset: -4px;
+      border-radius: 50%;
+      border: 1px solid rgba(62,201,255,0.35);
+      animation: ringPulse 3s ease-in-out infinite;
+    }
+
+    @keyframes ringPulse {
+      0%, 100% { opacity: 0.35; transform: scale(1); }
+      50%       { opacity: 0.70; transform: scale(1.05); }
+    }
+
+    .avatar-initials {
+      width: 72px;
+      height: 72px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, rgba(62,201,255,0.18) 0%, rgba(110,58,240,0.18) 100%);
+      border: 1px solid rgba(62,201,255,0.22);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Bricolage Grotesque', sans-serif;
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--accent);
+      letter-spacing: 0.04em;
+    }
+
+    .avatar-status {
+      position: absolute;
+      bottom: 2px;
+      right: 2px;
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      background: #27C93F;
+      border: 2px solid var(--dark-bg-2);
+    }
+
+    .team-card-body { display: flex; flex-direction: column; gap: 12px; }
+
+    .team-name {
+      font-family: 'Bricolage Grotesque', sans-serif;
+      font-size: 20px;
+      font-weight: 700;
+      color: var(--dark-fg);
+      letter-spacing: -0.02em;
+    }
+
+    .team-role {
+      font-family: 'DM Mono', monospace;
+      font-size: 11px;
+      font-weight: 400;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-top: -6px;
+    }
+
+    .team-bio {
+      font-size: 14px;
+      line-height: 1.75;
+      color: var(--dark-fg-2);
+      margin-top: 4px;
+    }
+
+    .team-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 4px;
+    }
+
+    .team-tags span {
+      font-family: 'DM Mono', monospace;
+      font-size: 10px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      padding: 5px 12px;
+      border-radius: 6px;
+      background: rgba(62,201,255,0.08);
+      border: 1px solid rgba(62,201,255,0.18);
+      color: var(--dark-fg-2);
+    }
+
+    .team-email {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      margin-top: 8px;
+      font-size: 13px;
+      color: var(--accent);
+      text-decoration: none;
+      opacity: 0.85;
+      transition: opacity 0.2s, gap 0.2s;
+    }
+
+    .team-email:hover { opacity: 1; gap: 12px; }
+
+    .team-reach {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      max-width: 900px;
+      margin: 56px auto 0;
+      padding: 28px 36px;
+      background: rgba(62,201,255,0.06);
+      border: 1px solid rgba(62,201,255,0.18);
+      border-radius: 16px;
+    }
+
+    .team-reach-icon {
+      width: 48px;
+      height: 48px;
+      border-radius: 12px;
+      background: rgba(62,201,255,0.12);
+      border: 1px solid rgba(62,201,255,0.22);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--accent);
+      flex-shrink: 0;
+    }
+
+    .team-reach-title {
+      font-family: 'Bricolage Grotesque', sans-serif;
+      font-size: 16px;
+      font-weight: 700;
+      color: var(--dark-fg);
+      margin-bottom: 4px;
+    }
+
+    .team-reach-sub {
+      font-size: 14px;
+      color: var(--dark-fg-2);
+    }
+
+    @media (max-width: 680px) {
+      .team-grid { grid-template-columns: 1fr; }
+      .team-reach { flex-direction: column; text-align: center; }
+    }
+
+    /* ======================================================
+       PROCESS — light
+    ====================================================== */
+    #process { background: var(--light-bg); }
+
+    #process .section-title { color: var(--light-text); }
+
+    .process-steps { margin-top: 72px; }
+
+    .process-step {
+      display: grid;
+      grid-template-columns: 88px 1fr;
+      align-items: start;
+      padding: 48px 0;
+      border-bottom: 1px solid var(--light-border);
+      gap: 36px;
+      /* slide-in initial state */
+      opacity: 0;
+      transform: translateX(-72px);
+      transition: opacity 0.65s cubic-bezier(0.16, 1, 0.3, 1),
+                  transform 0.65s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .process-step:first-child { border-top: 1px solid var(--light-border); }
+    .process-step.slide-in { opacity: 1; transform: translateX(0); }
+
+    /* Left column: number + icon */
+    .step-left {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 14px;
+      padding-top: 2px;
+    }
+
+    .step-num {
+      font-family: 'DM Mono', monospace;
+      font-size: 11px;
+      color: var(--light-text-3);
+      letter-spacing: 0.15em;
+    }
+
+    .step-icon {
+      width: 48px;
+      height: 48px;
+      border-radius: 14px;
+      background: var(--light-bg-2);
+      border: 1px solid var(--light-border);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--accent-ink);
+      transition: background 0.3s, border-color 0.3s, transform 0.3s;
+    }
+
+    .process-step:hover .step-icon {
+      background: rgba(0,133,178,0.08);
+      border-color: rgba(0,133,178,0.22);
+      transform: scale(1.08);
+    }
+
+    .step-icon svg {
+      width: 20px;
+      height: 20px;
+      stroke: currentColor;
+      fill: none;
+      stroke-width: 1.6;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    /* Right column: all content */
+    .step-header-row {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 16px;
+      margin-bottom: 14px;
+    }
+
+    .step-title {
+      font-family: 'Bricolage Grotesque', sans-serif;
+      font-size: 24px;
+      font-weight: 700;
+      letter-spacing: -0.025em;
+      color: var(--light-text);
+      line-height: 1.15;
+    }
+
+    .step-tag {
+      flex-shrink: 0;
+      font-family: 'DM Mono', monospace;
+      font-size: 10px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--accent-ink);
+      background: rgba(0,133,178,0.07);
+      border: 1px solid rgba(0,133,178,0.18);
+      padding: 5px 11px;
+      border-radius: 100px;
+      margin-top: 4px;
+    }
+
+    .step-body {
+      font-size: 15px;
+      color: var(--light-text-2);
+      line-height: 1.8;
+      margin-bottom: 24px;
+    }
+
+    .step-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    .step-list li {
+      font-family: 'DM Mono', monospace;
+      font-size: 11px;
+      letter-spacing: 0.06em;
+      color: var(--light-text-2);
+      background: var(--light-bg-2);
+      border: 1px solid var(--light-border);
+      padding: 6px 13px;
+      border-radius: 7px;
+      transition: border-color 0.2s, color 0.2s;
+    }
+
+    .process-step:hover .step-list li {
+      border-color: rgba(0,133,178,0.2);
+      color: var(--light-text);
+    }
+
+    /* ======================================================
+       CONTACT / CTA — dark
+    ====================================================== */
+    #contact { background: var(--dark-bg); }
+
+    .cta-inner {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      align-items: start;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    .cta-text-col { padding-top: 12px; }
+
+    .cta-text-col .section-title { color: var(--dark-fg); margin-bottom: 24px; }
+
+    .cta-sub {
+      font-size: 16px;
+      color: var(--dark-fg-2);
+      line-height: 1.75;
+      margin-bottom: 48px;
+    }
+
+    .cta-direct {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .cta-direct-label {
+      font-family: 'DM Mono', monospace;
+      font-size: 10px;
+      letter-spacing: 0.24em;
+      text-transform: uppercase;
+      color: var(--dark-fg-3);
+      margin-bottom: 4px;
+    }
+
+    .cta-email {
+      font-family: 'Bricolage Grotesque', sans-serif;
+      font-size: 18px;
+      font-weight: 600;
+      color: var(--accent);
+      text-decoration: none;
+      transition: opacity 0.2s;
+    }
+
+    .cta-email:hover { opacity: 0.65; }
+
+    .cta-form-col {
+      background: var(--dark-bg-2);
+      border: 1px solid var(--dark-border);
+      border-radius: 20px;
+      overflow: hidden;
+      box-shadow: 0 0 80px rgba(62,201,255,0.06);
+    }
+
+    .cta-form-col iframe {
+      width: 100%;
+      min-height: 680px;
+      border: none;
+      display: block;
+    }
+
+    @media (max-width: 860px) {
+      .cta-inner {
+        grid-template-columns: 1fr;
+        gap: 48px;
+      }
+    }
+
+    /* ======================================================
+       FOOTER — dark
+    ====================================================== */
+    footer {
+      background: var(--dark-bg-2);
+      border-top: 1px solid var(--dark-border);
+      padding: 40px 56px;
+    }
+
+    .footer-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 20px;
+    }
+
+    .footer-copy { font-size: 13px; color: var(--dark-fg-3); }
+
+    .footer-links { display: flex; gap: 24px; list-style: none; }
+
+    .footer-links a {
+      font-size: 13px;
+      color: var(--dark-fg-3);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    .footer-links a:hover { color: var(--dark-fg-2); }
+
+    /* ======================================================
+       CURSOR GLOW
+    ====================================================== */
+    #cursor-glow {
+      position: fixed;
+      width: 320px; height: 320px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(62,201,255,0.035) 0%, transparent 70%);
+      pointer-events: none;
+      z-index: 0;
+      transform: translate(-50%, -50%);
+    }
+
+    /* ======================================================
+       RESPONSIVE
+    ====================================================== */
+    @media (max-width: 960px) {
+      #nav, #nav.scrolled, #nav.light { padding: 20px 24px; }
+      .nav-links { display: none; }
+      .menu-btn { display: flex; }
+      .hero-inner { padding: 0 24px; padding-top: 100px; }
+      .macbook-wrap { max-width: 360px; }
+      .section { padding: 80px 24px; }
+      .services-grid { grid-template-columns: 1fr; }
+      .about-grid { grid-template-columns: 1fr; gap: 40px; }
+      .about-visual { order: -1; }
+      .hero-scroll, .hero-badge { display: none; }
+      .cta-form { flex-direction: column; }
+      .footer-inner { flex-direction: column; text-align: center; }
+      .process-step { grid-template-columns: 1fr; padding: 36px 0; gap: 20px; }
+      .step-left { flex-direction: row; align-items: center; gap: 16px; }
+      .step-header-row { flex-direction: column; gap: 10px; }
+      .step-tag { align-self: flex-start; }
+    }
+
+    @media (max-width: 580px) {
+
+      .hero-content h1 { font-size: 42px; }
+    }
+
+    /* ======================================================
+       HERO VISUAL — orbs + MacBook
+    ====================================================== */
+    .hero-visual {
+      flex: 1;
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+      pointer-events: none;
+    }
+
+    .orb {
+      position: absolute;
+      border-radius: 50%;
+      pointer-events: none;
+      will-change: transform;
+    }
+
+    .orb-1 {
+      width: 640px;
+      height: 640px;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background: radial-gradient(circle, rgba(62,201,255,0.38) 0%, rgba(62,201,255,0.07) 58%, transparent 100%);
+      filter: blur(96px);
+    }
+
+    .orb-2 {
+      width: 420px;
+      height: 420px;
+      top: 60%;
+      left: 44%;
+      transform: translate(-50%, -50%);
+      background: radial-gradient(circle, rgba(110,58,240,0.30) 0%, rgba(110,58,240,0.04) 64%, transparent 100%);
+      filter: blur(88px);
+    }
+
+    .macbook-wrap {
+      position: relative;
+      z-index: 3;
+      width: 100%;
+      max-width: 640px;
+      filter: drop-shadow(0 40px 80px rgba(0,0,0,0.6)) drop-shadow(0 0 100px rgba(62,201,255,0.18));
+      transform: perspective(1400px) rotateY(-4deg) rotateX(3deg);
+      will-change: transform;
+    }
+
+    .macbook-svg {
+      width: 100%;
+      display: block;
+    }
+
+    @media (max-width: 960px) { .hero-visual { min-height: 260px; } }
+  </style>
+</head>
+<body>
+
+<div id="cursor-glow"></div>
+
+<!-- ================================================================
+     INTRO OVERLAY
+================================================================ -->
+<div id="intro">
+  <canvas id="intro-canvas"></canvas>
+  <div class="intro-brand">
+    <div class="intro-title" aria-label="Clearpath">
+      <span class="letter">C</span>
+      <span class="letter">L</span>
+      <span class="letter">E</span>
+      <span class="letter">A</span>
+      <span class="letter">R</span>
+      <span class="letter">P</span>
+      <span class="letter">A</span>
+      <span class="letter">T</span>
+      <span class="letter">H</span>
+    </div>
+    <div class="intro-sub">Solutions</div>
+  </div>
+  <div class="intro-progress-bar"></div>
+</div>
+
+<!-- ================================================================
+     NAVIGATION
+================================================================ -->
+<nav id="nav">
+  <a href="#" class="nav-logo">
+    <div class="logo-mark">CS</div>
+    <span class="logo-text">Clearpath <em>Solutions</em></span>
+  </a>
+  <ul class="nav-links">
+    <li><a href="#services" data-i18n="nav.services">Services</a></li>
+    <li><a href="#about" data-i18n="nav.about">About</a></li>
+    <li><a href="/team.html" data-i18n="nav.team">Team</a></li>
+    <li><a href="/how-we-work.html" data-i18n="nav.process">Process</a></li>
+    <li><a href="#contact" class="nav-cta" data-i18n="nav.cta">Get Started</a></li>
+  </ul>
+  <div class="lang-toggle" id="lang-toggle">
+    <button type="button" id="lang-en" class="active" onclick="setLang('en')">EN</button>
+    <div class="lang-sep"></div>
+    <button type="button" id="lang-no" onclick="setLang('no')">NO</button>
+  </div>
+  <button type="button" class="menu-btn" id="menu-btn" aria-label="Open menu">
+    <span></span><span></span>
+  </button>
+</nav>
+
+<div class="nav-mobile" id="nav-mobile">
+  <a href="#services" onclick="closeMenu()" data-i18n="nav.services">Services</a>
+  <a href="#about" onclick="closeMenu()" data-i18n="nav.about">About</a>
+  <a href="/team.html" onclick="closeMenu()" data-i18n="nav.team">Team</a>
+  <a href="/how-we-work.html" onclick="closeMenu()" data-i18n="nav.process">Process</a>
+  <a href="#contact" onclick="closeMenu()" data-i18n="nav.cta">Get Started</a>
+</div>
+
+<!-- ================================================================
+     HERO — dark
+================================================================ -->
+<section id="hero">
+  <canvas id="hero-canvas"></canvas>
+  <div class="hero-inner" id="hero-content">
+
+    <div class="hero-eyebrow-row">
+      <span class="eyebrow" data-i18n="hero.eyebrow">Est. 2024 · Clearpath Solutions</span>
+    </div>
+
+    <div class="hero-headline-row">
+      <h1 class="hero-title" data-i18n="hero.h1top">Nordic Web Design</h1>
+      <span class="hero-amp">&amp;</span>
+      <h1 class="hero-title hero-title-right" data-i18n="hero.h1bottom"><span class="accent">AI Automation</span></h1>
+    </div>
+
+    <div class="hero-visuals-row">
+    <div class="hero-visual">
+    <div class="orb orb-1" id="orb1"></div>
+    <div class="orb orb-2" id="orb2"></div>
+    <div class="macbook-wrap" id="macbook-wrap">
+      <svg class="macbook-svg" viewBox="0 0 600 308" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <linearGradient id="mb-body" x1="30%" y1="0%" x2="70%" y2="100%">
+            <stop offset="0%" stop-color="#3C4760"/>
+            <stop offset="100%" stop-color="#1E2535"/>
+          </linearGradient>
+          <linearGradient id="mb-screen-bg" x1="25%" y1="0%" x2="75%" y2="100%">
+            <stop offset="0%" stop-color="#0C1628"/>
+            <stop offset="100%" stop-color="#07101D"/>
+          </linearGradient>
+          <radialGradient id="mb-glow1" cx="68%" cy="22%" r="52%">
+            <stop offset="0%" stop-color="rgba(62,201,255,0.22)"/>
+            <stop offset="100%" stop-color="rgba(62,201,255,0)"/>
+          </radialGradient>
+          <radialGradient id="mb-glow2" cx="18%" cy="80%" r="40%">
+            <stop offset="0%" stop-color="rgba(110,58,240,0.16)"/>
+            <stop offset="100%" stop-color="rgba(110,58,240,0)"/>
+          </radialGradient>
+          <linearGradient id="mb-glass" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stop-color="rgba(255,255,255,0.10)"/>
+            <stop offset="100%" stop-color="rgba(255,255,255,0.03)"/>
+          </linearGradient>
+          <linearGradient id="mb-lid-shine" x1="0%" y1="0%" x2="0%" y2="100%">
+            <stop offset="0%" stop-color="rgba(255,255,255,0.14)"/>
+            <stop offset="35%" stop-color="rgba(255,255,255,0.02)"/>
+            <stop offset="100%" stop-color="rgba(255,255,255,0)"/>
+          </linearGradient>
+          <pattern id="mb-keys" x="0" y="0" width="40" height="22" patternUnits="userSpaceOnUse">
+            <rect x="1.5" y="1.5" width="36" height="18" rx="3.5"
+                  fill="rgba(255,255,255,0.04)" stroke="rgba(255,255,255,0.09)" stroke-width="0.5"/>
+          </pattern>
+          <clipPath id="mb-clip">
+            <rect x="44" y="28" width="512" height="252" rx="6"/>
+          </clipPath>
+        </defs>
+
+        <!-- ══ SCREEN LID ══ -->
+        <rect x="22" y="8"  width="556" height="294" rx="18" fill="url(#mb-body)"/>
+        <rect x="22" y="8"  width="556" height="2"   rx="1"  fill="url(#mb-lid-shine)"/>
+        <rect x="32" y="18" width="536" height="274" rx="14" fill="#0B1220"/>
+        <rect x="44" y="28" width="512" height="252" rx="6"  fill="url(#mb-screen-bg)"/>
+        <rect x="44" y="28" width="512" height="252" rx="6"  fill="url(#mb-glow1)"/>
+        <rect x="44" y="28" width="512" height="252" rx="6"  fill="url(#mb-glow2)"/>
+        <!-- Notch -->
+        <rect x="268" y="18" width="64" height="16" rx="8" fill="#0B1220"/>
+
+        <!-- ══ SCREEN CONTENT ══ -->
+        <g clip-path="url(#mb-clip)">
+          <!-- Browser chrome -->
+          <rect x="44" y="28" width="512" height="28" fill="rgba(0,0,0,0.35)"/>
+          <circle cx="62" cy="42" r="5" fill="#FF5F56"/>
+          <circle cx="78" cy="42" r="5" fill="#FFBD2E"/>
+          <circle cx="94" cy="42" r="5" fill="#27C93F"/>
+          <rect x="156" y="34" width="284" height="16" rx="8" fill="rgba(255,255,255,0.07)"/>
+          <text x="298" y="45" text-anchor="middle"
+                font-family="'DM Sans', Arial, sans-serif"
+                font-size="8" fill="rgba(255,255,255,0.35)">clearpath.solutions</text>
+
+          <!-- Site nav -->
+          <rect x="44" y="56" width="512" height="26" fill="rgba(14,27,46,0.92)"/>
+          <rect x="56"  y="63" width="8"  height="8"  rx="2" fill="#3EC9FF"/>
+          <rect x="68"  y="65" width="56" height="5"  rx="2" fill="rgba(255,255,255,0.65)"/>
+          <rect x="338" y="65" width="26" height="5"  rx="2" fill="rgba(255,255,255,0.28)"/>
+          <rect x="372" y="65" width="26" height="5"  rx="2" fill="rgba(255,255,255,0.28)"/>
+          <rect x="406" y="65" width="26" height="5"  rx="2" fill="rgba(255,255,255,0.28)"/>
+          <rect x="444" y="60" width="58" height="14" rx="7" fill="rgba(62,201,255,0.75)"/>
+          <text x="473" y="70" text-anchor="middle"
+                font-family="'DM Sans', Arial, sans-serif"
+                font-size="7" font-weight="600" fill="#0E1B2E">Get Started</text>
+
+          <!-- ── HEADLINE ── -->
+          <text x="64" y="114"
+                font-family="'Bricolage Grotesque', Georgia, serif"
+                font-size="21" font-weight="800"
+                fill="rgba(255,255,255,0.97)" letter-spacing="-0.5">Let us create</text>
+          <text x="64" y="140"
+                font-family="'Bricolage Grotesque', Georgia, serif"
+                font-size="21" font-weight="800"
+                fill="rgba(255,255,255,0.97)" letter-spacing="-0.5">your website</text>
+          <text x="64" y="166"
+                font-family="'Bricolage Grotesque', Georgia, serif"
+                font-size="21" font-weight="800"
+                fill="rgba(255,255,255,0.97)" letter-spacing="-0.5">today<tspan fill="#3EC9FF">.</tspan></text>
+
+          <!-- Subtext -->
+          <rect x="64" y="176" width="210" height="6" rx="3" fill="rgba(255,255,255,0.24)"/>
+          <rect x="64" y="187" width="164" height="6" rx="3" fill="rgba(255,255,255,0.17)"/>
+
+          <!-- CTA buttons -->
+          <rect x="64"  y="202" width="92" height="22" rx="11" fill="#3EC9FF"/>
+          <text x="110" y="217" text-anchor="middle"
+                font-family="'DM Sans', Arial, sans-serif"
+                font-size="8.5" font-weight="600" fill="#0E1B2E">Get Started →</text>
+          <rect x="164" y="202" width="92" height="22" rx="11"
+                fill="rgba(255,255,255,0.07)" stroke="rgba(255,255,255,0.18)" stroke-width="0.8"/>
+          <text x="210" y="217" text-anchor="middle"
+                font-family="'DM Sans', Arial, sans-serif"
+                font-size="8.5" fill="rgba(255,255,255,0.65)">See Our Work</text>
+
+          <!-- ── FLOATING GLASS CARD ── -->
+          <rect x="370" y="86" width="172" height="108" rx="12"
+                fill="url(#mb-glass)" stroke="rgba(255,255,255,0.12)" stroke-width="0.8"/>
+          <path d="M 382 86 L 530 86" stroke="rgba(255,255,255,0.20)" stroke-width="0.8" fill="none"/>
+          <!-- Icon -->
+          <rect x="382" y="100" width="22" height="22" rx="5" fill="rgba(62,201,255,0.20)"/>
+          <rect x="387" y="107" width="12" height="2"  rx="1" fill="rgba(62,201,255,0.85)"/>
+          <rect x="387" y="112" width="8"  height="2"  rx="1" fill="rgba(62,201,255,0.60)"/>
+          <!-- Text lines -->
+          <rect x="412" y="101" width="106" height="7" rx="3" fill="rgba(255,255,255,0.50)"/>
+          <rect x="412" y="113" width="80"  height="5" rx="2" fill="rgba(255,255,255,0.22)"/>
+          <rect x="412" y="123" width="92"  height="5" rx="2" fill="rgba(255,255,255,0.22)"/>
+          <line x1="382" y1="140" x2="530" y2="140" stroke="rgba(255,255,255,0.08)" stroke-width="0.8"/>
+          <!-- Metric -->
+          <text x="384" y="162"
+                font-family="'DM Mono', monospace"
+                font-size="16" font-weight="600" fill="#3EC9FF">↑ 240%</text>
+          <rect x="436" y="153" width="58" height="5" rx="2" fill="rgba(255,255,255,0.20)"/>
+          <rect x="436" y="163" width="42" height="5" rx="2" fill="rgba(255,255,255,0.14)"/>
+
+
+          <!-- Subtle glare -->
+          <path d="M 44 28 L 210 28 L 116 148 L 44 96 Z" fill="rgba(255,255,255,0.018)"/>
+        </g>
+
+        <!-- Screen top-edge glint -->
+        <path d="M 44 34 Q 44 28 50 28 L 550 28"
+              stroke="rgba(255,255,255,0.08)" stroke-width="0.8" fill="none"/>
+      </svg>
+    </div>
+  </div>
+
+    <div class="hero-orb-col">
+      <div class="ai-orb-wrap">
+        <canvas id="ai-orb"></canvas>
+      </div>
+    </div>
+    </div><!-- end hero-visuals-row -->
+
+  </div><!-- end hero-inner -->
+
+  <!-- CTAs pinned to bottom centre of hero -->
+  <div class="hero-bottom-cta">
+    <div class="hero-ctas">
+      <a href="#contact" class="btn btn-primary">
+        <span data-i18n="hero.cta1">Get Started</span>
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M3 8h10M9 4l4 4-4 4"/>
+        </svg>
+      </a>
+      <a href="#services" class="btn btn-ghost-dark" data-i18n="hero.cta2">See What We Do</a>
+    </div>
+  </div>
+
+  <div class="hero-scroll">
+    <span data-i18n="hero.scroll">Scroll</span>
+    <div class="scroll-line"></div>
+  </div>
+  <div class="hero-badge">
+    <span class="badge-dot"></span>
+    <span data-i18n="hero.badge">Based in Scandinavia</span>
+  </div>
+</section>
+
+<!-- ================================================================
+     TICKER
+================================================================ -->
+<div class="ticker-wrap" aria-hidden="true">
+  <div class="ticker-track">
+    <span class="ticker-item">Web Design<span class="ticker-sep"> · </span></span>
+    <span class="ticker-item">AI Integration<span class="ticker-sep"> · </span></span>
+    <span class="ticker-item">Nordic SMBs<span class="ticker-sep"> · </span></span>
+    <span class="ticker-item">Conversion Optimization<span class="ticker-sep"> · </span></span>
+    <span class="ticker-item">Workflow Automation<span class="ticker-sep"> · </span></span>
+    <span class="ticker-item">Digital Strategy<span class="ticker-sep"> · </span></span>
+    <span class="ticker-item">E-Commerce<span class="ticker-sep"> · </span></span>
+    <span class="ticker-item">AI Chatbots<span class="ticker-sep"> · </span></span>
+    <span class="ticker-item">Web Design<span class="ticker-sep"> · </span></span>
+    <span class="ticker-item">AI Integration<span class="ticker-sep"> · </span></span>
+    <span class="ticker-item">Nordic SMBs<span class="ticker-sep"> · </span></span>
+    <span class="ticker-item">Conversion Optimization<span class="ticker-sep"> · </span></span>
+    <span class="ticker-item">Workflow Automation<span class="ticker-sep"> · </span></span>
+    <span class="ticker-item">Digital Strategy<span class="ticker-sep"> · </span></span>
+    <span class="ticker-item">E-Commerce<span class="ticker-sep"> · </span></span>
+    <span class="ticker-item">AI Chatbots<span class="ticker-sep"> · </span></span>
+  </div>
+</div>
+
+<!-- ================================================================
+     SERVICES — light
+================================================================ -->
+<section id="services">
+  <div class="section">
+    <div class="section-label label-light reveal" data-i18n="services.label">What We Do</div>
+    <h2 class="section-title reveal reveal-delay-1" data-i18n="services.title">Two powerful services.<br>One clear path forward.</h2>
+
+    <div class="services-grid">
+
+      <div class="service-card reveal reveal-delay-2">
+        <div class="service-num">01</div>
+        <div class="service-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="2" y="3" width="20" height="14" rx="2"/>
+            <path d="M8 21h8M12 17v4"/>
+            <path d="M7 8.5l2.5 2.5-2.5 2.5"/>
+            <line x1="12" y1="13.5" x2="16" y2="13.5"/>
+          </svg>
+        </div>
+        <h3 class="service-title" data-i18n="services.s1.title">Web Design &amp; Development</h3>
+        <p class="service-desc" data-i18n="services.s1.desc">We build high-converting websites with Nordic design sensibility — clean, purposeful, and built to perform for small and medium businesses.</p>
+        <ul class="service-features" data-i18n-list="services.s1.features">
+          <li>Custom website design &amp; development</li>
+          <li>Conversion rate optimization</li>
+          <li>SEO-ready architecture</li>
+          <li>E-commerce &amp; booking solutions</li>
+          <li>Ongoing support &amp; maintenance</li>
+        </ul>
+        <a href="#contact" class="service-link">
+          <span data-i18n="services.s1.cta">Start a project</span>
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M2 7h10M8 3l4 4-4 4"/>
+          </svg>
+        </a>
+      </div>
+
+      <div class="service-card reveal reveal-delay-3">
+        <div class="service-num">02</div>
+        <div class="service-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="5" r="2"/>
+            <circle cx="5" cy="12" r="2"/>
+            <circle cx="19" cy="12" r="2"/>
+            <circle cx="12" cy="19" r="2"/>
+            <line x1="12" y1="7" x2="12" y2="17"/>
+            <line x1="7" y1="12" x2="17" y2="12"/>
+            <line x1="6.8" y1="6.8" x2="10" y2="10"/>
+            <line x1="17.2" y1="6.8" x2="14" y2="10"/>
+            <line x1="6.8" y1="17.2" x2="10" y2="14"/>
+            <line x1="17.2" y1="17.2" x2="14" y2="14"/>
+          </svg>
+        </div>
+        <h3 class="service-title" data-i18n="services.s2.title">AI Integration &amp; Automation</h3>
+        <p class="service-desc" data-i18n="services.s2.desc">We identify where AI can save you time and increase revenue, then implement it cleanly into your existing workflow — no complexity, just results.</p>
+        <ul class="service-features" data-i18n-list="services.s2.features">
+          <li>AI-powered customer support</li>
+          <li>Workflow automation &amp; efficiency</li>
+          <li>Data analysis &amp; smart insights</li>
+          <li>Custom AI tooling for your industry</li>
+          <li>Staff training &amp; smooth adoption</li>
+        </ul>
+        <a href="#contact" class="service-link">
+          <span data-i18n="services.s2.cta">Explore AI for your business</span>
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M2 7h10M8 3l4 4-4 4"/>
+          </svg>
+        </a>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ================================================================
+     ABOUT — light-2
+================================================================ -->
+<section id="about">
+  <div class="section">
+    <div class="about-grid">
+
+      <div class="about-visual reveal">
+        <div class="about-visual-inner">
+          <div class="grid-overlay"></div>
+          <div class="about-visual-text">
+            NORDIC<br>PRECISION
+          </div>
+          <svg class="about-node-diagram" width="100" height="60" viewBox="0 0 100 60" fill="none">
+            <circle cx="10" cy="30" r="4" stroke="#3EC9FF" stroke-width="1"/>
+            <circle cx="50" cy="10" r="4" stroke="#3EC9FF" stroke-width="1"/>
+            <circle cx="50" cy="50" r="4" stroke="#3EC9FF" stroke-width="1"/>
+            <circle cx="90" cy="30" r="4" stroke="#3EC9FF" stroke-width="1"/>
+            <line x1="14" y1="30" x2="46" y2="12" stroke="#3EC9FF" stroke-width="0.5"/>
+            <line x1="14" y1="30" x2="46" y2="48" stroke="#3EC9FF" stroke-width="0.5"/>
+            <line x1="54" y1="10" x2="86" y2="28" stroke="#3EC9FF" stroke-width="0.5"/>
+            <line x1="54" y1="50" x2="86" y2="32" stroke="#3EC9FF" stroke-width="0.5"/>
+          </svg>
+
+        </div>
+      </div>
+
+      <div class="about-text">
+        <div class="section-label label-light reveal" data-i18n="about.label">About Us</div>
+        <h2 class="section-title reveal reveal-delay-1" data-i18n="about.title">Built on Nordic<br>values. Driven<br>by results.</h2>
+        <p class="reveal reveal-delay-2" data-i18n="about.p1">We believe SMBs deserve the same quality and innovation that large enterprises get. We combine Nordic design precision with cutting-edge AI to give your business a genuine competitive edge.</p>
+        <p class="reveal reveal-delay-3" data-i18n="about.p2">No bloated agencies, no hidden costs. We work directly with decision makers to deliver digital solutions that move the needle — fast, transparent, and with a long-term vision.</p>
+
+        <a href="/team.html" class="btn btn-ghost-light about-team-cta reveal reveal-delay-3">
+          <span data-i18n="about.teamcta">Meet the founders</span>
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M2 7h10M8 3l4 4-4 4"/></svg>
+        </a>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+
+<!-- ================================================================
+     CONTACT / CTA — dark
+================================================================ -->
+<section id="contact">
+  <div class="section">
+    <div class="cta-inner">
+
+      <div class="cta-text-col">
+        <div class="section-label label-dark reveal" data-i18n="contact.label">Let's Talk</div>
+        <h2 class="section-title reveal reveal-delay-1" data-i18n="contact.title">Ready to build<br>something <span class="cta-accent">exceptional?</span></h2>
+        <p class="cta-sub reveal reveal-delay-2" data-i18n="contact.sub">Fill in the form and we'll confirm a time that works. We aim to respond within 24 hours.</p>
+        <div class="cta-direct reveal reveal-delay-3">
+          <div>
+            <div class="cta-direct-label" data-i18n="contact.or">or reach us directly at</div>
+            <a href="mailto:ole@clearpath.no" class="cta-email">ole@clearpath.no</a>
+          </div>
+          <div>
+            <a href="mailto:herman@clearpath.no" class="cta-email">herman@clearpath.no</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="cta-form-col reveal reveal-delay-2">
+        <iframe
+          src="https://api.leadconnectorhq.com/widget/form/g4yeUjLnidn4HImGAZKj"
+          id="form-g4yeUjLnidn4HImGAZKj"
+          title="Book Meeting with Us"
+          scrolling="no">
+        </iframe>
+        <script src="https://link.msgsndr.com/js/form_embed.js"></script>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ================================================================
+     FOOTER — dark
+================================================================ -->
+<footer>
+  <div class="footer-inner">
+    <a href="#" class="nav-logo">
+      <div class="logo-mark">CS</div>
+      <span class="logo-text">Clearpath <em>Solutions</em></span>
+    </a>
+    <span class="footer-copy" data-i18n="footer.copy">© 2024 Clearpath Solutions AS. All rights reserved.</span>
+    <ul class="footer-links">
+      <li><a href="#services" data-i18n="nav.services">Services</a></li>
+      <li><a href="#about" data-i18n="nav.about">About</a></li>
+      <li><a href="/team.html" data-i18n="nav.team">Team</a></li>
+      <li><a href="/how-we-work.html" data-i18n="nav.process">Process</a></li>
+      <li><a href="#contact" data-i18n="footer.contact">Contact</a></li>
+    </ul>
+  </div>
+</footer>
+
+<!-- ================================================================
+     JAVASCRIPT
+================================================================ -->
+<script>
+  /* ── INTRO PARTICLES CANVAS ── */
+  (function() {
+    const ic = document.getElementById('intro-canvas');
+    const cx = ic.getContext('2d');
+    ic.width  = window.innerWidth;
+    ic.height = window.innerHeight;
+
+    const orbs = Array.from({ length: 55 }, () => ({
+      x:  Math.random() * ic.width,
+      y:  Math.random() * ic.height,
+      r:  Math.random() * 3 + 1,
+      vx: (Math.random() - 0.5) * 0.55,
+      vy: (Math.random() - 0.5) * 0.55,
+      a:  Math.random() * 0.5 + 0.1,
+      hue: Math.random() < 0.7 ? '62,201,255' : '180,120,255'
+    }));
+
+    function drawIntroParticles() {
+      cx.clearRect(0, 0, ic.width, ic.height);
+      orbs.forEach(o => {
+        o.x += o.vx; o.y += o.vy;
+        if (o.x < 0) o.x = ic.width;
+        if (o.x > ic.width)  o.x = 0;
+        if (o.y < 0) o.y = ic.height;
+        if (o.y > ic.height) o.y = 0;
+        cx.beginPath();
+        const g = cx.createRadialGradient(o.x, o.y, 0, o.x, o.y, o.r * 4);
+        g.addColorStop(0, `rgba(${o.hue},${o.a})`);
+        g.addColorStop(1, `rgba(${o.hue},0)`);
+        cx.fillStyle = g;
+        cx.arc(o.x, o.y, o.r * 4, 0, Math.PI * 2);
+        cx.fill();
+      });
+      requestAnimationFrame(drawIntroParticles);
+    }
+    drawIntroParticles();
+  })();
+
+  /* ── INTRO FIRST-VISIT + EXIT ── */
+  const intro = document.getElementById('intro');
+  const heroContent = document.getElementById('hero-content');
+
+  function exitIntro() {
+    intro.classList.add('exit');
+    intro.addEventListener('transitionend', () => { intro.style.display = 'none'; }, { once: true });
+    heroContent.classList.add('hero-entrance');
+  }
+
+  if (sessionStorage.getItem('cp_seen')) {
+    intro.style.display = 'none';
+  } else {
+    sessionStorage.setItem('cp_seen', '1');
+    setTimeout(exitIntro, 1900);
+  }
+
+  /* NAV — dark when over hero, light when over content */
+  const nav  = document.getElementById('nav');
+  const hero = document.getElementById('hero');
+
+  const heroObserver = new IntersectionObserver(([entry]) => {
+    nav.classList.toggle('light', !entry.isIntersecting);
+  }, { threshold: 0.05 });
+  heroObserver.observe(hero);
+
+  window.addEventListener('scroll', () => {
+    nav.classList.toggle('scrolled', window.scrollY > 60);
+  });
+
+  /* MOBILE MENU */
+  const menuBtn   = document.getElementById('menu-btn');
+  const navMobile = document.getElementById('nav-mobile');
+  let menuOpen = false;
+
+  menuBtn.addEventListener('click', () => {
+    menuOpen = !menuOpen;
+    navMobile.classList.toggle('open', menuOpen);
+    document.body.style.overflow = menuOpen ? 'hidden' : '';
+    const [s1, s2] = menuBtn.querySelectorAll('span');
+    s1.style.transform = menuOpen ? 'rotate(45deg) translate(3px, 3px)'  : '';
+    s2.style.transform = menuOpen ? 'rotate(-45deg) translate(3px, -3px)' : '';
+  });
+
+  function closeMenu() {
+    menuOpen = false;
+    navMobile.classList.remove('open');
+    document.body.style.overflow = '';
+    menuBtn.querySelectorAll('span').forEach(s => s.style.transform = '');
+  }
+
+  /* SCROLL REVEAL */
+  const revealObs = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) { e.target.classList.add('visible'); revealObs.unobserve(e.target); }
+    });
+  }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
+
+  document.querySelectorAll('.reveal').forEach(el => revealObs.observe(el));
+
+  /* COUNTERS */
+  const counterObs = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (!e.isIntersecting) return;
+      const el = e.target, target = +el.dataset.target, dur = 1600, t0 = performance.now();
+      const tick = now => {
+        const p = Math.min((now - t0) / dur, 1);
+        el.textContent = Math.floor((1 - Math.pow(1 - p, 3)) * target);
+        if (p < 1) requestAnimationFrame(tick); else el.textContent = target;
+      };
+      requestAnimationFrame(tick);
+      counterObs.unobserve(el);
+    });
+  }, { threshold: 0.6 });
+  document.querySelectorAll('.counter').forEach(el => counterObs.observe(el));
+
+  /* PROCESS STEPS — slide in from left on scroll */
+  const stepObs = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('slide-in');
+        stepObs.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.12, rootMargin: '0px 0px -48px 0px' });
+
+  document.querySelectorAll('.process-step').forEach((step, i) => {
+    step.style.transitionDelay = `${i * 0.08}s`;
+    stepObs.observe(step);
+  });
+
+  /* SERVICE CARD TILT */
+  document.querySelectorAll('.service-card').forEach(card => {
+    card.addEventListener('mousemove', e => {
+      const r = card.getBoundingClientRect();
+      const x = (e.clientX - r.left) / r.width  - 0.5;
+      const y = (e.clientY - r.top)  / r.height - 0.5;
+      card.style.transform  = `translateY(-6px) rotateX(${-y * 6}deg) rotateY(${x * 6}deg)`;
+      card.style.transition = 'transform 0.08s ease, border-color 0.3s, box-shadow 0.3s';
+    });
+    card.addEventListener('mouseleave', () => {
+      card.style.transform  = '';
+      card.style.transition = 'transform 0.5s ease, border-color 0.3s, box-shadow 0.3s';
+    });
+  });
+
+  /* HERO CONSTELLATION CANVAS */
+  const canvas = document.getElementById('hero-canvas');
+  const ctx    = canvas.getContext('2d');
+  let particles = [];
+  let mouse = { x: -9999, y: -9999 };
+
+  function resize() {
+    canvas.width  = canvas.offsetWidth;
+    canvas.height = canvas.offsetHeight;
+  }
+
+  /* small constellation stars */
+  class Particle {
+    constructor() { this.init(); }
+    init() {
+      this.x  = Math.random() * canvas.width;
+      this.y  = Math.random() * canvas.height;
+      this.vx = (Math.random() - 0.5) * 0.4;
+      this.vy = (Math.random() - 0.5) * 0.4;
+      this.r  = Math.random() * 1.5 + 0.4;
+      this.a  = Math.random() * 0.4 + 0.15;
+    }
+    update() {
+      this.x += this.vx; this.y += this.vy;
+      if (this.x < -20) this.x = canvas.width  + 20;
+      if (this.x > canvas.width  + 20) this.x = -20;
+      if (this.y < -20) this.y = canvas.height + 20;
+      if (this.y > canvas.height + 20) this.y = -20;
+    }
+    draw() {
+      ctx.beginPath();
+      ctx.arc(this.x, this.y, this.r, 0, Math.PI * 2);
+      ctx.fillStyle = `rgba(62,201,255,${this.a})`;
+      ctx.fill();
+    }
+  }
+
+  /* large floating glow orbs */
+  let floatOrbs = [];
+  class FloatOrb {
+    constructor() { this.init(); }
+    init() {
+      this.x  = Math.random() * canvas.width;
+      this.y  = Math.random() * canvas.height;
+      this.vx = (Math.random() - 0.5) * 0.18;
+      this.vy = (Math.random() - 0.5) * 0.18;
+      this.r  = Math.random() * 38 + 18;
+      this.a  = Math.random() * 0.09 + 0.03;
+      this.hue = Math.random() < 0.65 ? '62,201,255' : '110,58,240';
+      this.phase = Math.random() * Math.PI * 2;
+    }
+    update(t) {
+      this.x += this.vx + Math.sin(t * 0.4 + this.phase) * 0.25;
+      this.y += this.vy + Math.cos(t * 0.3 + this.phase) * 0.18;
+      if (this.x < -this.r * 2) this.x = canvas.width  + this.r * 2;
+      if (this.x > canvas.width  + this.r * 2) this.x = -this.r * 2;
+      if (this.y < -this.r * 2) this.y = canvas.height + this.r * 2;
+      if (this.y > canvas.height + this.r * 2) this.y = -this.r * 2;
+    }
+    draw() {
+      const g = ctx.createRadialGradient(this.x, this.y, 0, this.x, this.y, this.r);
+      g.addColorStop(0, `rgba(${this.hue},${this.a})`);
+      g.addColorStop(1, `rgba(${this.hue},0)`);
+      ctx.beginPath();
+      ctx.arc(this.x, this.y, this.r, 0, Math.PI * 2);
+      ctx.fillStyle = g;
+      ctx.fill();
+    }
+  }
+
+  function initParticles() {
+    particles = [];
+    floatOrbs = [];
+    const n = Math.min(Math.floor(canvas.width * canvas.height / 12000), 90);
+    for (let i = 0; i < n; i++) particles.push(new Particle());
+    const m = Math.min(Math.floor(canvas.width * canvas.height / 28000), 22);
+    for (let i = 0; i < m; i++) floatOrbs.push(new FloatOrb());
+  }
+
+  function drawLines() {
+    const max = 140;
+    for (let i = 0; i < particles.length; i++) {
+      for (let j = i + 1; j < particles.length; j++) {
+        const dx = particles[i].x - particles[j].x;
+        const dy = particles[i].y - particles[j].y;
+        const d  = Math.sqrt(dx*dx + dy*dy);
+        if (d < max) {
+          ctx.beginPath();
+          ctx.moveTo(particles[i].x, particles[i].y);
+          ctx.lineTo(particles[j].x, particles[j].y);
+          ctx.strokeStyle = `rgba(62,201,255,${(1 - d/max) * 0.13})`;
+          ctx.lineWidth = 0.5;
+          ctx.stroke();
+        }
+      }
+    }
+  }
+
+  function drawMouseLines() {
+    const max = 170;
+    particles.forEach(p => {
+      const dx = p.x - mouse.x, dy = p.y - mouse.y;
+      const d = Math.sqrt(dx*dx + dy*dy);
+      if (d < max) {
+        ctx.beginPath();
+        ctx.moveTo(p.x, p.y); ctx.lineTo(mouse.x, mouse.y);
+        ctx.strokeStyle = `rgba(62,201,255,${(1 - d/max) * 0.4})`;
+        ctx.lineWidth = 0.8;
+        ctx.stroke();
+      }
+    });
+  }
+
+  let heroT = 0;
+  function animate() {
+    heroT += 0.016;
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    floatOrbs.forEach(o => { o.update(heroT); o.draw(); });
+    drawLines();
+    drawMouseLines();
+    particles.forEach(p => { p.update(); p.draw(); });
+    requestAnimationFrame(animate);
+  }
+
+  canvas.addEventListener('mousemove', e => {
+    const r = canvas.getBoundingClientRect();
+    mouse.x = e.clientX - r.left; mouse.y = e.clientY - r.top;
+  });
+  canvas.addEventListener('mouseleave', () => { mouse.x = -9999; mouse.y = -9999; });
+
+  resize(); initParticles(); animate();
+  window.addEventListener('resize', () => { resize(); initParticles(); });
+
+  /* CURSOR GLOW */
+  const glow = document.getElementById('cursor-glow');
+  let gx = 0, gy = 0, tx = 0, ty = 0;
+  document.addEventListener('mousemove', e => { tx = e.clientX; ty = e.clientY; });
+  (function loop() {
+    gx += (tx - gx) * 0.08; gy += (ty - gy) * 0.08;
+    glow.style.left = gx + 'px'; glow.style.top = gy + 'px';
+    requestAnimationFrame(loop);
+  })();
+
+  /* CLICK RIPPLE */
+  document.addEventListener('click', e => {
+    const size = Math.random() * 80 + 80;
+    const r = document.createElement('div');
+    r.className = 'click-ripple';
+    r.style.cssText = `left:${e.clientX}px;top:${e.clientY}px;width:${size}px;height:${size}px`;
+    document.body.appendChild(r);
+    r.addEventListener('animationend', () => r.remove(), { once: true });
+  });
+
+  /* MACBOOK TILT + ORB PARALLAX */
+  const macbookWrap = document.getElementById('macbook-wrap');
+  const orb1 = document.getElementById('orb1');
+  const orb2 = document.getElementById('orb2');
+
+  let mbTX = -4, mbTY = 3;   // target Y/X rotation degrees
+  let mbCX = -4, mbCY = 3;   // current (lerped)
+  let o1TX = 0,  o1TY = 0;   // orb1 target offset px
+  let o2TX = 0,  o2TY = 0;   // orb2 target offset px
+  let o1CX = 0,  o1CY = 0;   // orb1 current offset
+  let o2CX = 0,  o2CY = 0;   // orb2 current offset
+  let orbT = 0;               // passive float timer
+
+  hero.addEventListener('mousemove', e => {
+    const r  = hero.getBoundingClientRect();
+    const nx = (e.clientX - r.left) / r.width  - 0.5;  // −0.5 → +0.5
+    const ny = (e.clientY - r.top)  / r.height - 0.5;
+    mbTX = -4  + nx * 28;   // rotateY: max ±14 deg
+    mbTY =  3  - ny * 18;   // rotateX: max ±9 deg
+    o1TX = nx *  48;  o1TY = ny *  34;
+    o2TX = nx * -30;  o2TY = ny * -22;
+  });
+
+  hero.addEventListener('mouseleave', () => {
+    mbTX = -4; mbTY = 3;
+    o1TX = 0;  o1TY = 0;
+    o2TX = 0;  o2TY = 0;
+  });
+
+  (function tickMB() {
+    // Smooth lerp for MacBook rotation
+    mbCX += (mbTX - mbCX) * 0.14;
+    mbCY += (mbTY - mbCY) * 0.14;
+    if (macbookWrap) {
+      macbookWrap.style.transform =
+        `perspective(1200px) rotateY(${mbCX}deg) rotateX(${mbCY}deg)`;
+    }
+
+    // Passive sine float for orbs
+    orbT += 0.006;
+    const fx = Math.sin(orbT)        * 15;
+    const fy = Math.cos(orbT * 0.65) * 10;
+
+    // Lerp orb offsets
+    o1CX += (o1TX - o1CX) * 0.038;
+    o1CY += (o1TY - o1CY) * 0.038;
+    o2CX += (o2TX - o2CX) * 0.038;
+    o2CY += (o2TY - o2CY) * 0.038;
+
+    if (orb1) orb1.style.transform =
+      `translate(calc(-50% + ${o1CX + fx}px), calc(-50% + ${o1CY + fy}px))`;
+    if (orb2) orb2.style.transform =
+      `translate(calc(-50% + ${o2CX - fx * 0.55}px), calc(-50% + ${o2CY - fy * 0.5}px))`;
+
+    requestAnimationFrame(tickMB);
+  })();
+
+  /* ============================================================
+     LANGUAGE SWITCHER
+  ============================================================ */
+  const translations = {
+    en: {
+      'nav.services': 'Services',
+      'nav.about': 'About',
+      'nav.process': 'Process',
+      'nav.cta': 'Get Started',
+      'footer.contact': 'Contact',
+      'footer.copy': '© 2024 Clearpath Solutions AS. All rights reserved.',
+
+      'hero.eyebrow': 'Est. 2024 · Clearpath Solutions',
+      'hero.h1top':    'Nordic Web Design',
+      'hero.h1bottom': '<span class="accent">AI Automation</span>',
+      'hero.orblabel': 'AI Entity — hover to interact',
+      'hero.lead': 'We craft high-converting websites and implement AI that makes your business more efficient and more profitable.',
+      'hero.cta1': 'Get Started',
+      'hero.cta2': 'See What We Do',
+      'hero.scroll': 'Scroll',
+      'hero.badge': 'Based in Scandinavia',
+
+      'services.label': 'What We Do',
+      'services.title': 'Two powerful services.<br>One clear path forward.',
+      'services.s1.title': 'Web Design &amp; Development',
+      'services.s1.desc': 'We build high-converting websites with Nordic design sensibility — clean, purposeful, and built to perform for small and medium businesses.',
+      'services.s1.features': ['Custom website design &amp; development', 'Conversion rate optimization', 'SEO-ready architecture', 'E-commerce &amp; booking solutions', 'Ongoing support &amp; maintenance'],
+      'services.s1.cta': 'Start a project',
+      'services.s2.title': 'AI Integration &amp; Automation',
+      'services.s2.desc': 'We identify where AI can save you time and increase revenue, then implement it cleanly into your existing workflow — no complexity, just results.',
+      'services.s2.features': ['AI-powered customer support', 'Workflow automation &amp; efficiency', 'Data analysis &amp; smart insights', 'Custom AI tooling for your industry', 'Staff training &amp; smooth adoption'],
+      'services.s2.cta': 'Explore AI for your business',
+
+      'about.label': 'About Us',
+      'about.title': 'Built on Nordic<br>values. Driven<br>by results.',
+      'about.p1': 'We believe SMBs deserve the same quality and innovation that large enterprises get. We combine Nordic design precision with cutting-edge AI to give your business a genuine competitive edge.',
+      'about.p2': 'No bloated agencies, no hidden costs. We work directly with decision makers to deliver digital solutions that move the needle — fast, transparent, and with a long-term vision.',
+
+      'process.label': 'How We Work',
+      'process.title': 'A clear path from<br>idea to impact.',
+      'process.s1.title': 'Discovery &amp; Strategy',
+      'process.s1.tag': 'Week 1–2',
+      'process.s1.body': 'We start by deeply understanding your business, competitive landscape, and target audience. Together we define exactly what success looks like and map the clearest route to get there — before a single pixel is drawn.',
+      'process.s1.list': ['Brand &amp; competitor audit', 'Target audience mapping', 'Scope &amp; success metrics', 'Technology stack recommendation'],
+      'process.s2.title': 'Design &amp; Prototype',
+      'process.s2.tag': 'Week 3–4',
+      'process.s2.body': 'Our designers craft a bespoke visual identity and fully interactive prototype. You see and feel exactly what you\'re getting before a single line of code is written — revisions included until it\'s perfect.',
+      'process.s2.list': ['Visual identity &amp; colour system', 'Wireframes &amp; interactive prototype', 'Mobile-first responsive layouts', 'Design review &amp; sign-off'],
+      'process.s3.title': 'Build &amp; Integrate',
+      'process.s3.tag': 'Week 5–8',
+      'process.s3.body': 'We build your solution with performance, SEO, and long-term scalability in mind. AI and automation integrations are wired cleanly into your existing workflows — zero disruption, immediate impact.',
+      'process.s3.list': ['Production-grade development', 'CMS &amp; content setup', 'AI &amp; automation integration', 'Performance optimisation'],
+      'process.s4.title': 'Test &amp; Refine',
+      'process.s4.tag': 'Week 9',
+      'process.s4.body': 'Thorough quality assurance across all devices, browsers, and real-user scenarios. We stress-test every interaction and refine until every detail is exactly right — nothing ships until it\'s excellent.',
+      'process.s4.list': ['Cross-browser &amp; device testing', 'Accessibility audit (WCAG 2.1)', 'Load speed &amp; Core Web Vitals', 'Client acceptance testing'],
+      'process.s5.title': 'Launch &amp; Grow',
+      'process.s5.tag': 'Week 10+',
+      'process.s5.body': 'We handle the launch end-to-end and stay on as long-term partners. As your business evolves we optimise, expand, and adapt your digital presence — you focus on growth, we handle the technology.',
+      'process.s5.list': ['Managed deployment &amp; DNS', 'Analytics &amp; conversion tracking', 'Ongoing support &amp; maintenance', 'Quarterly performance reviews'],
+
+      'nav.team': 'Team',
+      'about.teamcta': 'Meet the founders',
+
+      'team.label': 'The Founders',
+      'team.title': 'Two builders.<br>One <span class="accent">clear</span> vision.',
+      'team.intro': 'We started Clearpath Solutions because we believe great digital work shouldn\'t be a luxury reserved for big companies. Reach out — we\'d love to hear about your project.',
+      'team.m1.name': 'Ole Wilhelm Weidal',
+      'team.m1.role': 'Co-Founder &amp; CEO',
+      'team.m1.bio': 'Ole drives the strategic vision and client relationships at Clearpath. With a background spanning Nordic business development and digital growth, he ensures every project delivers measurable results and a lasting impact.',
+      'team.m2.name': 'Herman Malme',
+      'team.m2.role': 'Co-Founder &amp; CTO',
+      'team.m2.bio': 'Herman leads the technical and design side of Clearpath. He architects scalable web solutions and AI integrations with a focus on precision, performance, and Nordic design principles that make every product feel effortless.',
+      'team.tag.strategy': 'Strategy',
+      'team.tag.growth': 'Growth',
+      'team.tag.clients': 'Client Relations',
+      'team.tag.design': 'Design',
+      'team.tag.ai': 'AI &amp; Automation',
+      'team.tag.dev': 'Development',
+      'team.reach.title': 'Have a question?',
+      'team.reach.sub': 'Reach out to either of us directly and we\'ll get back to you shortly.',
+
+      'contact.label': 'Let\'s Talk',
+      'contact.title': 'Ready to build<br>something <span class="cta-accent">exceptional?</span>',
+      'contact.sub': 'Fill in the form and we\'ll confirm a time that works. We aim to respond within 24 hours.',
+      'contact.or': 'or reach us directly at',
+    },
+    no: {
+      'nav.services': 'Tjenester',
+      'nav.about': 'Om oss',
+      'nav.process': 'Prosess',
+      'nav.cta': 'Kom i gang',
+      'footer.contact': 'Kontakt',
+      'footer.copy': '© 2024 Clearpath Solutions AS. Alle rettigheter forbeholdt.',
+
+      'hero.eyebrow': 'Est. 2024 · Clearpath Solutions',
+      'hero.h1top':    'Nordisk Webdesign',
+      'hero.h1bottom': '<span class="accent">AI-automatisering</span>',
+      'hero.orblabel': 'AI-entitet — hover for å interagere',
+      'hero.lead': 'Vi lager nettsider med høy konvertering og implementerer AI som gjør bedriften din mer effektiv og lønnsom.',
+      'hero.cta1': 'Kom i gang',
+      'hero.cta2': 'Se hva vi gjør',
+      'hero.scroll': 'Skroll',
+      'hero.badge': 'Basert i Skandinavia',
+
+      'services.label': 'Hva vi gjør',
+      'services.title': 'To kraftfulle tjenester.<br>Én tydelig vei fremover.',
+      'services.s1.title': 'Webdesign &amp; Utvikling',
+      'services.s1.desc': 'Vi bygger nettsider med høy konvertering og nordisk designsensibilitet — rene, formålsdrevne og bygget for å prestere for små og mellomstore bedrifter.',
+      'services.s1.features': ['Skreddersydd webdesign &amp; utvikling', 'Konverteringsoptimalisering', 'SEO-klar arkitektur', 'E-handel &amp; bookingløsninger', 'Løpende support &amp; vedlikehold'],
+      'services.s1.cta': 'Start et prosjekt',
+      'services.s2.title': 'AI-integrasjon &amp; Automatisering',
+      'services.s2.desc': 'Vi identifiserer hvor AI kan spare deg tid og øke inntektene, deretter implementerer vi det ryddig i din eksisterende arbeidsflyt — ingen kompleksitet, bare resultater.',
+      'services.s2.features': ['AI-drevet kundeservice', 'Automatisering av arbeidsflyt', 'Dataanalyse &amp; smarte innsikter', 'Skreddersydde AI-verktøy for din bransje', 'Opplæring &amp; smidig innføring'],
+      'services.s2.cta': 'Utforsk AI for din bedrift',
+
+      'about.label': 'Om oss',
+      'about.title': 'Bygget på nordiske<br>verdier. Drevet<br>av resultater.',
+      'about.p1': 'Vi mener SMBer fortjener samme kvalitet og innovasjon som store selskaper. Vi kombinerer nordisk designpresisjon med banebrytende AI for å gi bedriften din et ekte konkurransefortrinn.',
+      'about.p2': 'Ingen oppblåste byråer, ingen skjulte kostnader. Vi jobber direkte med beslutningstakere for å levere digitale løsninger som gir resultater — raskt, transparent og med et langsiktig perspektiv.',
+
+      'process.label': 'Slik jobber vi',
+      'process.title': 'En tydelig vei fra<br>idé til resultat.',
+      'process.s1.title': 'Oppdagelse &amp; Strategi',
+      'process.s1.tag': 'Uke 1–2',
+      'process.s1.body': 'Vi starter med å forstå din bedrift, konkurranselandskapet og målgruppen i dybden. Sammen definerer vi nøyaktig hva suksess betyr og kartlegger den klareste veien dit — før en eneste piksel er tegnet.',
+      'process.s1.list': ['Merkevare- &amp; konkurrentanalyse', 'Kartlegging av målgruppe', 'Omfang &amp; suksessmål', 'Anbefaling av teknologistack'],
+      'process.s2.title': 'Design &amp; Prototype',
+      'process.s2.tag': 'Uke 3–4',
+      'process.s2.body': 'Våre designere lager en skreddersydd visuell identitet og en fullt interaktiv prototype. Du ser og føler nøyaktig hva du får før en eneste kodelinje er skrevet — revisjoner inkludert til det er perfekt.',
+      'process.s2.list': ['Visuell identitet &amp; fargesystem', 'Wireframes &amp; interaktiv prototype', 'Mobilfirst responsivt design', 'Designgjennomgang &amp; godkjenning'],
+      'process.s3.title': 'Bygg &amp; Integrer',
+      'process.s3.tag': 'Uke 5–8',
+      'process.s3.body': 'Vi bygger løsningen din med ytelse, SEO og langsiktig skalerbarhet i tankene. AI og automatiseringsintegrasjoner kobles ryddig inn i din eksisterende arbeidsflyt — null forstyrrelse, umiddelbar effekt.',
+      'process.s3.list': ['Produksjonsklar utvikling', 'CMS &amp; innholdsoppsett', 'AI &amp; automatiseringsintegrasjon', 'Ytelsesoptimalisering'],
+      'process.s4.title': 'Test &amp; Finjuster',
+      'process.s4.tag': 'Uke 9',
+      'process.s4.body': 'Grundig kvalitetssikring på tvers av alle enheter, nettlesere og virkelige brukersituasjoner. Vi stresstester hver interaksjon og finjusterer til alle detaljer er nøyaktig riktige — ingenting sendes ut før det er utmerket.',
+      'process.s4.list': ['Testing på tvers av nettlesere &amp; enheter', 'Tilgjengelighetsrevisjon (WCAG 2.1)', 'Lastehastighet &amp; Core Web Vitals', 'Kundeakseptansetesting'],
+      'process.s5.title': 'Lansering &amp; Vekst',
+      'process.s5.tag': 'Uke 10+',
+      'process.s5.body': 'Vi håndterer lanseringen fra A til Å og forblir langsiktige partnere. Etter hvert som bedriften din utvikler seg, optimaliserer, utvider og tilpasser vi din digitale tilstedeværelse — du fokuserer på vekst, vi tar oss av teknologien.',
+      'process.s5.list': ['Administrert utrulling &amp; DNS', 'Analyse &amp; konverteringssporing', 'Løpende support &amp; vedlikehold', 'Kvartalsvise ytelsesgjennomganger'],
+
+      'nav.team': 'Team',
+      'about.teamcta': 'Møt grunnleggerne',
+
+      'team.label': 'Grunnleggerne',
+      'team.title': 'To byggere.<br>Én <span class="accent">tydelig</span> visjon.',
+      'team.intro': 'Vi startet Clearpath Solutions fordi vi mener at godt digitalt arbeid ikke skal være forbeholdt store selskaper. Ta kontakt — vi hører gjerne om prosjektet ditt.',
+      'team.m1.name': 'Ole Wilhelm Weidal',
+      'team.m1.role': 'Medgründer &amp; CEO',
+      'team.m1.bio': 'Ole driver den strategiske visjonen og kunderelasjonene i Clearpath. Med bakgrunn innen nordisk forretningsutvikling og digital vekst sørger han for at hvert prosjekt leverer målbare resultater og varig påvirkning.',
+      'team.m2.name': 'Herman Malme',
+      'team.m2.role': 'Medgründer &amp; CTO',
+      'team.m2.bio': 'Herman leder den tekniske og designmessige siden av Clearpath. Han arkitekterer skalerbare nettløsninger og AI-integrasjoner med fokus på presisjon, ytelse og nordiske designprinsipper som gjør hvert produkt enkelt og elegant.',
+      'team.tag.strategy': 'Strategi',
+      'team.tag.growth': 'Vekst',
+      'team.tag.clients': 'Kunderelasjon',
+      'team.tag.design': 'Design',
+      'team.tag.ai': 'KI &amp; Automatisering',
+      'team.tag.dev': 'Utvikling',
+      'team.reach.title': 'Har du et spørsmål?',
+      'team.reach.sub': 'Ta kontakt med en av oss direkte, så svarer vi deg så snart vi kan.',
+
+      'contact.label': 'La oss snakke',
+      'contact.title': 'Klar til å bygge<br>noe <span class="cta-accent">eksepsjonelt?</span>',
+      'contact.sub': 'Fyll ut skjemaet så bekrefter vi et tidspunkt som passer. Vi svarer innen 24 timer.',
+      'contact.or': 'eller nå oss direkte på',
+    }
+  };
+
+  let currentLang = 'en';
+
+  function setLang(lang) {
+    currentLang = lang;
+    const t = translations[lang];
+
+    document.getElementById('lang-en').classList.toggle('active', lang === 'en');
+    document.getElementById('lang-no').classList.toggle('active', lang === 'no');
+    document.documentElement.lang = lang;
+
+    // Plain text / innerHTML elements
+    document.querySelectorAll('[data-i18n]').forEach(el => {
+      const key = el.dataset.i18n;
+      if (t[key] !== undefined) el.innerHTML = t[key];
+    });
+
+    // List elements
+    document.querySelectorAll('[data-i18n-list]').forEach(el => {
+      const key = el.dataset.i18nList;
+      if (Array.isArray(t[key])) {
+        el.innerHTML = t[key].map(item => `<li>${item}</li>`).join('');
+      }
+    });
+
+    // Placeholder attributes
+    document.querySelectorAll('[data-i18n-placeholder]').forEach(el => {
+      const key = el.dataset.i18nPlaceholder;
+      if (t[key] !== undefined) el.placeholder = t[key].replace(/&amp;/g, '&');
+    });
+  }
+
+  /* ============================================================
+     AI ENTITY ORB
+  ============================================================ */
+  (function() {
+    const oc  = document.getElementById('ai-orb');
+    const ctx = oc.getContext('2d');
+    const S   = 380;
+    oc.width = oc.height = S;
+    const cx = S / 2, cy = S / 2;
+
+    let mx = cx, my = cy, mActive = false;
+    oc.addEventListener('mousemove', e => {
+      const r = oc.getBoundingClientRect();
+      mx = (e.clientX - r.left) * (S / r.width);
+      my = (e.clientY - r.top)  * (S / r.height);
+      mActive = true;
+    });
+    oc.addEventListener('mouseleave', () => { mActive = false; mx = cx; my = cy; });
+
+    /* Orbiting neural particles */
+    const particles = Array.from({ length: 60 }, (_, i) => {
+      const layers   = [68, 100, 136, 168];
+      const baseR    = layers[Math.floor(Math.random() * layers.length)] + (Math.random() - 0.5) * 22;
+      const angle    = (i / 60) * Math.PI * 2 + Math.random() * 0.4;
+      const speed    = (0.004 + Math.random() * 0.006) * (Math.random() < 0.5 ? 1 : -1);
+      return { angle, baseR, r: baseR, speed, size: Math.random() * 2 + 0.6,
+               alpha: Math.random() * 0.55 + 0.25, x: 0, y: 0,
+               hue: Math.random() < 0.72 ? '62,201,255' : '130,80,255' };
+    });
+
+    let T = 0;
+    function frame() {
+      T += 0.018;
+      ctx.clearRect(0, 0, S, S);
+
+      /* ── outer ambient glow ── */
+      const amb = ctx.createRadialGradient(cx, cy, 0, cx, cy, S / 2);
+      amb.addColorStop(0,   'rgba(62,201,255,0.00)');
+      amb.addColorStop(0.45,'rgba(62,201,255,0.04)');
+      amb.addColorStop(0.72,'rgba(110,58,240,0.06)');
+      amb.addColorStop(1,   'rgba(0,0,0,0)');
+      ctx.fillStyle = amb;
+      ctx.fillRect(0, 0, S, S);
+
+      /* ── orbit rings ── */
+      [68, 100, 136, 168].forEach((rad, i) => {
+        ctx.beginPath();
+        ctx.arc(cx, cy, rad, 0, Math.PI * 2);
+        const a = 0.05 + Math.sin(T * 0.6 + i) * 0.025;
+        ctx.strokeStyle = `rgba(62,201,255,${a})`;
+        ctx.lineWidth = 0.5;
+        ctx.stroke();
+      });
+
+      /* ── particles ── */
+      particles.forEach((p, i) => {
+        p.angle += p.speed;
+
+        /* mouse pull */
+        const dx = mx - cx, dy = my - cy;
+        const md = Math.hypot(dx, dy);
+        if (mActive && md < 170) {
+          const pull = (1 - md / 170) * 0.55;
+          const targetAngle = Math.atan2(my - cy, mx - cx);
+          const diff = targetAngle - p.angle;
+          p.angle    += Math.sin(diff) * pull * 0.04;
+          p.r         = p.baseR + (170 - md) * pull * 0.38;
+        } else {
+          p.r += (p.baseR - p.r) * 0.06;
+        }
+
+        p.x = cx + Math.cos(p.angle) * p.r;
+        p.y = cy + Math.sin(p.angle) * p.r;
+
+        /* connect close neighbours */
+        for (let j = i + 1; j < particles.length; j++) {
+          const d = Math.hypot(particles[j].x - p.x, particles[j].y - p.y);
+          if (d < 48) {
+            ctx.beginPath();
+            ctx.moveTo(p.x, p.y);
+            ctx.lineTo(particles[j].x, particles[j].y);
+            ctx.strokeStyle = `rgba(62,201,255,${(1 - d / 48) * 0.22})`;
+            ctx.lineWidth = 0.6;
+            ctx.stroke();
+          }
+        }
+
+        /* tendrils to core */
+        ctx.beginPath();
+        ctx.moveTo(p.x, p.y);
+        ctx.lineTo(cx, cy);
+        ctx.strokeStyle = `rgba(62,201,255,${(1 - p.r / 200) * 0.055})`;
+        ctx.lineWidth = 0.4;
+        ctx.stroke();
+
+        /* dot */
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+        ctx.fillStyle = `rgba(${p.hue},${p.alpha + Math.sin(T * 1.5 + i) * 0.1})`;
+        ctx.fill();
+      });
+
+      /* ── core ── */
+      const pulse = 0.88 + Math.sin(T * 1.9) * 0.12;
+
+      /* outer core bloom */
+      const bloom = ctx.createRadialGradient(cx, cy, 0, cx, cy, 56 * pulse);
+      bloom.addColorStop(0,   `rgba(200,240,255,${0.55 * pulse})`);
+      bloom.addColorStop(0.18,`rgba(62,201,255,${0.6  * pulse})`);
+      bloom.addColorStop(0.5, `rgba(62,201,255,${0.18 * pulse})`);
+      bloom.addColorStop(1,   'rgba(62,201,255,0)');
+      ctx.beginPath();
+      ctx.arc(cx, cy, 56 * pulse, 0, Math.PI * 2);
+      ctx.fillStyle = bloom;
+      ctx.fill();
+
+      /* hard inner core */
+      const core = ctx.createRadialGradient(cx, cy, 0, cx, cy, 20 * pulse);
+      core.addColorStop(0,   `rgba(255,255,255,${0.95 * pulse})`);
+      core.addColorStop(0.4, `rgba(140,220,255,${0.8  * pulse})`);
+      core.addColorStop(1,   'rgba(62,201,255,0)');
+      ctx.beginPath();
+      ctx.arc(cx, cy, 20 * pulse, 0, Math.PI * 2);
+      ctx.fillStyle = core;
+      ctx.fill();
+
+      /* mouse proximity flare */
+      if (mActive) {
+        const md = Math.hypot(mx - cx, my - cy);
+        if (md < 180) {
+          const flare = (1 - md / 180) * 0.35;
+          const fl = ctx.createRadialGradient(cx, cy, 0, cx, cy, 90);
+          fl.addColorStop(0,  `rgba(62,201,255,${flare})`);
+          fl.addColorStop(1,  'rgba(62,201,255,0)');
+          ctx.beginPath();
+          ctx.arc(cx, cy, 90, 0, Math.PI * 2);
+          ctx.fillStyle = fl;
+          ctx.fill();
+        }
+      }
+
+      requestAnimationFrame(frame);
+    }
+    frame();
+  })();
+</script>
+</body>
+</html>

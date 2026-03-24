@@ -1,0 +1,710 @@
+<script>
+  /* ── INTRO PARTICLES CANVAS ── */
+  (function() {
+    const ic = document.getElementById('intro-canvas');
+    const cx = ic.getContext('2d');
+    ic.width  = window.innerWidth;
+    ic.height = window.innerHeight;
+
+    const orbs = Array.from({ length: 55 }, () => ({
+      x:  Math.random() * ic.width,
+      y:  Math.random() * ic.height,
+      r:  Math.random() * 3 + 1,
+      vx: (Math.random() - 0.5) * 0.55,
+      vy: (Math.random() - 0.5) * 0.55,
+      a:  Math.random() * 0.5 + 0.1,
+      hue: Math.random() < 0.7 ? '62,201,255' : '180,120,255'
+    }));
+
+    function drawIntroParticles() {
+      cx.clearRect(0, 0, ic.width, ic.height);
+      orbs.forEach(o => {
+        o.x += o.vx; o.y += o.vy;
+        if (o.x < 0) o.x = ic.width;
+        if (o.x > ic.width)  o.x = 0;
+        if (o.y < 0) o.y = ic.height;
+        if (o.y > ic.height) o.y = 0;
+        cx.beginPath();
+        const g = cx.createRadialGradient(o.x, o.y, 0, o.x, o.y, o.r * 4);
+        g.addColorStop(0, `rgba(${o.hue},${o.a})`);
+        g.addColorStop(1, `rgba(${o.hue},0)`);
+        cx.fillStyle = g;
+        cx.arc(o.x, o.y, o.r * 4, 0, Math.PI * 2);
+        cx.fill();
+      });
+      requestAnimationFrame(drawIntroParticles);
+    }
+    drawIntroParticles();
+  })();
+
+  /* ── INTRO FIRST-VISIT + EXIT ── */
+  const intro = document.getElementById('intro');
+  const heroContent = document.getElementById('hero-content');
+
+  function exitIntro() {
+    intro.classList.add('exit');
+    intro.addEventListener('transitionend', () => { intro.style.display = 'none'; }, { once: true });
+    heroContent.classList.add('hero-entrance');
+  }
+
+  if (sessionStorage.getItem('cp_seen')) {
+    intro.style.display = 'none';
+  } else {
+    sessionStorage.setItem('cp_seen', '1');
+    setTimeout(exitIntro, 1900);
+  }
+
+  /* NAV — dark when over hero, light when over content */
+  const nav  = document.getElementById('nav');
+  const hero = document.getElementById('hero');
+
+  const heroObserver = new IntersectionObserver(([entry]) => {
+    nav.classList.toggle('light', !entry.isIntersecting);
+  }, { threshold: 0.05 });
+  heroObserver.observe(hero);
+
+  window.addEventListener('scroll', () => {
+    nav.classList.toggle('scrolled', window.scrollY > 60);
+  });
+
+  /* MOBILE MENU */
+  const menuBtn   = document.getElementById('menu-btn');
+  const navMobile = document.getElementById('nav-mobile');
+  let menuOpen = false;
+
+  menuBtn.addEventListener('click', () => {
+    menuOpen = !menuOpen;
+    navMobile.classList.toggle('open', menuOpen);
+    document.body.style.overflow = menuOpen ? 'hidden' : '';
+    const [s1, s2] = menuBtn.querySelectorAll('span');
+    s1.style.transform = menuOpen ? 'rotate(45deg) translate(3px, 3px)'  : '';
+    s2.style.transform = menuOpen ? 'rotate(-45deg) translate(3px, -3px)' : '';
+  });
+
+  function closeMenu() {
+    menuOpen = false;
+    navMobile.classList.remove('open');
+    document.body.style.overflow = '';
+    menuBtn.querySelectorAll('span').forEach(s => s.style.transform = '');
+  }
+
+  /* SCROLL REVEAL */
+  const revealObs = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) { e.target.classList.add('visible'); revealObs.unobserve(e.target); }
+    });
+  }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
+
+  document.querySelectorAll('.reveal').forEach(el => revealObs.observe(el));
+
+  /* COUNTERS */
+  const counterObs = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (!e.isIntersecting) return;
+      const el = e.target, target = +el.dataset.target, dur = 1600, t0 = performance.now();
+      const tick = now => {
+        const p = Math.min((now - t0) / dur, 1);
+        el.textContent = Math.floor((1 - Math.pow(1 - p, 3)) * target);
+        if (p < 1) requestAnimationFrame(tick); else el.textContent = target;
+      };
+      requestAnimationFrame(tick);
+      counterObs.unobserve(el);
+    });
+  }, { threshold: 0.6 });
+  document.querySelectorAll('.counter').forEach(el => counterObs.observe(el));
+
+  /* PROCESS STEPS — slide in from left on scroll */
+  const stepObs = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('slide-in');
+        stepObs.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.12, rootMargin: '0px 0px -48px 0px' });
+
+  document.querySelectorAll('.process-step').forEach((step, i) => {
+    step.style.transitionDelay = `${i * 0.08}s`;
+    stepObs.observe(step);
+  });
+
+  /* SERVICE CARD TILT */
+  document.querySelectorAll('.service-card').forEach(card => {
+    card.addEventListener('mousemove', e => {
+      const r = card.getBoundingClientRect();
+      const x = (e.clientX - r.left) / r.width  - 0.5;
+      const y = (e.clientY - r.top)  / r.height - 0.5;
+      card.style.transform  = `translateY(-6px) rotateX(${-y * 6}deg) rotateY(${x * 6}deg)`;
+      card.style.transition = 'transform 0.08s ease, border-color 0.3s, box-shadow 0.3s';
+    });
+    card.addEventListener('mouseleave', () => {
+      card.style.transform  = '';
+      card.style.transition = 'transform 0.5s ease, border-color 0.3s, box-shadow 0.3s';
+    });
+  });
+
+  /* HERO CONSTELLATION CANVAS */
+  const canvas = document.getElementById('hero-canvas');
+  const ctx    = canvas.getContext('2d');
+  let particles = [];
+  let mouse = { x: -9999, y: -9999 };
+
+  function resize() {
+    canvas.width  = canvas.offsetWidth;
+    canvas.height = canvas.offsetHeight;
+  }
+
+  /* small constellation stars */
+  class Particle {
+    constructor() { this.init(); }
+    init() {
+      this.x  = Math.random() * canvas.width;
+      this.y  = Math.random() * canvas.height;
+      this.vx = (Math.random() - 0.5) * 0.4;
+      this.vy = (Math.random() - 0.5) * 0.4;
+      this.r  = Math.random() * 1.5 + 0.4;
+      this.a  = Math.random() * 0.4 + 0.15;
+    }
+    update() {
+      this.x += this.vx; this.y += this.vy;
+      if (this.x < -20) this.x = canvas.width  + 20;
+      if (this.x > canvas.width  + 20) this.x = -20;
+      if (this.y < -20) this.y = canvas.height + 20;
+      if (this.y > canvas.height + 20) this.y = -20;
+    }
+    draw() {
+      ctx.beginPath();
+      ctx.arc(this.x, this.y, this.r, 0, Math.PI * 2);
+      ctx.fillStyle = `rgba(62,201,255,${this.a})`;
+      ctx.fill();
+    }
+  }
+
+  /* large floating glow orbs */
+  let floatOrbs = [];
+  class FloatOrb {
+    constructor() { this.init(); }
+    init() {
+      this.x  = Math.random() * canvas.width;
+      this.y  = Math.random() * canvas.height;
+      this.vx = (Math.random() - 0.5) * 0.18;
+      this.vy = (Math.random() - 0.5) * 0.18;
+      this.r  = Math.random() * 38 + 18;
+      this.a  = Math.random() * 0.09 + 0.03;
+      this.hue = Math.random() < 0.65 ? '62,201,255' : '110,58,240';
+      this.phase = Math.random() * Math.PI * 2;
+    }
+    update(t) {
+      this.x += this.vx + Math.sin(t * 0.4 + this.phase) * 0.25;
+      this.y += this.vy + Math.cos(t * 0.3 + this.phase) * 0.18;
+      if (this.x < -this.r * 2) this.x = canvas.width  + this.r * 2;
+      if (this.x > canvas.width  + this.r * 2) this.x = -this.r * 2;
+      if (this.y < -this.r * 2) this.y = canvas.height + this.r * 2;
+      if (this.y > canvas.height + this.r * 2) this.y = -this.r * 2;
+    }
+    draw() {
+      const g = ctx.createRadialGradient(this.x, this.y, 0, this.x, this.y, this.r);
+      g.addColorStop(0, `rgba(${this.hue},${this.a})`);
+      g.addColorStop(1, `rgba(${this.hue},0)`);
+      ctx.beginPath();
+      ctx.arc(this.x, this.y, this.r, 0, Math.PI * 2);
+      ctx.fillStyle = g;
+      ctx.fill();
+    }
+  }
+
+  function initParticles() {
+    particles = [];
+    floatOrbs = [];
+    const n = Math.min(Math.floor(canvas.width * canvas.height / 12000), 90);
+    for (let i = 0; i < n; i++) particles.push(new Particle());
+    const m = Math.min(Math.floor(canvas.width * canvas.height / 28000), 22);
+    for (let i = 0; i < m; i++) floatOrbs.push(new FloatOrb());
+  }
+
+  function drawLines() {
+    const max = 140;
+    for (let i = 0; i < particles.length; i++) {
+      for (let j = i + 1; j < particles.length; j++) {
+        const dx = particles[i].x - particles[j].x;
+        const dy = particles[i].y - particles[j].y;
+        const d  = Math.sqrt(dx*dx + dy*dy);
+        if (d < max) {
+          ctx.beginPath();
+          ctx.moveTo(particles[i].x, particles[i].y);
+          ctx.lineTo(particles[j].x, particles[j].y);
+          ctx.strokeStyle = `rgba(62,201,255,${(1 - d/max) * 0.13})`;
+          ctx.lineWidth = 0.5;
+          ctx.stroke();
+        }
+      }
+    }
+  }
+
+  function drawMouseLines() {
+    const max = 170;
+    particles.forEach(p => {
+      const dx = p.x - mouse.x, dy = p.y - mouse.y;
+      const d = Math.sqrt(dx*dx + dy*dy);
+      if (d < max) {
+        ctx.beginPath();
+        ctx.moveTo(p.x, p.y); ctx.lineTo(mouse.x, mouse.y);
+        ctx.strokeStyle = `rgba(62,201,255,${(1 - d/max) * 0.4})`;
+        ctx.lineWidth = 0.8;
+        ctx.stroke();
+      }
+    });
+  }
+
+  let heroT = 0;
+  function animate() {
+    heroT += 0.016;
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    floatOrbs.forEach(o => { o.update(heroT); o.draw(); });
+    drawLines();
+    drawMouseLines();
+    particles.forEach(p => { p.update(); p.draw(); });
+    requestAnimationFrame(animate);
+  }
+
+  canvas.addEventListener('mousemove', e => {
+    const r = canvas.getBoundingClientRect();
+    mouse.x = e.clientX - r.left; mouse.y = e.clientY - r.top;
+  });
+  canvas.addEventListener('mouseleave', () => { mouse.x = -9999; mouse.y = -9999; });
+
+  resize(); initParticles(); animate();
+  window.addEventListener('resize', () => { resize(); initParticles(); });
+
+  /* CURSOR GLOW */
+  const glow = document.getElementById('cursor-glow');
+  let gx = 0, gy = 0, tx = 0, ty = 0;
+  document.addEventListener('mousemove', e => { tx = e.clientX; ty = e.clientY; });
+  (function loop() {
+    gx += (tx - gx) * 0.08; gy += (ty - gy) * 0.08;
+    glow.style.left = gx + 'px'; glow.style.top = gy + 'px';
+    requestAnimationFrame(loop);
+  })();
+
+  /* CLICK RIPPLE */
+  document.addEventListener('click', e => {
+    const size = Math.random() * 80 + 80;
+    const r = document.createElement('div');
+    r.className = 'click-ripple';
+    r.style.cssText = `left:${e.clientX}px;top:${e.clientY}px;width:${size}px;height:${size}px`;
+    document.body.appendChild(r);
+    r.addEventListener('animationend', () => r.remove(), { once: true });
+  });
+
+  /* MACBOOK TILT + ORB PARALLAX */
+  const macbookWrap = document.getElementById('macbook-wrap');
+  const orb1 = document.getElementById('orb1');
+  const orb2 = document.getElementById('orb2');
+
+  let mbTX = -4, mbTY = 3;   // target Y/X rotation degrees
+  let mbCX = -4, mbCY = 3;   // current (lerped)
+  let o1TX = 0,  o1TY = 0;   // orb1 target offset px
+  let o2TX = 0,  o2TY = 0;   // orb2 target offset px
+  let o1CX = 0,  o1CY = 0;   // orb1 current offset
+  let o2CX = 0,  o2CY = 0;   // orb2 current offset
+  let orbT = 0;               // passive float timer
+
+  hero.addEventListener('mousemove', e => {
+    const r  = hero.getBoundingClientRect();
+    const nx = (e.clientX - r.left) / r.width  - 0.5;  // −0.5 → +0.5
+    const ny = (e.clientY - r.top)  / r.height - 0.5;
+    mbTX = -4  + nx * 28;   // rotateY: max ±14 deg
+    mbTY =  3  - ny * 18;   // rotateX: max ±9 deg
+    o1TX = nx *  48;  o1TY = ny *  34;
+    o2TX = nx * -30;  o2TY = ny * -22;
+  });
+
+  hero.addEventListener('mouseleave', () => {
+    mbTX = -4; mbTY = 3;
+    o1TX = 0;  o1TY = 0;
+    o2TX = 0;  o2TY = 0;
+  });
+
+  (function tickMB() {
+    // Smooth lerp for MacBook rotation
+    mbCX += (mbTX - mbCX) * 0.14;
+    mbCY += (mbTY - mbCY) * 0.14;
+    if (macbookWrap) {
+      macbookWrap.style.transform =
+        `perspective(1200px) rotateY(${mbCX}deg) rotateX(${mbCY}deg)`;
+    }
+
+    // Passive sine float for orbs
+    orbT += 0.006;
+    const fx = Math.sin(orbT)        * 15;
+    const fy = Math.cos(orbT * 0.65) * 10;
+
+    // Lerp orb offsets
+    o1CX += (o1TX - o1CX) * 0.038;
+    o1CY += (o1TY - o1CY) * 0.038;
+    o2CX += (o2TX - o2CX) * 0.038;
+    o2CY += (o2TY - o2CY) * 0.038;
+
+    if (orb1) orb1.style.transform =
+      `translate(calc(-50% + ${o1CX + fx}px), calc(-50% + ${o1CY + fy}px))`;
+    if (orb2) orb2.style.transform =
+      `translate(calc(-50% + ${o2CX - fx * 0.55}px), calc(-50% + ${o2CY - fy * 0.5}px))`;
+
+    requestAnimationFrame(tickMB);
+  })();
+
+  /* ============================================================
+     LANGUAGE SWITCHER
+  ============================================================ */
+  const translations = {
+    en: {
+      'nav.services': 'Services',
+      'nav.about': 'About',
+      'nav.process': 'Process',
+      'nav.cta': 'Get Started',
+      'footer.contact': 'Contact',
+      'footer.copy': '© 2024 Clearpath Solutions AS. All rights reserved.',
+
+      'hero.eyebrow': 'Est. 2024 · Clearpath Solutions',
+      'hero.h1top':    'Nordic Web Design',
+      'hero.h1bottom': '<span class="accent">AI Automation</span>',
+      'hero.orblabel': 'AI Entity — hover to interact',
+      'hero.lead': 'We craft high-converting websites and implement AI that makes your business more efficient and more profitable.',
+      'hero.cta1': 'Get Started',
+      'hero.cta2': 'See What We Do',
+      'hero.scroll': 'Scroll',
+      'hero.badge': 'Based in Scandinavia',
+
+      'services.label': 'What We Do',
+      'services.title': 'Two powerful services.<br>One clear path forward.',
+      'services.s1.title': 'Web Design &amp; Development',
+      'services.s1.desc': 'We build high-converting websites with Nordic design sensibility — clean, purposeful, and built to perform for small and medium businesses.',
+      'services.s1.features': ['Custom website design &amp; development', 'Conversion rate optimization', 'SEO-ready architecture', 'E-commerce &amp; booking solutions', 'Ongoing support &amp; maintenance'],
+      'services.s1.cta': 'Start a project',
+      'services.s2.title': 'AI Integration &amp; Automation',
+      'services.s2.desc': 'We identify where AI can save you time and increase revenue, then implement it cleanly into your existing workflow — no complexity, just results.',
+      'services.s2.features': ['AI-powered customer support', 'Workflow automation &amp; efficiency', 'Data analysis &amp; smart insights', 'Custom AI tooling for your industry', 'Staff training &amp; smooth adoption'],
+      'services.s2.cta': 'Explore AI for your business',
+
+      'about.label': 'About Us',
+      'about.title': 'Built on Nordic<br>values. Driven<br>by results.',
+      'about.p1': 'We believe SMBs deserve the same quality and innovation that large enterprises get. We combine Nordic design precision with cutting-edge AI to give your business a genuine competitive edge.',
+      'about.p2': 'No bloated agencies, no hidden costs. We work directly with decision makers to deliver digital solutions that move the needle — fast, transparent, and with a long-term vision.',
+      'about.stat1': 'Projects delivered',
+      'about.stat2': 'Client satisfaction',
+      'about.stat3': 'Avg. ROI increase',
+
+      'process.label': 'How We Work',
+      'process.title': 'A clear path from<br>idea to impact.',
+      'process.s1.title': 'Discovery &amp; Strategy',
+      'process.s1.tag': 'Week 1–2',
+      'process.s1.body': 'We start by deeply understanding your business, competitive landscape, and target audience. Together we define exactly what success looks like and map the clearest route to get there — before a single pixel is drawn.',
+      'process.s1.list': ['Brand &amp; competitor audit', 'Target audience mapping', 'Scope &amp; success metrics', 'Technology stack recommendation'],
+      'process.s2.title': 'Design &amp; Prototype',
+      'process.s2.tag': 'Week 3–4',
+      'process.s2.body': 'Our designers craft a bespoke visual identity and fully interactive prototype. You see and feel exactly what you\'re getting before a single line of code is written — revisions included until it\'s perfect.',
+      'process.s2.list': ['Visual identity &amp; colour system', 'Wireframes &amp; interactive prototype', 'Mobile-first responsive layouts', 'Design review &amp; sign-off'],
+      'process.s3.title': 'Build &amp; Integrate',
+      'process.s3.tag': 'Week 5–8',
+      'process.s3.body': 'We build your solution with performance, SEO, and long-term scalability in mind. AI and automation integrations are wired cleanly into your existing workflows — zero disruption, immediate impact.',
+      'process.s3.list': ['Production-grade development', 'CMS &amp; content setup', 'AI &amp; automation integration', 'Performance optimisation'],
+      'process.s4.title': 'Test &amp; Refine',
+      'process.s4.tag': 'Week 9',
+      'process.s4.body': 'Thorough quality assurance across all devices, browsers, and real-user scenarios. We stress-test every interaction and refine until every detail is exactly right — nothing ships until it\'s excellent.',
+      'process.s4.list': ['Cross-browser &amp; device testing', 'Accessibility audit (WCAG 2.1)', 'Load speed &amp; Core Web Vitals', 'Client acceptance testing'],
+      'process.s5.title': 'Launch &amp; Grow',
+      'process.s5.tag': 'Week 10+',
+      'process.s5.body': 'We handle the launch end-to-end and stay on as long-term partners. As your business evolves we optimise, expand, and adapt your digital presence — you focus on growth, we handle the technology.',
+      'process.s5.list': ['Managed deployment &amp; DNS', 'Analytics &amp; conversion tracking', 'Ongoing support &amp; maintenance', 'Quarterly performance reviews'],
+
+      'nav.team': 'Team',
+      'about.teamcta': 'Meet the founders',
+
+      'team.label': 'The Founders',
+      'team.title': 'Two builders.<br>One <span class="accent">clear</span> vision.',
+      'team.intro': 'We started Clearpath Solutions because we believe great digital work shouldn\'t be a luxury reserved for big companies. Reach out — we\'d love to hear about your project.',
+      'team.m1.name': 'Ole Wilhelm Weidal',
+      'team.m1.role': 'Co-Founder &amp; CEO',
+      'team.m1.bio': 'Ole drives the strategic vision and client relationships at Clearpath. With a background spanning Nordic business development and digital growth, he ensures every project delivers measurable results and a lasting impact.',
+      'team.m2.name': 'Herman Malme',
+      'team.m2.role': 'Co-Founder &amp; CTO',
+      'team.m2.bio': 'Herman leads the technical and design side of Clearpath. He architects scalable web solutions and AI integrations with a focus on precision, performance, and Nordic design principles that make every product feel effortless.',
+      'team.tag.strategy': 'Strategy',
+      'team.tag.growth': 'Growth',
+      'team.tag.clients': 'Client Relations',
+      'team.tag.design': 'Design',
+      'team.tag.ai': 'AI &amp; Automation',
+      'team.tag.dev': 'Development',
+      'team.reach.title': 'Have a question?',
+      'team.reach.sub': 'Reach out to either of us directly and we\'ll get back to you shortly.',
+
+      'contact.label': 'Let\'s Talk',
+      'contact.title': 'Ready to build<br>something <span class="cta-accent">exceptional?</span>',
+      'contact.sub': 'Fill in the form and we\'ll confirm a time that works. We aim to respond within 24 hours.',
+      'contact.or': 'or reach us directly at',
+    },
+    no: {
+      'nav.services': 'Tjenester',
+      'nav.about': 'Om oss',
+      'nav.process': 'Prosess',
+      'nav.cta': 'Kom i gang',
+      'footer.contact': 'Kontakt',
+      'footer.copy': '© 2024 Clearpath Solutions AS. Alle rettigheter forbeholdt.',
+
+      'hero.eyebrow': 'Est. 2024 · Clearpath Solutions',
+      'hero.h1top':    'Nordisk Webdesign',
+      'hero.h1bottom': '<span class="accent">AI-automatisering</span>',
+      'hero.orblabel': 'AI-entitet — hover for å interagere',
+      'hero.lead': 'Vi lager nettsider med høy konvertering og implementerer AI som gjør bedriften din mer effektiv og lønnsom.',
+      'hero.cta1': 'Kom i gang',
+      'hero.cta2': 'Se hva vi gjør',
+      'hero.scroll': 'Skroll',
+      'hero.badge': 'Basert i Skandinavia',
+
+      'services.label': 'Hva vi gjør',
+      'services.title': 'To kraftfulle tjenester.<br>Én tydelig vei fremover.',
+      'services.s1.title': 'Webdesign &amp; Utvikling',
+      'services.s1.desc': 'Vi bygger nettsider med høy konvertering og nordisk designsensibilitet — rene, formålsdrevne og bygget for å prestere for små og mellomstore bedrifter.',
+      'services.s1.features': ['Skreddersydd webdesign &amp; utvikling', 'Konverteringsoptimalisering', 'SEO-klar arkitektur', 'E-handel &amp; bookingløsninger', 'Løpende support &amp; vedlikehold'],
+      'services.s1.cta': 'Start et prosjekt',
+      'services.s2.title': 'AI-integrasjon &amp; Automatisering',
+      'services.s2.desc': 'Vi identifiserer hvor AI kan spare deg tid og øke inntektene, deretter implementerer vi det ryddig i din eksisterende arbeidsflyt — ingen kompleksitet, bare resultater.',
+      'services.s2.features': ['AI-drevet kundeservice', 'Automatisering av arbeidsflyt', 'Dataanalyse &amp; smarte innsikter', 'Skreddersydde AI-verktøy for din bransje', 'Opplæring &amp; smidig innføring'],
+      'services.s2.cta': 'Utforsk AI for din bedrift',
+
+      'about.label': 'Om oss',
+      'about.title': 'Bygget på nordiske<br>verdier. Drevet<br>av resultater.',
+      'about.p1': 'Vi mener SMBer fortjener samme kvalitet og innovasjon som store selskaper. Vi kombinerer nordisk designpresisjon med banebrytende AI for å gi bedriften din et ekte konkurransefortrinn.',
+      'about.p2': 'Ingen oppblåste byråer, ingen skjulte kostnader. Vi jobber direkte med beslutningstakere for å levere digitale løsninger som gir resultater — raskt, transparent og med et langsiktig perspektiv.',
+      'about.stat1': 'Prosjekter levert',
+      'about.stat2': 'Kundetilfredshet',
+      'about.stat3': 'Gj.snitt ROI-økning',
+
+      'process.label': 'Slik jobber vi',
+      'process.title': 'En tydelig vei fra<br>idé til resultat.',
+      'process.s1.title': 'Oppdagelse &amp; Strategi',
+      'process.s1.tag': 'Uke 1–2',
+      'process.s1.body': 'Vi starter med å forstå din bedrift, konkurranselandskapet og målgruppen i dybden. Sammen definerer vi nøyaktig hva suksess betyr og kartlegger den klareste veien dit — før en eneste piksel er tegnet.',
+      'process.s1.list': ['Merkevare- &amp; konkurrentanalyse', 'Kartlegging av målgruppe', 'Omfang &amp; suksessmål', 'Anbefaling av teknologistack'],
+      'process.s2.title': 'Design &amp; Prototype',
+      'process.s2.tag': 'Uke 3–4',
+      'process.s2.body': 'Våre designere lager en skreddersydd visuell identitet og en fullt interaktiv prototype. Du ser og føler nøyaktig hva du får før en eneste kodelinje er skrevet — revisjoner inkludert til det er perfekt.',
+      'process.s2.list': ['Visuell identitet &amp; fargesystem', 'Wireframes &amp; interaktiv prototype', 'Mobilfirst responsivt design', 'Designgjennomgang &amp; godkjenning'],
+      'process.s3.title': 'Bygg &amp; Integrer',
+      'process.s3.tag': 'Uke 5–8',
+      'process.s3.body': 'Vi bygger løsningen din med ytelse, SEO og langsiktig skalerbarhet i tankene. AI og automatiseringsintegrasjoner kobles ryddig inn i din eksisterende arbeidsflyt — null forstyrrelse, umiddelbar effekt.',
+      'process.s3.list': ['Produksjonsklar utvikling', 'CMS &amp; innholdsoppsett', 'AI &amp; automatiseringsintegrasjon', 'Ytelsesoptimalisering'],
+      'process.s4.title': 'Test &amp; Finjuster',
+      'process.s4.tag': 'Uke 9',
+      'process.s4.body': 'Grundig kvalitetssikring på tvers av alle enheter, nettlesere og virkelige brukersituasjoner. Vi stresstester hver interaksjon og finjusterer til alle detaljer er nøyaktig riktige — ingenting sendes ut før det er utmerket.',
+      'process.s4.list': ['Testing på tvers av nettlesere &amp; enheter', 'Tilgjengelighetsrevisjon (WCAG 2.1)', 'Lastehastighet &amp; Core Web Vitals', 'Kundeakseptansetesting'],
+      'process.s5.title': 'Lansering &amp; Vekst',
+      'process.s5.tag': 'Uke 10+',
+      'process.s5.body': 'Vi håndterer lanseringen fra A til Å og forblir langsiktige partnere. Etter hvert som bedriften din utvikler seg, optimaliserer, utvider og tilpasser vi din digitale tilstedeværelse — du fokuserer på vekst, vi tar oss av teknologien.',
+      'process.s5.list': ['Administrert utrulling &amp; DNS', 'Analyse &amp; konverteringssporing', 'Løpende support &amp; vedlikehold', 'Kvartalsvise ytelsesgjennomganger'],
+
+      'nav.team': 'Team',
+      'about.teamcta': 'Møt grunnleggerne',
+
+      'team.label': 'Grunnleggerne',
+      'team.title': 'To byggere.<br>Én <span class="accent">tydelig</span> visjon.',
+      'team.intro': 'Vi startet Clearpath Solutions fordi vi mener at godt digitalt arbeid ikke skal være forbeholdt store selskaper. Ta kontakt — vi hører gjerne om prosjektet ditt.',
+      'team.m1.name': 'Ole Wilhelm Weidal',
+      'team.m1.role': 'Medgründer &amp; CEO',
+      'team.m1.bio': 'Ole driver den strategiske visjonen og kunderelasjonene i Clearpath. Med bakgrunn innen nordisk forretningsutvikling og digital vekst sørger han for at hvert prosjekt leverer målbare resultater og varig påvirkning.',
+      'team.m2.name': 'Herman Malme',
+      'team.m2.role': 'Medgründer &amp; CTO',
+      'team.m2.bio': 'Herman leder den tekniske og designmessige siden av Clearpath. Han arkitekterer skalerbare nettløsninger og AI-integrasjoner med fokus på presisjon, ytelse og nordiske designprinsipper som gjør hvert produkt enkelt og elegant.',
+      'team.tag.strategy': 'Strategi',
+      'team.tag.growth': 'Vekst',
+      'team.tag.clients': 'Kunderelasjon',
+      'team.tag.design': 'Design',
+      'team.tag.ai': 'KI &amp; Automatisering',
+      'team.tag.dev': 'Utvikling',
+      'team.reach.title': 'Har du et spørsmål?',
+      'team.reach.sub': 'Ta kontakt med en av oss direkte, så svarer vi deg så snart vi kan.',
+
+      'contact.label': 'La oss snakke',
+      'contact.title': 'Klar til å bygge<br>noe <span class="cta-accent">eksepsjonelt?</span>',
+      'contact.sub': 'Fyll ut skjemaet så bekrefter vi et tidspunkt som passer. Vi svarer innen 24 timer.',
+      'contact.or': 'eller nå oss direkte på',
+    }
+  };
+
+  let currentLang = 'en';
+
+  function setLang(lang) {
+    currentLang = lang;
+    const t = translations[lang];
+
+    document.getElementById('lang-en').classList.toggle('active', lang === 'en');
+    document.getElementById('lang-no').classList.toggle('active', lang === 'no');
+    document.documentElement.lang = lang;
+
+    // Plain text / innerHTML elements
+    document.querySelectorAll('[data-i18n]').forEach(el => {
+      const key = el.dataset.i18n;
+      if (t[key] !== undefined) el.innerHTML = t[key];
+    });
+
+    // List elements
+    document.querySelectorAll('[data-i18n-list]').forEach(el => {
+      const key = el.dataset.i18nList;
+      if (Array.isArray(t[key])) {
+        el.innerHTML = t[key].map(item => `<li>${item}</li>`).join('');
+      }
+    });
+
+    // Placeholder attributes
+    document.querySelectorAll('[data-i18n-placeholder]').forEach(el => {
+      const key = el.dataset.i18nPlaceholder;
+      if (t[key] !== undefined) el.placeholder = t[key].replace(/&amp;/g, '&');
+    });
+  }
+
+  /* ============================================================
+     AI ENTITY ORB
+  ============================================================ */
+  (function() {
+    const oc  = document.getElementById('ai-orb');
+    const ctx = oc.getContext('2d');
+    const S   = 380;
+    oc.width = oc.height = S;
+    const cx = S / 2, cy = S / 2;
+
+    let mx = cx, my = cy, mActive = false;
+    oc.addEventListener('mousemove', e => {
+      const r = oc.getBoundingClientRect();
+      mx = (e.clientX - r.left) * (S / r.width);
+      my = (e.clientY - r.top)  * (S / r.height);
+      mActive = true;
+    });
+    oc.addEventListener('mouseleave', () => { mActive = false; mx = cx; my = cy; });
+
+    /* Orbiting neural particles */
+    const particles = Array.from({ length: 60 }, (_, i) => {
+      const layers   = [68, 100, 136, 168];
+      const baseR    = layers[Math.floor(Math.random() * layers.length)] + (Math.random() - 0.5) * 22;
+      const angle    = (i / 60) * Math.PI * 2 + Math.random() * 0.4;
+      const speed    = (0.004 + Math.random() * 0.006) * (Math.random() < 0.5 ? 1 : -1);
+      return { angle, baseR, r: baseR, speed, size: Math.random() * 2 + 0.6,
+               alpha: Math.random() * 0.55 + 0.25, x: 0, y: 0,
+               hue: Math.random() < 0.72 ? '62,201,255' : '130,80,255' };
+    });
+
+    let T = 0;
+    function frame() {
+      T += 0.018;
+      ctx.clearRect(0, 0, S, S);
+
+      /* ── outer ambient glow ── */
+      const amb = ctx.createRadialGradient(cx, cy, 0, cx, cy, S / 2);
+      amb.addColorStop(0,   'rgba(62,201,255,0.00)');
+      amb.addColorStop(0.45,'rgba(62,201,255,0.04)');
+      amb.addColorStop(0.72,'rgba(110,58,240,0.06)');
+      amb.addColorStop(1,   'rgba(0,0,0,0)');
+      ctx.fillStyle = amb;
+      ctx.fillRect(0, 0, S, S);
+
+      /* ── orbit rings ── */
+      [68, 100, 136, 168].forEach((rad, i) => {
+        ctx.beginPath();
+        ctx.arc(cx, cy, rad, 0, Math.PI * 2);
+        const a = 0.05 + Math.sin(T * 0.6 + i) * 0.025;
+        ctx.strokeStyle = `rgba(62,201,255,${a})`;
+        ctx.lineWidth = 0.5;
+        ctx.stroke();
+      });
+
+      /* ── particles ── */
+      particles.forEach((p, i) => {
+        p.angle += p.speed;
+
+        /* mouse pull */
+        const dx = mx - cx, dy = my - cy;
+        const md = Math.hypot(dx, dy);
+        if (mActive && md < 170) {
+          const pull = (1 - md / 170) * 0.55;
+          const targetAngle = Math.atan2(my - cy, mx - cx);
+          const diff = targetAngle - p.angle;
+          p.angle    += Math.sin(diff) * pull * 0.04;
+          p.r         = p.baseR + (170 - md) * pull * 0.38;
+        } else {
+          p.r += (p.baseR - p.r) * 0.06;
+        }
+
+        p.x = cx + Math.cos(p.angle) * p.r;
+        p.y = cy + Math.sin(p.angle) * p.r;
+
+        /* connect close neighbours */
+        for (let j = i + 1; j < particles.length; j++) {
+          const d = Math.hypot(particles[j].x - p.x, particles[j].y - p.y);
+          if (d < 48) {
+            ctx.beginPath();
+            ctx.moveTo(p.x, p.y);
+            ctx.lineTo(particles[j].x, particles[j].y);
+            ctx.strokeStyle = `rgba(62,201,255,${(1 - d / 48) * 0.22})`;
+            ctx.lineWidth = 0.6;
+            ctx.stroke();
+          }
+        }
+
+        /* tendrils to core */
+        ctx.beginPath();
+        ctx.moveTo(p.x, p.y);
+        ctx.lineTo(cx, cy);
+        ctx.strokeStyle = `rgba(62,201,255,${(1 - p.r / 200) * 0.055})`;
+        ctx.lineWidth = 0.4;
+        ctx.stroke();
+
+        /* dot */
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+        ctx.fillStyle = `rgba(${p.hue},${p.alpha + Math.sin(T * 1.5 + i) * 0.1})`;
+        ctx.fill();
+      });
+
+      /* ── core ── */
+      const pulse = 0.88 + Math.sin(T * 1.9) * 0.12;
+
+      /* outer core bloom */
+      const bloom = ctx.createRadialGradient(cx, cy, 0, cx, cy, 56 * pulse);
+      bloom.addColorStop(0,   `rgba(200,240,255,${0.55 * pulse})`);
+      bloom.addColorStop(0.18,`rgba(62,201,255,${0.6  * pulse})`);
+      bloom.addColorStop(0.5, `rgba(62,201,255,${0.18 * pulse})`);
+      bloom.addColorStop(1,   'rgba(62,201,255,0)');
+      ctx.beginPath();
+      ctx.arc(cx, cy, 56 * pulse, 0, Math.PI * 2);
+      ctx.fillStyle = bloom;
+      ctx.fill();
+
+      /* hard inner core */
+      const core = ctx.createRadialGradient(cx, cy, 0, cx, cy, 20 * pulse);
+      core.addColorStop(0,   `rgba(255,255,255,${0.95 * pulse})`);
+      core.addColorStop(0.4, `rgba(140,220,255,${0.8  * pulse})`);
+      core.addColorStop(1,   'rgba(62,201,255,0)');
+      ctx.beginPath();
+      ctx.arc(cx, cy, 20 * pulse, 0, Math.PI * 2);
+      ctx.fillStyle = core;
+      ctx.fill();
+
+      /* mouse proximity flare */
+      if (mActive) {
+        const md = Math.hypot(mx - cx, my - cy);
+        if (md < 180) {
+          const flare = (1 - md / 180) * 0.35;
+          const fl = ctx.createRadialGradient(cx, cy, 0, cx, cy, 90);
+          fl.addColorStop(0,  `rgba(62,201,255,${flare})`);
+          fl.addColorStop(1,  'rgba(62,201,255,0)');
+          ctx.beginPath();
+          ctx.arc(cx, cy, 90, 0, Math.PI * 2);
+          ctx.fillStyle = fl;
+          ctx.fill();
+        }
+      }
+
+      requestAnimationFrame(frame);
+    }
+    frame();
+  })();
+</script>
