@@ -1,0 +1,852 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Team — Clearpath Solutions</title>
+  <meta name="description" content="Meet the founders of Clearpath Solutions — Ole Wilhelm Weidal and Herman Malme. Nordic web design and AI specialists building digital products for SMBs.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,300;12..96,400;12..96,500;12..96,700;12..96,800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&family=DM+Mono:wght@300;400&display=swap" rel="stylesheet">
+
+  <style>
+    /* ======================================================
+       RESET & BASE
+    ====================================================== */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --dark-bg:    #0E1B2E;
+      --dark-bg-2:  #162540;
+      --dark-fg:    #EEF2FF;
+      --dark-fg-2:  #7A93B8;
+      --dark-fg-3:  #3A5070;
+      --dark-border:rgba(255,255,255,0.08);
+      --light-bg:   #FFFFFF;
+      --light-bg-2: #F4F7FF;
+      --light-text: #0D1B2E;
+      --light-text-2:#4A5E78;
+      --light-border:rgba(13,27,46,0.09);
+      --accent:     #3EC9FF;
+      --accent-ink: #0085B2;
+      --accent-low: rgba(62,201,255,0.10);
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: var(--dark-bg);
+      color: var(--dark-fg);
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ======================================================
+       NAVIGATION
+    ====================================================== */
+    #nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      padding: 28px 56px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: rgba(14, 27, 46, 0.88);
+      -webkit-backdrop-filter: blur(20px);
+      backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--dark-border);
+      transition: padding 0.4s ease;
+    }
+
+    #nav.scrolled { padding: 18px 56px; }
+
+    .nav-logo {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      text-decoration: none;
+      color: var(--dark-fg);
+    }
+
+    .logo-mark {
+      width: 36px; height: 36px;
+      background: var(--accent);
+      color: var(--dark-bg);
+      font-family: 'Bricolage Grotesque', sans-serif;
+      font-weight: 800;
+      font-size: 13px;
+      letter-spacing: 0.04em;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+      flex-shrink: 0;
+    }
+
+    .logo-text {
+      font-family: 'Bricolage Grotesque', sans-serif;
+      font-weight: 700;
+      font-size: 16px;
+      letter-spacing: -0.02em;
+    }
+
+    .logo-text em { font-style: normal; color: var(--accent); }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 40px;
+      list-style: none;
+    }
+
+    .nav-links a {
+      font-size: 14px;
+      font-weight: 400;
+      color: var(--dark-fg-2);
+      text-decoration: none;
+      transition: color 0.2s;
+      position: relative;
+    }
+
+    .nav-links a::after {
+      content: '';
+      position: absolute;
+      bottom: -3px; left: 0;
+      width: 0%; height: 1px;
+      background: var(--accent);
+      transition: width 0.3s ease;
+    }
+
+    .nav-links a:hover { color: var(--dark-fg); }
+    .nav-links a:hover::after { width: 100%; }
+
+    .nav-links a.active {
+      color: var(--accent);
+    }
+
+    .nav-links a.active::after { width: 100%; }
+
+    .nav-cta {
+      padding: 10px 26px;
+      border: 1px solid var(--accent) !important;
+      border-radius: 4px;
+      color: var(--accent) !important;
+      font-weight: 500 !important;
+      transition: background 0.2s, color 0.2s !important;
+    }
+
+    .nav-cta::after { display: none !important; }
+
+    .nav-cta:hover {
+      background: var(--accent) !important;
+      color: var(--dark-bg) !important;
+    }
+
+    .lang-toggle {
+      display: flex;
+      align-items: center;
+      border: 1px solid rgba(255,255,255,0.18);
+      border-radius: 4px;
+      overflow: hidden;
+      flex-shrink: 0;
+    }
+
+    .lang-toggle button {
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 7px 13px;
+      font-family: 'DM Mono', monospace;
+      font-size: 11px;
+      font-weight: 400;
+      letter-spacing: 0.08em;
+      color: var(--dark-fg-2);
+      transition: background 0.2s, color 0.2s;
+    }
+
+    .lang-toggle button.active {
+      background: rgba(62,201,255,0.15);
+      color: var(--accent);
+    }
+
+    .lang-toggle button:hover:not(.active) { color: var(--dark-fg); }
+
+    .lang-sep {
+      width: 1px;
+      height: 28px;
+      background: rgba(255,255,255,0.18);
+      flex-shrink: 0;
+    }
+
+    .menu-btn {
+      display: none;
+      background: none;
+      border: none;
+      cursor: pointer;
+      flex-direction: column;
+      gap: 5px;
+      padding: 4px;
+    }
+
+    .menu-btn span {
+      display: block;
+      width: 24px; height: 1.5px;
+      background: var(--dark-fg);
+      transition: transform 0.3s, opacity 0.3s;
+    }
+
+    .nav-mobile {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: var(--light-bg);
+      z-index: 99;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 36px;
+    }
+
+    .nav-mobile.open { display: flex; }
+
+    .nav-mobile a {
+      font-family: 'Bricolage Grotesque', sans-serif;
+      font-size: 36px;
+      font-weight: 700;
+      color: var(--light-text);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    .nav-mobile a:hover { color: var(--accent-ink); }
+
+    /* ======================================================
+       SECTION SCAFFOLDING
+    ====================================================== */
+    .section {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 120px 56px;
+    }
+
+    .section-label {
+      font-family: 'DM Mono', monospace;
+      font-size: 11px;
+      letter-spacing: 0.32em;
+      text-transform: uppercase;
+      margin-bottom: 20px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .section-label::before {
+      content: '';
+      width: 24px; height: 1px;
+    }
+
+    .section-label-centered { justify-content: center; }
+
+    .label-dark { color: var(--accent); }
+    .label-dark::before { background: var(--accent); }
+
+    .section-title {
+      font-family: 'Bricolage Grotesque', sans-serif;
+      font-size: clamp(34px, 4.5vw, 58px);
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      line-height: 1.05;
+      margin-bottom: 20px;
+      color: var(--dark-fg);
+    }
+
+    .reveal {
+      opacity: 0;
+      transform: translateY(36px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+    .reveal-delay-1 { transition-delay: 0.10s; }
+    .reveal-delay-2 { transition-delay: 0.20s; }
+    .reveal-delay-3 { transition-delay: 0.30s; }
+
+    /* ======================================================
+       PAGE HERO
+    ====================================================== */
+    #page-hero {
+      background: var(--dark-bg);
+      padding: 180px 56px 100px;
+      position: relative;
+      overflow: hidden;
+      text-align: center;
+    }
+
+    #page-hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(ellipse 60% 50% at 50% 0%, rgba(62,201,255,0.10) 0%, transparent 70%),
+        radial-gradient(ellipse 40% 40% at 20% 80%, rgba(110,58,240,0.08) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .page-hero-inner {
+      max-width: 700px;
+      margin: 0 auto;
+      position: relative;
+      z-index: 1;
+    }
+
+    .page-hero-inner .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      font-family: 'DM Mono', monospace;
+      font-size: 11px;
+      letter-spacing: 0.28em;
+      color: var(--accent);
+      text-transform: uppercase;
+      margin-bottom: 28px;
+    }
+
+    .page-hero-inner .eyebrow::before {
+      content: '';
+      width: 32px; height: 1px;
+      background: var(--accent);
+    }
+
+    .page-hero-inner h1 {
+      font-family: 'Bricolage Grotesque', sans-serif;
+      font-size: clamp(42px, 6vw, 80px);
+      font-weight: 800;
+      letter-spacing: -0.04em;
+      line-height: 1.0;
+      color: var(--dark-fg);
+      margin-bottom: 28px;
+    }
+
+    .page-hero-inner h1 .accent { color: var(--accent); }
+
+    .page-hero-inner p {
+      font-size: 17px;
+      font-weight: 300;
+      color: var(--dark-fg-2);
+      line-height: 1.75;
+      max-width: 520px;
+      margin: 0 auto;
+    }
+
+    /* ======================================================
+       TEAM SECTION
+    ====================================================== */
+    #team-content {
+      background: var(--dark-bg);
+    }
+
+    .team-title { color: var(--dark-fg); text-align: center; }
+
+    .team-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 32px;
+      max-width: 900px;
+      margin: 0 auto;
+    }
+
+    .team-card {
+      background: var(--dark-bg-2);
+      border: 1px solid var(--dark-border);
+      border-radius: 20px;
+      padding: 40px 36px;
+      display: flex;
+      flex-direction: column;
+      gap: 28px;
+      transition: border-color 0.3s, transform 0.3s;
+    }
+
+    .team-card:hover {
+      border-color: rgba(62,201,255,0.28);
+      transform: translateY(-4px);
+    }
+
+    .team-avatar {
+      position: relative;
+      width: 72px;
+      height: 72px;
+    }
+
+    .avatar-ring {
+      position: absolute;
+      inset: -4px;
+      border-radius: 50%;
+      border: 1px solid rgba(62,201,255,0.35);
+      animation: ringPulse 3s ease-in-out infinite;
+    }
+
+    @keyframes ringPulse {
+      0%, 100% { opacity: 0.35; transform: scale(1); }
+      50%       { opacity: 0.70; transform: scale(1.05); }
+    }
+
+    .avatar-initials {
+      width: 72px;
+      height: 72px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, rgba(62,201,255,0.18) 0%, rgba(110,58,240,0.18) 100%);
+      border: 1px solid rgba(62,201,255,0.22);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Bricolage Grotesque', sans-serif;
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--accent);
+      letter-spacing: 0.04em;
+    }
+
+    .avatar-status {
+      position: absolute;
+      bottom: 2px;
+      right: 2px;
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      background: #27C93F;
+      border: 2px solid var(--dark-bg-2);
+    }
+
+    .team-card-body { display: flex; flex-direction: column; gap: 12px; }
+
+    .team-name {
+      font-family: 'Bricolage Grotesque', sans-serif;
+      font-size: 22px;
+      font-weight: 700;
+      color: var(--dark-fg);
+      letter-spacing: -0.02em;
+    }
+
+    .team-role {
+      font-family: 'DM Mono', monospace;
+      font-size: 11px;
+      font-weight: 400;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-top: -6px;
+    }
+
+    .team-bio {
+      font-size: 14px;
+      line-height: 1.8;
+      color: var(--dark-fg-2);
+      margin-top: 4px;
+    }
+
+    .team-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 4px;
+    }
+
+    .team-tags span {
+      font-family: 'DM Mono', monospace;
+      font-size: 10px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      padding: 5px 12px;
+      border-radius: 6px;
+      background: rgba(62,201,255,0.08);
+      border: 1px solid rgba(62,201,255,0.18);
+      color: var(--dark-fg-2);
+    }
+
+    .team-email {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      margin-top: 8px;
+      font-size: 13px;
+      color: var(--accent);
+      text-decoration: none;
+      opacity: 0.85;
+      transition: opacity 0.2s, gap 0.2s;
+    }
+
+    .team-email:hover { opacity: 1; gap: 12px; }
+
+    /* ======================================================
+       REACH OUT BANNER
+    ====================================================== */
+    .team-reach {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      max-width: 900px;
+      margin: 56px auto 0;
+      padding: 28px 36px;
+      background: rgba(62,201,255,0.06);
+      border: 1px solid rgba(62,201,255,0.18);
+      border-radius: 16px;
+    }
+
+    .team-reach-icon {
+      width: 48px;
+      height: 48px;
+      border-radius: 12px;
+      background: rgba(62,201,255,0.12);
+      border: 1px solid rgba(62,201,255,0.22);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--accent);
+      flex-shrink: 0;
+    }
+
+    .team-reach-title {
+      font-family: 'Bricolage Grotesque', sans-serif;
+      font-size: 16px;
+      font-weight: 700;
+      color: var(--dark-fg);
+      margin-bottom: 4px;
+    }
+
+    .team-reach-sub {
+      font-size: 14px;
+      color: var(--dark-fg-2);
+    }
+
+    /* ======================================================
+       FOOTER
+    ====================================================== */
+    footer {
+      background: var(--dark-bg-2);
+      border-top: 1px solid var(--dark-border);
+      padding: 40px 56px;
+    }
+
+    .footer-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 20px;
+    }
+
+    .footer-copy { font-size: 13px; color: var(--dark-fg-3); }
+
+    .footer-links { display: flex; gap: 24px; list-style: none; }
+
+    .footer-links a {
+      font-size: 13px;
+      color: var(--dark-fg-3);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    .footer-links a:hover { color: var(--dark-fg-2); }
+
+    /* ======================================================
+       CURSOR GLOW
+    ====================================================== */
+    #cursor-glow {
+      position: fixed;
+      width: 320px; height: 320px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(62,201,255,0.035) 0%, transparent 70%);
+      pointer-events: none;
+      z-index: 9999;
+      transform: translate(-50%, -50%);
+      transition: opacity 0.3s;
+      opacity: 0;
+    }
+
+    /* ======================================================
+       RESPONSIVE
+    ====================================================== */
+    @media (max-width: 900px) {
+      .nav-links { display: none; }
+      .lang-toggle { display: none; }
+      .menu-btn { display: flex; }
+      #page-hero { padding: 160px 24px 80px; }
+    }
+
+    @media (max-width: 680px) {
+      .team-grid { grid-template-columns: 1fr; }
+      .section { padding: 80px 24px; }
+      footer { padding: 40px 24px; }
+      .team-reach { flex-direction: column; text-align: center; }
+      .footer-inner { flex-direction: column; text-align: center; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- Cursor glow -->
+<div id="cursor-glow"></div>
+
+<!-- ================================================================
+     NAVIGATION
+================================================================ -->
+<nav id="nav">
+  <a href="/" class="nav-logo">
+    <div class="logo-mark">CS</div>
+    <span class="logo-text">Clearpath <em>Solutions</em></span>
+  </a>
+  <ul class="nav-links">
+    <li><a href="/#services" data-i18n="nav.services">Services</a></li>
+    <li><a href="/about/" data-i18n="nav.about">About</a></li>
+    <li><a href="/team.html" class="active" data-i18n="nav.team">Team</a></li>
+    <li><a href="/how-we-work.html" data-i18n="nav.process">Process</a></li>
+    <li><a href="/get-started/" class="nav-cta" data-i18n="nav.cta">Get Started</a></li>
+  </ul>
+  <div class="lang-toggle" id="lang-toggle">
+    <button type="button" id="lang-en" class="active" onclick="setLang('en')">EN</button>
+    <div class="lang-sep"></div>
+    <button type="button" id="lang-no" onclick="setLang('no')">NO</button>
+  </div>
+  <button type="button" class="menu-btn" id="menu-btn" aria-label="Open menu">
+    <span></span><span></span>
+  </button>
+</nav>
+
+<div class="nav-mobile" id="nav-mobile">
+  <a href="/#services" onclick="closeMenu()" data-i18n="nav.services">Services</a>
+  <a href="/about/" onclick="closeMenu()" data-i18n="nav.about">About</a>
+  <a href="/team.html" onclick="closeMenu()" data-i18n="nav.team">Team</a>
+  <a href="/how-we-work.html" onclick="closeMenu()" data-i18n="nav.process">Process</a>
+  <a href="/get-started/" onclick="closeMenu()" data-i18n="nav.cta">Get Started</a>
+</div>
+
+<!-- ================================================================
+     PAGE HERO
+================================================================ -->
+<header id="page-hero">
+  <div class="page-hero-inner">
+    <span class="eyebrow" data-i18n="team.eyebrow">The People Behind Clearpath</span>
+    <h1 data-i18n="team.h1">Two builders.<br>One <span class="accent">clear</span> vision.</h1>
+    <p data-i18n="team.intro">We started Clearpath Solutions because we believe great digital work shouldn't be a luxury reserved for big companies. Reach out — we'd love to hear about your project.</p>
+  </div>
+</header>
+
+<!-- ================================================================
+     TEAM CARDS
+================================================================ -->
+<section id="team-content">
+  <div class="section" style="padding-top: 0;">
+
+    <div class="team-grid">
+
+      <div class="team-card reveal reveal-delay-1">
+        <div class="team-avatar">
+          <div class="avatar-ring"></div>
+          <div class="avatar-initials">OW</div>
+          <div class="avatar-status"></div>
+        </div>
+        <div class="team-card-body">
+          <div class="team-name" data-i18n="team.m1.name">Ole Wilhelm Weidal</div>
+          <div class="team-role" data-i18n="team.m1.role">Co-Founder &amp; CEO</div>
+          <p class="team-bio" data-i18n="team.m1.bio">Ole drives the strategic vision and client relationships at Clearpath. With a background spanning Nordic business development and digital growth, he ensures every project delivers measurable results and a lasting impact.</p>
+          <div class="team-tags">
+            <span data-i18n="team.tag.strategy">Strategy</span>
+            <span data-i18n="team.tag.growth">Growth</span>
+            <span data-i18n="team.tag.clients">Client Relations</span>
+          </div>
+          <a href="mailto:ole@clearpath.no" class="team-email">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M2 8l10 7 10-7"/></svg>
+            ole@clearpath.no
+          </a>
+        </div>
+      </div>
+
+      <div class="team-card reveal reveal-delay-2">
+        <div class="team-avatar">
+          <div class="avatar-ring"></div>
+          <div class="avatar-initials">HM</div>
+          <div class="avatar-status"></div>
+        </div>
+        <div class="team-card-body">
+          <div class="team-name" data-i18n="team.m2.name">Herman Malme</div>
+          <div class="team-role" data-i18n="team.m2.role">Co-Founder &amp; CTO</div>
+          <p class="team-bio" data-i18n="team.m2.bio">Herman leads the technical and design side of Clearpath. He architects scalable web solutions and AI integrations with a focus on precision, performance, and Nordic design principles that make every product feel effortless.</p>
+          <div class="team-tags">
+            <span data-i18n="team.tag.design">Design</span>
+            <span data-i18n="team.tag.ai">AI &amp; Automation</span>
+            <span data-i18n="team.tag.dev">Development</span>
+          </div>
+          <a href="mailto:herman@clearpath.no" class="team-email">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M2 8l10 7 10-7"/></svg>
+            herman@clearpath.no
+          </a>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="team-reach reveal">
+      <div class="team-reach-icon">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>
+      </div>
+      <div>
+        <div class="team-reach-title" data-i18n="team.reach.title">Have a question?</div>
+        <div class="team-reach-sub" data-i18n="team.reach.sub">Reach out to either of us directly and we'll get back to you shortly.</div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ================================================================
+     FOOTER
+================================================================ -->
+<footer>
+  <div class="footer-inner">
+    <a href="/" class="nav-logo">
+      <div class="logo-mark">CS</div>
+      <span class="logo-text">Clearpath <em>Solutions</em></span>
+    </a>
+    <span class="footer-copy" data-i18n="footer.copy">© 2024 Clearpath Solutions AS. All rights reserved.</span>
+    <ul class="footer-links">
+      <li><a href="/#services" data-i18n="nav.services">Services</a></li>
+      <li><a href="/about/" data-i18n="nav.about">About</a></li>
+      <li><a href="/team.html" data-i18n="nav.team">Team</a></li>
+      <li><a href="/how-we-work.html" data-i18n="nav.process">Process</a></li>
+      <li><a href="/get-started/" data-i18n="footer.contact">Contact</a></li>
+    </ul>
+  </div>
+</footer>
+
+<!-- ================================================================
+     JAVASCRIPT
+================================================================ -->
+<script>
+  /* NAV scroll */
+  const nav = document.getElementById('nav');
+  window.addEventListener('scroll', () => {
+    nav.classList.toggle('scrolled', window.scrollY > 60);
+  });
+
+  /* MOBILE MENU */
+  const menuBtn   = document.getElementById('menu-btn');
+  const navMobile = document.getElementById('nav-mobile');
+  let menuOpen = false;
+
+  menuBtn.addEventListener('click', () => {
+    menuOpen = !menuOpen;
+    navMobile.classList.toggle('open', menuOpen);
+    document.body.style.overflow = menuOpen ? 'hidden' : '';
+    const [s1, s2] = menuBtn.querySelectorAll('span');
+    s1.style.transform = menuOpen ? 'rotate(45deg) translate(3px, 3px)'  : '';
+    s2.style.transform = menuOpen ? 'rotate(-45deg) translate(3px, -3px)' : '';
+  });
+
+  function closeMenu() {
+    menuOpen = false;
+    navMobile.classList.remove('open');
+    document.body.style.overflow = '';
+    menuBtn.querySelectorAll('span').forEach(s => s.style.transform = '');
+  }
+
+  /* SCROLL REVEAL */
+  const revealObs = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) { e.target.classList.add('visible'); revealObs.unobserve(e.target); }
+    });
+  }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
+
+  document.querySelectorAll('.reveal').forEach(el => revealObs.observe(el));
+
+  /* CURSOR GLOW */
+  const cursorGlow = document.getElementById('cursor-glow');
+  document.addEventListener('mousemove', e => {
+    cursorGlow.style.opacity = '1';
+    cursorGlow.style.left = e.clientX + 'px';
+    cursorGlow.style.top  = e.clientY + 'px';
+  });
+
+  /* ============================================================
+     LANGUAGE SWITCHER
+  ============================================================ */
+  const translations = {
+    en: {
+      'nav.services': 'Services',
+      'nav.about':    'About',
+      'nav.team':     'Team',
+      'nav.process':  'Process',
+      'nav.cta':      'Get Started',
+      'footer.contact': 'Contact',
+      'footer.copy':  '© 2024 Clearpath Solutions AS. All rights reserved.',
+
+      'team.eyebrow': 'The People Behind Clearpath',
+      'team.h1':      'Two builders.<br>One <span class="accent">clear</span> vision.',
+      'team.intro':   "We started Clearpath Solutions because we believe great digital work shouldn't be a luxury reserved for big companies. Reach out — we'd love to hear about your project.",
+
+      'team.m1.name': 'Ole Wilhelm Weidal',
+      'team.m1.role': 'Co-Founder &amp; CEO',
+      'team.m1.bio':  'Ole drives the strategic vision and client relationships at Clearpath. With a background spanning Nordic business development and digital growth, he ensures every project delivers measurable results and a lasting impact.',
+      'team.m2.name': 'Herman Malme',
+      'team.m2.role': 'Co-Founder &amp; CTO',
+      'team.m2.bio':  'Herman leads the technical and design side of Clearpath. He architects scalable web solutions and AI integrations with a focus on precision, performance, and Nordic design principles that make every product feel effortless.',
+
+      'team.tag.strategy': 'Strategy',
+      'team.tag.growth':   'Growth',
+      'team.tag.clients':  'Client Relations',
+      'team.tag.design':   'Design',
+      'team.tag.ai':       'AI &amp; Automation',
+      'team.tag.dev':      'Development',
+
+      'team.reach.title': 'Have a question?',
+      'team.reach.sub':   "Reach out to either of us directly and we'll get back to you shortly.",
+    },
+    no: {
+      'nav.services': 'Tjenester',
+      'nav.about':    'Om oss',
+      'nav.team':     'Team',
+      'nav.process':  'Prosess',
+      'nav.cta':      'Kom i gang',
+      'footer.contact': 'Kontakt',
+      'footer.copy':  '© 2024 Clearpath Solutions AS. Alle rettigheter forbeholdt.',
+
+      'team.eyebrow': 'Menneskene bak Clearpath',
+      'team.h1':      'To byggere.<br>Én <span class="accent">tydelig</span> visjon.',
+      'team.intro':   'Vi startet Clearpath Solutions fordi vi mener at godt digitalt arbeid ikke skal være forbeholdt store selskaper. Ta kontakt — vi hører gjerne om prosjektet ditt.',
+
+      'team.m1.name': 'Ole Wilhelm Weidal',
+      'team.m1.role': 'Medgründer &amp; CEO',
+      'team.m1.bio':  'Ole driver den strategiske visjonen og kunderelasjonene i Clearpath. Med bakgrunn innen nordisk forretningsutvikling og digital vekst sørger han for at hvert prosjekt leverer målbare resultater og varig påvirkning.',
+      'team.m2.name': 'Herman Malme',
+      'team.m2.role': 'Medgründer &amp; CTO',
+      'team.m2.bio':  'Herman leder den tekniske og designmessige siden av Clearpath. Han arkitekterer skalerbare nettløsninger og AI-integrasjoner med fokus på presisjon, ytelse og nordiske designprinsipper som gjør hvert produkt enkelt og elegant.',
+
+      'team.tag.strategy': 'Strategi',
+      'team.tag.growth':   'Vekst',
+      'team.tag.clients':  'Kunderelasjon',
+      'team.tag.design':   'Design',
+      'team.tag.ai':       'KI &amp; Automatisering',
+      'team.tag.dev':      'Utvikling',
+
+      'team.reach.title': 'Har du et spørsmål?',
+      'team.reach.sub':   'Ta kontakt med en av oss direkte, så svarer vi deg så snart vi kan.',
+    }
+  };
+
+  function setLang(lang) {
+    const t = translations[lang];
+    document.getElementById('lang-en').classList.toggle('active', lang === 'en');
+    document.getElementById('lang-no').classList.toggle('active', lang === 'no');
+    document.documentElement.lang = lang;
+
+    document.querySelectorAll('[data-i18n]').forEach(el => {
+      const key = el.dataset.i18n;
+      if (t[key] !== undefined) el.innerHTML = t[key];
+    });
+  }
+</script>
+</body>
+</html>
