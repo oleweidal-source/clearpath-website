@@ -1,0 +1,15 @@
+<svg width="80" height="80" viewBox="0 0 80 80" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <style>
+      @import url('https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,800&amp;display=swap');
+    </style>
+  </defs>
+
+  <!-- Hex mark -->
+  <polygon points="40,4 76,22 76,58 40,76 4,58 4,22" fill="#3EC9FF"/>
+
+  <!-- CS text -->
+  <text x="40" y="41" text-anchor="middle" dominant-baseline="middle"
+        font-family="'Bricolage Grotesque', sans-serif" font-weight="800" font-size="24"
+        letter-spacing="1.5" fill="#0E1B2E">CS</text>
+</svg>
