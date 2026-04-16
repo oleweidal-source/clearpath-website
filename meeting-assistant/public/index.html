@@ -1,0 +1,851 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Møteassistent</title>
+  <style>
+    :root {
+      --bg: #0f1117;
+      --surface: #1a1d27;
+      --border: #2d3148;
+      --accent: #6366f1;
+      --accent-hover: #818cf8;
+      --text: #e2e8f0;
+      --text-muted: #94a3b8;
+      --success: #10b981;
+      --warning: #f59e0b;
+      --danger: #ef4444;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+
+    header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 12px 20px;
+      background: var(--surface);
+      border-bottom: 1px solid var(--border);
+      flex-shrink: 0;
+    }
+
+    .header-left { display: flex; align-items: center; gap: 12px; }
+    .logo { font-weight: 700; font-size: 15px; }
+
+    .status-badge {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      padding: 4px 10px;
+      border-radius: 20px;
+      font-size: 12px;
+      font-weight: 500;
+      background: var(--border);
+      color: var(--text-muted);
+      transition: all 0.2s;
+    }
+
+    .status-badge.recording {
+      background: rgba(239, 68, 68, 0.15);
+      color: var(--danger);
+      border: 1px solid rgba(239, 68, 68, 0.3);
+    }
+
+    .status-badge.paused {
+      background: rgba(245, 158, 11, 0.15);
+      color: var(--warning);
+      border: 1px solid rgba(245, 158, 11, 0.3);
+    }
+
+    .dot {
+      width: 7px; height: 7px;
+      border-radius: 50%;
+      background: currentColor;
+    }
+
+    .recording .dot { animation: pulse 1.5s infinite; }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.3; }
+    }
+
+    .timer {
+      font-size: 18px;
+      font-weight: 600;
+      font-variant-numeric: tabular-nums;
+      color: var(--text);
+      min-width: 60px;
+      text-align: center;
+    }
+
+    .header-controls { display: flex; gap: 8px; align-items: center; }
+
+    button {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      padding: 8px 14px;
+      border-radius: 8px;
+      border: none;
+      font-size: 13px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.15s;
+      white-space: nowrap;
+    }
+
+    .btn-primary { background: var(--accent); color: white; }
+    .btn-primary:hover { background: var(--accent-hover); }
+
+    .btn-danger { background: rgba(239,68,68,0.15); color: var(--danger); border: 1px solid rgba(239,68,68,0.3); }
+    .btn-danger:hover { background: rgba(239,68,68,0.25); }
+
+    .btn-secondary { background: var(--border); color: var(--text); }
+    .btn-secondary:hover { background: #3d4168; }
+
+    .btn-ghost { background: transparent; color: var(--text-muted); border: 1px solid var(--border); }
+    .btn-ghost:hover { background: var(--surface); color: var(--text); }
+
+    .btn-sm { padding: 4px 10px; font-size: 11px; }
+
+    .lang-toggle {
+      display: flex;
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      overflow: hidden;
+    }
+
+    .lang-btn {
+      padding: 6px 12px;
+      font-size: 12px;
+      font-weight: 600;
+      background: transparent;
+      color: var(--text-muted);
+      border: none;
+      border-radius: 0;
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+
+    .lang-btn.active {
+      background: var(--accent);
+      color: white;
+    }
+
+    .lang-btn:hover:not(.active) { background: var(--border); color: var(--text); }
+
+    main {
+      flex: 1;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      overflow: hidden;
+    }
+
+    .panel { display: flex; flex-direction: column; overflow: hidden; }
+
+    .panel-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 10px 20px;
+      border-bottom: 1px solid var(--border);
+      font-size: 11px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--text-muted);
+      background: var(--surface);
+      flex-shrink: 0;
+    }
+
+    .panel-body {
+      flex: 1;
+      overflow-y: auto;
+      padding: 16px 20px;
+    }
+
+    .panel-body::-webkit-scrollbar { width: 4px; }
+    .panel-body::-webkit-scrollbar-track { background: transparent; }
+    .panel-body::-webkit-scrollbar-thumb { background: var(--border); border-radius: 2px; }
+
+    #transcript-panel { border-right: 1px solid var(--border); }
+
+    .transcript-line {
+      padding: 5px 0;
+      font-size: 14px;
+      line-height: 1.6;
+      border-bottom: 1px solid rgba(45,49,72,0.5);
+    }
+
+    .transcript-line:last-child { border-bottom: none; }
+
+    .interim {
+      color: var(--text-muted);
+      font-style: italic;
+      font-size: 14px;
+      padding: 5px 0;
+    }
+
+    .empty-state {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 200px;
+      color: var(--text-muted);
+      font-size: 14px;
+      gap: 8px;
+      text-align: center;
+    }
+
+    .empty-state .icon { font-size: 32px; margin-bottom: 4px; }
+
+    .notes-section { margin-bottom: 24px; }
+
+    .notes-section h3 {
+      font-size: 11px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--accent);
+      margin-bottom: 10px;
+      padding-bottom: 6px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .loading-row {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      color: var(--text-muted);
+      font-size: 13px;
+      padding: 8px 0;
+    }
+
+    .spinner {
+      width: 14px; height: 14px;
+      border: 2px solid var(--border);
+      border-top-color: var(--accent);
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+      flex-shrink: 0;
+    }
+
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    .note-item {
+      display: flex;
+      gap: 8px;
+      padding: 5px 0;
+      font-size: 13.5px;
+      line-height: 1.5;
+    }
+
+    .note-bullet {
+      width: 6px; height: 6px;
+      border-radius: 50%;
+      background: var(--accent);
+      margin-top: 7px;
+      flex-shrink: 0;
+    }
+
+    .action-item {
+      display: flex;
+      gap: 10px;
+      padding: 8px 12px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      margin-bottom: 6px;
+      font-size: 13px;
+      line-height: 1.5;
+      align-items: flex-start;
+    }
+
+    .action-checkbox {
+      width: 15px; height: 15px;
+      border: 2px solid var(--accent);
+      border-radius: 4px;
+      margin-top: 2px;
+      flex-shrink: 0;
+    }
+
+    .notes-empty {
+      color: var(--text-muted);
+      font-size: 13px;
+      font-style: italic;
+      padding: 4px 0;
+    }
+
+    /* Modal */
+    .overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.75);
+      z-index: 100;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .overlay.show { display: flex; }
+
+    .modal {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 24px;
+      width: 440px;
+      max-width: 90vw;
+    }
+
+    .modal h2 { font-size: 16px; margin-bottom: 6px; }
+    .modal .subtitle { font-size: 13px; color: var(--text-muted); margin-bottom: 20px; }
+
+    .form-group { display: flex; flex-direction: column; gap: 5px; margin-bottom: 14px; }
+    .form-group label { font-size: 11px; font-weight: 600; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.06em; }
+
+    input[type="text"], input[type="password"] {
+      width: 100%;
+      padding: 9px 12px;
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 7px;
+      color: var(--text);
+      font-size: 14px;
+    }
+
+    input:focus { outline: none; border-color: var(--accent); }
+
+    .modal-actions { display: flex; gap: 8px; justify-content: flex-end; margin-top: 4px; }
+
+    /* Summary modal */
+    .summary-modal { width: 620px; max-width: 92vw; }
+
+    .summary-body {
+      white-space: pre-wrap;
+      font-size: 13.5px;
+      line-height: 1.75;
+      max-height: 55vh;
+      overflow-y: auto;
+      padding: 16px;
+      background: var(--bg);
+      border-radius: 8px;
+      border: 1px solid var(--border);
+      margin: 16px 0;
+    }
+
+    .tip-bar {
+      background: rgba(99,102,241,0.1);
+      border: 1px solid rgba(99,102,241,0.25);
+      border-radius: 8px;
+      padding: 10px 14px;
+      font-size: 12px;
+      color: #a5b4fc;
+      margin-bottom: 16px;
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="header-left">
+    <div class="logo">Møteassistent</div>
+    <div class="status-badge" id="status-badge">
+      <div class="dot"></div>
+      <span id="status-text">Klar</span>
+    </div>
+  </div>
+  <div class="timer" id="timer">00:00</div>
+  <div class="header-controls">
+    <div class="lang-toggle">
+      <button type="button" class="lang-btn active" id="lang-no" onclick="switchLang('nb-NO')">🇳🇴 NO</button>
+      <button type="button" class="lang-btn" id="lang-se" onclick="switchLang('sv-SE')">🇸🇪 SE</button>
+    </div>
+    <button class="btn-ghost" onclick="openSettings()">⚙ Innstillinger</button>
+    <button class="btn-primary" id="btn-start" onclick="startRecording()">▶ Start møte</button>
+    <button class="btn-secondary" id="btn-pause" style="display:none" onclick="togglePause()">⏸ Pause</button>
+    <button class="btn-danger" id="btn-end" style="display:none" onclick="endMeeting()">⏹ Avslutt</button>
+  </div>
+</header>
+
+<main>
+  <!-- Transcript -->
+  <div class="panel" id="transcript-panel">
+    <div class="panel-header">
+      <span>Transkripsjon</span>
+      <button class="btn-ghost btn-sm" onclick="clearTranscript()">Tøm</button>
+    </div>
+    <div class="panel-body" id="transcript-body">
+      <div class="empty-state" id="transcript-empty">
+        <div class="icon">🎙</div>
+        <div>Trykk <strong>Start møte</strong> for å begynne</div>
+        <div style="font-size:12px; margin-top:4px">Bruk Chrome og tillat mikrofontilgang</div>
+      </div>
+      <div id="transcript-lines"></div>
+      <div id="interim-text" class="interim"></div>
+    </div>
+  </div>
+
+  <!-- Notes -->
+  <div class="panel">
+    <div class="panel-header">
+      <span>AI-notater</span>
+      <button class="btn-ghost btn-sm" id="btn-update-notes" onclick="updateNotes()">Oppdater nå</button>
+    </div>
+    <div class="panel-body" id="notes-body">
+      <div class="empty-state" id="notes-empty">
+        <div class="icon">📝</div>
+        <div>Notater genereres automatisk</div>
+        <div style="font-size:12px; margin-top:4px">Oppdateres hvert ~150. ord</div>
+      </div>
+      <div id="notes-content" style="display:none">
+        <div class="notes-section">
+          <h3>Nøkkelpunkter</h3>
+          <div id="key-points"></div>
+        </div>
+        <div class="notes-section">
+          <h3>Handlingspunkter</h3>
+          <div id="action-items"></div>
+        </div>
+        <div class="notes-section">
+          <h3>Beslutninger</h3>
+          <div id="decisions"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>
+
+<!-- Settings modal -->
+<div class="overlay" id="settings-overlay">
+  <div class="modal">
+    <h2>Innstillinger</h2>
+    <p class="subtitle">Trenger en Anthropic API-nøkkel for AI-notater.<br>Finner du på <strong>console.anthropic.com</strong></p>
+    <div class="form-group">
+      <label>Anthropic API-nøkkel</label>
+      <input type="password" id="input-apikey" placeholder="sk-ant-...">
+    </div>
+    <div class="form-group">
+      <label>Møtenavn (valgfritt)</label>
+      <input type="text" id="input-meetingname" placeholder="f.eks. Kundemøte Acme AS">
+    </div>
+    <div class="form-group">
+      <label>Språk for transkripsjon</label>
+      <select id="input-lang" style="padding:9px 12px; background:var(--bg); border:1px solid var(--border); border-radius:7px; color:var(--text); font-size:14px;">
+        <option value="nb-NO">Norsk</option>
+        <option value="en-US">English</option>
+        <option value="sv-SE">Svenska</option>
+        <option value="da-DK">Dansk</option>
+      </select>
+    </div>
+    <div class="modal-actions">
+      <button class="btn-ghost" onclick="closeSettings()">Avbryt</button>
+      <button class="btn-primary" onclick="saveSettings()">Lagre</button>
+    </div>
+  </div>
+</div>
+
+<!-- Summary modal -->
+<div class="overlay" id="summary-overlay">
+  <div class="modal summary-modal">
+    <h2>Møtereferat</h2>
+    <div class="summary-body" id="summary-body">Genererer sammendrag...</div>
+    <div class="modal-actions">
+      <button class="btn-ghost" onclick="copySummary()">Kopier</button>
+      <button class="btn-ghost" onclick="downloadSummary()">Last ned .txt</button>
+      <button class="btn-primary" onclick="closeSummary()">Lukk</button>
+    </div>
+  </div>
+</div>
+
+<script>
+  // --- State ---
+  let apiKey = localStorage.getItem('mtg_apikey') || '';
+  let meetingName = localStorage.getItem('mtg_name') || 'Møte';
+  let lang = localStorage.getItem('mtg_lang') || 'nb-NO';
+
+  let recognition = null;
+  let isRecording = false;
+  let isPaused = false;
+  let seconds = 0;
+  let timerInterval = null;
+  let transcriptLines = [];
+  let fullTranscript = '';
+  let lastNoteWordCount = 0;
+
+  // --- Init ---
+  if (!apiKey) setTimeout(openSettings, 600);
+
+  // Sync lang toggle to stored preference
+  document.getElementById('lang-no').classList.toggle('active', lang === 'nb-NO');
+  document.getElementById('lang-se').classList.toggle('active', lang === 'sv-SE');
+
+  // --- Timer ---
+  function tickTimer() {
+    seconds++;
+    const m = String(Math.floor(seconds / 60)).padStart(2, '0');
+    const s = String(seconds % 60).padStart(2, '0');
+    document.getElementById('timer').textContent = `${m}:${s}`;
+  }
+
+  // --- Status ---
+  function setStatus(text, state) {
+    document.getElementById('status-text').textContent = text;
+    const badge = document.getElementById('status-badge');
+    badge.className = 'status-badge';
+    if (state) badge.classList.add(state);
+  }
+
+  // --- Settings ---
+  function openSettings() {
+    document.getElementById('input-apikey').value = apiKey;
+    document.getElementById('input-meetingname').value = meetingName;
+    document.getElementById('input-lang').value = lang;
+    document.getElementById('settings-overlay').classList.add('show');
+  }
+
+  function closeSettings() {
+    document.getElementById('settings-overlay').classList.remove('show');
+  }
+
+  function saveSettings() {
+    apiKey = document.getElementById('input-apikey').value.trim();
+    meetingName = document.getElementById('input-meetingname').value.trim() || 'Møte';
+    lang = document.getElementById('input-lang').value;
+    localStorage.setItem('mtg_apikey', apiKey);
+    localStorage.setItem('mtg_name', meetingName);
+    localStorage.setItem('mtg_lang', lang);
+    closeSettings();
+  }
+
+  function switchLang(newLang) {
+    lang = newLang;
+    localStorage.setItem('mtg_lang', lang);
+
+    document.getElementById('lang-no').classList.toggle('active', lang === 'nb-NO');
+    document.getElementById('lang-se').classList.toggle('active', lang === 'sv-SE');
+    document.getElementById('input-lang').value = lang;
+
+    // Restart recognition with new language if currently recording
+    if (isRecording && !isPaused && recognition) {
+      recognition.stop();
+      recognition.lang = lang;
+      recognition.start();
+    } else if (recognition) {
+      recognition.lang = lang;
+    }
+  }
+
+  // --- Speech Recognition ---
+  function setupRecognition() {
+    const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
+    if (!SR) {
+      alert('Talegjenkjenning krever Google Chrome. Bruk Chrome for best resultat.');
+      return null;
+    }
+
+    const r = new SR();
+    r.continuous = true;
+    r.interimResults = true;
+    r.lang = lang;
+
+    r.onresult = (e) => {
+      let interim = '';
+      for (let i = e.resultIndex; i < e.results.length; i++) {
+        const t = e.results[i][0].transcript;
+        if (e.results[i].isFinal) {
+          addLine(t.trim());
+        } else {
+          interim += t;
+        }
+      }
+      document.getElementById('interim-text').textContent = interim;
+    };
+
+    r.onerror = (e) => {
+      if (e.error === 'not-allowed') {
+        setStatus('Mikrofon ikke tillatt', '');
+        stopAll();
+      } else if (e.error === 'no-speech') {
+        // Silent — ignore
+      }
+    };
+
+    r.onend = () => {
+      if (isRecording && !isPaused) r.start();
+    };
+
+    return r;
+  }
+
+  function addLine(text) {
+    if (!text) return;
+    transcriptLines.push(text);
+    fullTranscript = transcriptLines.join(' ');
+
+    document.getElementById('transcript-empty').style.display = 'none';
+
+    const div = document.createElement('div');
+    div.className = 'transcript-line';
+    div.textContent = text;
+    document.getElementById('transcript-lines').appendChild(div);
+
+    const body = document.getElementById('transcript-body');
+    body.scrollTop = body.scrollHeight;
+
+    // Auto-update notes every ~150 words
+    const wordCount = fullTranscript.split(/\s+/).length;
+    if (wordCount - lastNoteWordCount >= 150) {
+      lastNoteWordCount = wordCount;
+      updateNotes();
+    }
+  }
+
+  function clearTranscript() {
+    transcriptLines = [];
+    fullTranscript = '';
+    lastNoteWordCount = 0;
+    document.getElementById('transcript-lines').innerHTML = '';
+    document.getElementById('interim-text').textContent = '';
+    document.getElementById('transcript-empty').style.display = 'flex';
+  }
+
+  // --- Recording controls ---
+  function startRecording() {
+    if (!apiKey) { openSettings(); return; }
+
+    recognition = setupRecognition();
+    if (!recognition) return;
+
+    recognition.start();
+    isRecording = true;
+    isPaused = false;
+
+    setStatus('Tar opp...', 'recording');
+    timerInterval = setInterval(tickTimer, 1000);
+
+    document.getElementById('btn-start').style.display = 'none';
+    document.getElementById('btn-pause').style.display = 'inline-flex';
+    document.getElementById('btn-end').style.display = 'inline-flex';
+  }
+
+  function togglePause() {
+    if (isPaused) {
+      recognition.start();
+      isPaused = false;
+      setStatus('Tar opp...', 'recording');
+      document.getElementById('btn-pause').textContent = '⏸ Pause';
+      timerInterval = setInterval(tickTimer, 1000);
+    } else {
+      recognition.stop();
+      isPaused = true;
+      setStatus('Pauset', 'paused');
+      document.getElementById('btn-pause').textContent = '▶ Fortsett';
+      clearInterval(timerInterval);
+    }
+  }
+
+  function stopAll() {
+    isRecording = false;
+    if (recognition) recognition.stop();
+    clearInterval(timerInterval);
+    document.getElementById('btn-pause').style.display = 'none';
+    document.getElementById('btn-end').style.display = 'none';
+    document.getElementById('btn-start').style.display = 'inline-flex';
+  }
+
+  async function endMeeting() {
+    stopAll();
+    setStatus('Avsluttet', '');
+    await generateSummary();
+  }
+
+  // --- AI: update notes ---
+  async function updateNotes() {
+    if (!apiKey || !fullTranscript.trim()) return;
+
+    const notesEmpty = document.getElementById('notes-empty');
+    const notesContent = document.getElementById('notes-content');
+
+    notesEmpty.style.display = 'flex';
+    notesEmpty.innerHTML = '<div class="loading-row"><div class="spinner"></div> Analyserer transkripsjon...</div>';
+    notesContent.style.display = 'none';
+
+    try {
+      const raw = await callClaude(`
+Du er en profesjonell møteassistent. Analyser møtetranskripsjonen og trekk ut det viktigste.
+
+TRANSKRIPSJON:
+${fullTranscript}
+
+Svar KUN med dette JSON-formatet — ingen annen tekst:
+{
+  "keyPoints": ["punkt 1", "punkt 2"],
+  "actionItems": ["handling 1", "handling 2"],
+  "decisions": ["beslutning 1"]
+}
+
+Regler:
+- Maks 12 ord per punkt
+- Kun konkrete fakta fra transkripsjonen
+- Tom liste [] hvis ingen er funnet
+- Transkripsjonen kan være på norsk, svensk eller en blanding — forstå begge
+- Skriv svaret på norsk
+      `, 'claude-haiku-4-5-20251001');
+
+      const match = raw.match(/\{[\s\S]*\}/);
+      if (!match) throw new Error('Ugyldig JSON-svar');
+
+      const data = JSON.parse(match[0]);
+
+      renderList('key-points', data.keyPoints || [], 'bullet');
+      renderList('action-items', data.actionItems || [], 'action');
+      renderList('decisions', data.decisions || [], 'bullet');
+
+      notesEmpty.style.display = 'none';
+      notesContent.style.display = 'block';
+    } catch (err) {
+      notesEmpty.innerHTML = `<div style="color:var(--danger); font-size:13px">Feil: ${err.message}</div>`;
+    }
+  }
+
+  function renderList(id, items, type) {
+    const el = document.getElementById(id);
+    el.innerHTML = '';
+
+    if (!items.length) {
+      el.innerHTML = '<div class="notes-empty">Ingen funnet ennå</div>';
+      return;
+    }
+
+    items.forEach(text => {
+      const div = document.createElement('div');
+      if (type === 'action') {
+        div.className = 'action-item';
+        div.innerHTML = `<div class="action-checkbox"></div><span>${text}</span>`;
+      } else {
+        div.className = 'note-item';
+        div.innerHTML = `<div class="note-bullet"></div><span>${text}</span>`;
+      }
+      el.appendChild(div);
+    });
+  }
+
+  // --- AI: full summary ---
+  async function generateSummary() {
+    document.getElementById('summary-overlay').classList.add('show');
+    document.getElementById('summary-body').textContent = 'Genererer møtereferat...';
+
+    if (!fullTranscript.trim()) {
+      document.getElementById('summary-body').textContent = 'Ingen transkripsjon å oppsummere.';
+      return;
+    }
+
+    try {
+      const date = new Date().toLocaleDateString('nb-NO', { day: 'numeric', month: 'long', year: 'numeric' });
+      const duration = document.getElementById('timer').textContent;
+
+      const summary = await callClaude(`
+Du er en profesjonell møteassistent. Lag et komplett møtereferat.
+
+Møte: ${meetingName}
+Dato: ${date}
+Varighet: ${duration}
+
+TRANSKRIPSJON:
+${fullTranscript}
+
+Lag et strukturert møtereferat med disse seksjonene:
+
+## Sammendrag
+(2-3 setninger om hva møtet handlet om)
+
+## Nøkkelpunkter
+(De viktigste diskusjonspunktene som bullet points)
+
+## Beslutninger
+(Konkrete avgjørelser som ble tatt)
+
+## Handlingspunkter
+(Hvem skal gjøre hva – format: "- [Navn/Rolle]: oppgave")
+
+## Neste steg
+(Hva skjer videre)
+
+Transkripsjonen kan inneholde norsk, svensk eller en blanding av begge — forstå og sammenfatt begge språk.
+Skriv møtereferatet på norsk. Vær konkret og presis. Ikke inkluder innhold som ikke er i transkripsjonen.
+      `, 'claude-sonnet-4-6');
+
+      document.getElementById('summary-body').textContent = summary;
+    } catch (err) {
+      document.getElementById('summary-body').textContent = `Feil ved generering: ${err.message}\n\nSjekk at API-nøkkelen er gyldig.`;
+    }
+  }
+
+  // --- API call ---
+  async function callClaude(prompt, model) {
+    const res = await fetch('/api/analyze', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'x-api-key': apiKey
+      },
+      body: JSON.stringify({ prompt, model })
+    });
+
+    if (!res.ok) {
+      const err = await res.json();
+      throw new Error(err.error || `HTTP ${res.status}`);
+    }
+
+    const data = await res.json();
+    return data.content[0].text;
+  }
+
+  // --- Summary modal ---
+  function copySummary() {
+    navigator.clipboard.writeText(document.getElementById('summary-body').textContent);
+    const btn = event.target;
+    btn.textContent = 'Kopiert!';
+    setTimeout(() => btn.textContent = 'Kopier', 2000);
+  }
+
+  function downloadSummary() {
+    const text = document.getElementById('summary-body').textContent;
+    const date = new Date().toISOString().split('T')[0];
+    const filename = `møtereferat-${meetingName.toLowerCase().replace(/\s+/g, '-')}-${date}.txt`;
+    const blob = new Blob([text], { type: 'text/plain;charset=utf-8' });
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(blob);
+    a.download = filename;
+    a.click();
+  }
+
+  function closeSummary() {
+    document.getElementById('summary-overlay').classList.remove('show');
+  }
+
+  // Close modals on overlay click
+  document.getElementById('settings-overlay').addEventListener('click', (e) => {
+    if (e.target === e.currentTarget) closeSettings();
+  });
+  document.getElementById('summary-overlay').addEventListener('click', (e) => {
+    if (e.target === e.currentTarget) closeSummary();
+  });
+</script>
+</body>
+</html>

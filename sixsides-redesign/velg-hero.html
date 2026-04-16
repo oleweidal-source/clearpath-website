@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+  <meta charset="UTF-8">
+  <title>Velg hero-bilde — SixSides</title>
+  <style>
+    body { background:#08080B; color:#EDE8DF; font-family:system-ui,sans-serif; margin:0; padding:32px; }
+    h1 { font-size:18px; margin-bottom:8px; color:#C4995C; }
+    p  { font-size:13px; color:rgba(237,232,223,.5); margin-bottom:32px; }
+    .grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(320px,1fr)); gap:16px; }
+    .item { position:relative; cursor:pointer; border:2px solid transparent; border-radius:4px; overflow:hidden; transition:border-color .2s; }
+    .item:hover { border-color:#C4995C; }
+    .item img { width:100%; height:220px; object-fit:cover; display:block; }
+    .item .label {
+      position:absolute; bottom:0; left:0; right:0;
+      background:rgba(8,8,11,.85); padding:10px 14px;
+      font-size:12px; letter-spacing:.04em;
+    }
+    .item .label small { display:block; color:rgba(237,232,223,.4); font-size:10px; margin-top:2px; }
+    .copy {
+      position:absolute; top:8px; right:8px;
+      background:#C4995C; color:#08080B; border:none;
+      padding:5px 10px; border-radius:2px; font-size:11px;
+      font-weight:600; cursor:pointer; opacity:0; transition:opacity .2s;
+    }
+    .item:hover .copy { opacity:1; }
+    #toast {
+      position:fixed; bottom:32px; left:50%; transform:translateX(-50%);
+      background:#C4995C; color:#08080B; padding:10px 22px;
+      border-radius:4px; font-size:13px; font-weight:600;
+      opacity:0; transition:opacity .3s; pointer-events:none;
+    }
+    #toast.show { opacity:1; }
+  </style>
+</head>
+<body>
+  <h1>Velg hero-bilde</h1>
+  <p>Klikk "Kopier" på bildet du vil bruke, åpne index.html og lim inn URL-en i hero-bg-seksjonen.</p>
+
+  <div class="grid" id="grid"></div>
+  <div id="toast">URL kopiert!</div>
+
+  <script>
+    const base = 'https://i2.vrs.gd/sixsides/uploads/images/';
+    const imgs = [
+      { path:'Cases/Oljemuseet/DSC_0497_2.jpg',               label:'Oljemuseet #1',            cat:'Oljemuseet' },
+      { path:'Cases/Oljemuseet/Norsk-Oljemuseum-2.jpg',        label:'Oljemuseet #2',            cat:'Oljemuseet' },
+      { path:'Cases/Oljemuseet/Norsk-Oljemuseum-19.jpg',       label:'Oljemuseet #3',            cat:'Oljemuseet' },
+      { path:'Cases/Oljemuseet/DSC_0505_2.jpg',                label:'Oljemuseet #4',            cat:'Oljemuseet' },
+      { path:'Cases/Norges-bank/IMG_002_foto-Hyper.jpg',       label:'Norges Bank #1',           cat:'Norges Bank' },
+      { path:'Cases/Norges-bank/IMG_003_foto-Hyper.jpg',       label:'Norges Bank #2',           cat:'Norges Bank' },
+      { path:'Cases/Norges-bank/IMG_006_foto-Hyper.jpg',       label:'Norges Bank #3',           cat:'Norges Bank' },
+      { path:'Cases/Norges-bank/IMG_007_foto-Hyper.jpg',       label:'Norges Bank #4',           cat:'Norges Bank' },
+      { path:'Cases/Norges-bank/IMG_008_foto-Hyper.jpg',       label:'Norges Bank #5',           cat:'Norges Bank' },
+      { path:'Cases/Norges-bank/ustilling-2-of-19.jpg',        label:'Norges Bank utstilling #1',cat:'Norges Bank' },
+      { path:'Cases/Norges-bank/ustilling-4-of-19.jpg',        label:'Norges Bank utstilling #2',cat:'Norges Bank' },
+      { path:'Cases/Storfjorden_Atlanterhavsparken/DSC_5978.JPG',            label:'Atlanterhavsparken #1',    cat:'Atlanterhavsparken' },
+      { path:'Cases/Storfjorden_Atlanterhavsparken/FishEye_1_Stacked_Original.jpg',label:'Atlanterhavsparken fiskeøye',cat:'Atlanterhavsparken' },
+      { path:'Cases/Storfjorden_Atlanterhavsparken/IMG_2565_2022-09-05-124029_oaeu.jpg',label:'Atlanterhavsparken #3',cat:'Atlanterhavsparken' },
+      { path:'Cases/Storfjorden_Atlanterhavsparken/IMG_2589.jpg',            label:'Atlanterhavsparken #4',    cat:'Atlanterhavsparken' },
+      { path:'Cases/Storfjorden_Atlanterhavsparken/IMG_2612.jpg',            label:'Atlanterhavsparken #5',    cat:'Atlanterhavsparken' },
+      { path:'Cases/Storfjorden_Atlanterhavsparken/IMG_2642_lysere.jpg',     label:'Atlanterhavsparken #6',    cat:'Atlanterhavsparken' },
+      { path:'Cases/Storfjorden_Atlanterhavsparken/IMG_2748.jpg',            label:'Atlanterhavsparken #7',    cat:'Atlanterhavsparken' },
+      { path:'Cases/Storfjorden_Atlanterhavsparken/IMG_2753.jpg',            label:'Atlanterhavsparken #8',    cat:'Atlanterhavsparken' },
+      { path:'Cases/Klimahuset/Klimahuset_hovedbilde.png',     label:'Klimahuset hovedbilde',    cat:'Klimahuset' },
+      { path:'Cases/Klimahuset/kh_5.jpg',                      label:'Klimahuset #2',            cat:'Klimahuset' },
+      { path:'Cases/Klimahuset/P1240248.jpg',                  label:'Klimahuset #3',            cat:'Klimahuset' },
+      { path:'Cases/Klimahuset/P1240289.jpg',                  label:'Klimahuset #4',            cat:'Klimahuset' },
+      { path:'Cases/Klimahuset/P1240348.jpg',                  label:'Klimahuset #5',            cat:'Klimahuset' },
+      { path:'Cases/2023_Skimuseet/Skimuseet-10.jpg',          label:'Skimuseet #1',             cat:'Skimuseet' },
+      { path:'Cases/2023_Skimuseet/Skimuseet-17.jpg',          label:'Skimuseet #2',             cat:'Skimuseet' },
+      { path:'Cases/2023_Skimuseet/Skimuseet-25.jpg',          label:'Skimuseet #3',             cat:'Skimuseet' },
+      { path:'Cases/2023_Skimuseet/Skimuseet-30.jpg',          label:'Skimuseet #4',             cat:'Skimuseet' },
+      { path:'Cases/Vinjesenteret/IMG_3978.jpg',               label:'Vinjesenteret #1',         cat:'Vinjesenteret' },
+      { path:'Cases/Vinjesenteret/IMG_4021.jpg',               label:'Vinjesenteret #2',         cat:'Vinjesenteret' },
+      { path:'Cases/Vinjesenteret/IMG_4087.jpg',               label:'Vinjesenteret #3',         cat:'Vinjesenteret' },
+      { path:'Cases/Vinjesenteret/IMG_4270.JPG',               label:'Vinjesenteret #4',         cat:'Vinjesenteret' },
+      { path:'Cases/Vinjesenteret/IMG_4302.jpg',               label:'Vinjesenteret #5',         cat:'Vinjesenteret' },
+      { path:'Cases/Vinjesenteret/IMG_4388.jpg',               label:'Vinjesenteret #6',         cat:'Vinjesenteret' },
+      { path:'Cases/Vinjesenteret/IMG_4582.jpg',               label:'Vinjesenteret #7',         cat:'Vinjesenteret' },
+      { path:'Cases/Vinjesenteret/skog.jpg',                   label:'Vinjesenteret — Skog',     cat:'Vinjesenteret' },
+    ];
+
+    const grid = document.getElementById('grid');
+    const toast = document.getElementById('toast');
+
+    imgs.forEach(({path, label, cat}) => {
+      const url = base + path + '?width=800&height=500&format=jpg&quality=80';
+      const el = document.createElement('div');
+      el.className = 'item';
+      el.innerHTML = `
+        <img src="${url}" alt="${label}" loading="lazy">
+        <div class="label">${label}<small>${cat}</small></div>
+        <button class="copy" onclick="copy('${url}', event)">Bruk dette</button>
+      `;
+      grid.appendChild(el);
+    });
+
+    function copy(url, e) {
+      e.stopPropagation();
+      navigator.clipboard.writeText(url).then(() => {
+        toast.classList.add('show');
+        setTimeout(() => toast.classList.remove('show'), 2200);
+      });
+    }
+  </script>
+</body>
+</html>

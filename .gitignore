@@ -2,3 +2,4 @@
 .DS_Store
 .firecrawl/
 *.zip
+.vscode/sftp.json
