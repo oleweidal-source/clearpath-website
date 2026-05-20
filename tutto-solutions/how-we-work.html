@@ -1,0 +1,968 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>How We Work — Tutto Solutions</title>
+  <meta name="description" content="Our five-step process from discovery to launch. See how Tutto Solutions delivers web design and AI with clarity, precision, and measurable results.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,300;12..96,400;12..96,500;12..96,700;12..96,800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&family=DM+Mono:wght@300;400&display=swap" rel="stylesheet">
+
+  <style>
+    /* ======================================================
+       RESET & BASE
+    ====================================================== */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --dark-bg:    #0E1B2E;
+      --dark-bg-2:  #162540;
+      --dark-fg:    #EEF2FF;
+      --dark-fg-2:  #7A93B8;
+      --dark-fg-3:  #3A5070;
+      --dark-border:rgba(255,255,255,0.08);
+      --light-bg:   #FFFFFF;
+      --light-bg-2: #F4F7FF;
+      --light-text: #0D1B2E;
+      --light-text-2:#4A5E78;
+      --light-text-3:#A0B0C4;
+      --light-border:rgba(13,27,46,0.09);
+      --accent:     #3EC9FF;
+      --accent-ink: #0085B2;
+      --accent-low: rgba(62,201,255,0.10);
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: var(--dark-bg);
+      color: var(--dark-fg);
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ======================================================
+       NAVIGATION
+    ====================================================== */
+    #nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      padding: 28px 56px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: rgba(14, 27, 46, 0.88);
+      -webkit-backdrop-filter: blur(20px);
+      backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--dark-border);
+      transition: padding 0.4s ease;
+    }
+
+    #nav.scrolled { padding: 18px 56px; }
+
+    .nav-logo {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      text-decoration: none;
+      color: var(--dark-fg);
+    }
+
+    .logo-tutto {
+      font-family: 'Bricolage Grotesque', sans-serif;
+      font-weight: 800;
+      font-size: 22px;
+      letter-spacing: -0.03em;
+      color: var(--dark-fg);
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 40px;
+      list-style: none;
+    }
+
+    .nav-links a {
+      font-size: 14px;
+      font-weight: 400;
+      color: var(--dark-fg-2);
+      text-decoration: none;
+      transition: color 0.2s;
+      position: relative;
+    }
+
+    .nav-links a::after {
+      content: '';
+      position: absolute;
+      bottom: -3px; left: 0;
+      width: 0%; height: 1px;
+      background: var(--accent);
+      transition: width 0.3s ease;
+    }
+
+    .nav-links a:hover { color: var(--dark-fg); }
+    .nav-links a:hover::after { width: 100%; }
+
+    .nav-links a.active {
+      color: var(--accent);
+    }
+
+    .nav-links a.active::after { width: 100%; }
+
+    .nav-cta {
+      padding: 10px 26px;
+      border: 1px solid var(--accent) !important;
+      border-radius: 4px;
+      color: var(--accent) !important;
+      font-weight: 500 !important;
+      transition: background 0.2s, color 0.2s !important;
+    }
+
+    .nav-cta::after { display: none !important; }
+
+    .nav-cta:hover {
+      background: var(--accent) !important;
+      color: var(--dark-bg) !important;
+    }
+
+    .lang-toggle {
+      display: flex;
+      align-items: center;
+      border: 1px solid rgba(255,255,255,0.18);
+      border-radius: 4px;
+      overflow: hidden;
+      flex-shrink: 0;
+    }
+
+    .lang-toggle button {
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 7px 13px;
+      font-family: 'DM Mono', monospace;
+      font-size: 11px;
+      font-weight: 400;
+      letter-spacing: 0.08em;
+      color: var(--dark-fg-2);
+      transition: background 0.2s, color 0.2s;
+    }
+
+    .lang-toggle button.active {
+      background: rgba(62,201,255,0.15);
+      color: var(--accent);
+    }
+
+    .lang-toggle button:hover:not(.active) { color: var(--dark-fg); }
+
+    .lang-sep {
+      width: 1px;
+      height: 28px;
+      background: rgba(255,255,255,0.18);
+      flex-shrink: 0;
+    }
+
+    .menu-btn {
+      display: none;
+      background: none;
+      border: none;
+      cursor: pointer;
+      flex-direction: column;
+      gap: 5px;
+      padding: 4px;
+    }
+
+    .menu-btn span {
+      display: block;
+      width: 24px; height: 1.5px;
+      background: var(--dark-fg);
+      transition: transform 0.3s, opacity 0.3s;
+    }
+
+    .nav-mobile {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: var(--light-bg);
+      z-index: 99;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 36px;
+    }
+
+    .nav-mobile.open { display: flex; }
+
+    .nav-mobile a {
+      font-family: 'Bricolage Grotesque', sans-serif;
+      font-size: 36px;
+      font-weight: 700;
+      color: var(--light-text);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    .nav-mobile a:hover { color: var(--accent-ink); }
+
+    /* ======================================================
+       SECTION SCAFFOLDING
+    ====================================================== */
+    .section {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 120px 56px;
+    }
+
+    .section-label {
+      font-family: 'DM Mono', monospace;
+      font-size: 11px;
+      letter-spacing: 0.32em;
+      text-transform: uppercase;
+      margin-bottom: 20px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .section-label::before {
+      content: '';
+      width: 24px; height: 1px;
+    }
+
+    .label-light { color: var(--accent-ink); }
+    .label-light::before { background: var(--accent-ink); }
+
+    .section-title {
+      font-family: 'Bricolage Grotesque', sans-serif;
+      font-size: clamp(34px, 4.5vw, 58px);
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      line-height: 1.05;
+      margin-bottom: 20px;
+    }
+
+    .reveal {
+      opacity: 0;
+      transform: translateY(36px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+    .reveal-delay-1 { transition-delay: 0.10s; }
+    .reveal-delay-2 { transition-delay: 0.20s; }
+    .reveal-delay-3 { transition-delay: 0.30s; }
+
+    /* ======================================================
+       PAGE HERO — dark
+    ====================================================== */
+    #page-hero {
+      background: var(--dark-bg);
+      padding: 180px 56px 100px;
+      position: relative;
+      overflow: hidden;
+      text-align: center;
+    }
+
+    #page-hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(ellipse 60% 50% at 50% 0%, rgba(62,201,255,0.10) 0%, transparent 70%),
+        radial-gradient(ellipse 40% 40% at 80% 80%, rgba(0,133,178,0.07) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .page-hero-inner {
+      max-width: 700px;
+      margin: 0 auto;
+      position: relative;
+      z-index: 1;
+    }
+
+    .page-hero-inner .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      font-family: 'DM Mono', monospace;
+      font-size: 11px;
+      letter-spacing: 0.28em;
+      color: var(--accent);
+      text-transform: uppercase;
+      margin-bottom: 28px;
+    }
+
+    .page-hero-inner .eyebrow::before {
+      content: '';
+      width: 32px; height: 1px;
+      background: var(--accent);
+    }
+
+    .page-hero-inner h1 {
+      font-family: 'Bricolage Grotesque', sans-serif;
+      font-size: clamp(42px, 6vw, 80px);
+      font-weight: 800;
+      letter-spacing: -0.04em;
+      line-height: 1.0;
+      color: var(--dark-fg);
+      margin-bottom: 28px;
+    }
+
+    .page-hero-inner h1 .accent { color: var(--accent); }
+
+    .page-hero-inner p {
+      font-size: 17px;
+      font-weight: 300;
+      color: var(--dark-fg-2);
+      line-height: 1.75;
+      max-width: 520px;
+      margin: 0 auto;
+    }
+
+    /* ======================================================
+       PROCESS STEPS — light
+    ====================================================== */
+    #process-content {
+      background: var(--light-bg);
+    }
+
+    #process-content .section { padding-top: 80px; }
+
+    #process-content .section-title { color: var(--light-text); }
+
+    .process-steps { margin-top: 72px; }
+
+    .process-step {
+      display: grid;
+      grid-template-columns: 88px 1fr;
+      align-items: start;
+      padding: 48px 0;
+      border-bottom: 1px solid var(--light-border);
+      gap: 36px;
+      opacity: 0;
+      transform: perspective(700px) rotateX(45deg) translateY(40px);
+      transform-origin: top center;
+      will-change: transform, opacity;
+      transition: opacity 0.65s cubic-bezier(0.16, 1, 0.3, 1),
+                  transform 0.65s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .process-step:first-child { border-top: 1px solid var(--light-border); }
+    .process-step.slide-in { opacity: 1; transform: perspective(700px) rotateX(0deg) translateY(0); }
+
+    @media (prefers-reduced-motion: reduce) {
+      .process-step { transform: none; }
+      .process-step.slide-in { opacity: 1; transform: none; }
+    }
+
+    .step-left {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 14px;
+      padding-top: 2px;
+    }
+
+    .step-num {
+      font-family: 'DM Mono', monospace;
+      font-size: 11px;
+      color: var(--light-text-3);
+      letter-spacing: 0.15em;
+    }
+
+    .step-icon {
+      width: 48px;
+      height: 48px;
+      border-radius: 14px;
+      background: var(--light-bg-2);
+      border: 1px solid var(--light-border);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--accent-ink);
+      transition: background 0.3s, border-color 0.3s, transform 0.3s;
+    }
+
+    .process-step:hover .step-icon {
+      background: rgba(0,133,178,0.08);
+      border-color: rgba(0,133,178,0.22);
+      transform: scale(1.08);
+    }
+
+    .step-icon svg {
+      width: 20px;
+      height: 20px;
+      stroke: currentColor;
+      fill: none;
+      stroke-width: 1.6;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    .step-header-row {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 16px;
+      margin-bottom: 14px;
+    }
+
+    .step-title {
+      font-family: 'Bricolage Grotesque', sans-serif;
+      font-size: 24px;
+      font-weight: 700;
+      letter-spacing: -0.025em;
+      color: var(--light-text);
+      line-height: 1.15;
+    }
+
+    .step-tag {
+      flex-shrink: 0;
+      font-family: 'DM Mono', monospace;
+      font-size: 10px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--accent-ink);
+      background: rgba(0,133,178,0.07);
+      border: 1px solid rgba(0,133,178,0.18);
+      padding: 5px 11px;
+      border-radius: 100px;
+      margin-top: 4px;
+    }
+
+    .step-body {
+      font-size: 15px;
+      color: var(--light-text-2);
+      line-height: 1.8;
+      margin-bottom: 24px;
+    }
+
+    .step-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    .step-list li {
+      font-family: 'DM Mono', monospace;
+      font-size: 11px;
+      letter-spacing: 0.06em;
+      color: var(--light-text-2);
+      background: var(--light-bg-2);
+      border: 1px solid var(--light-border);
+      padding: 6px 13px;
+      border-radius: 7px;
+      transition: border-color 0.2s, color 0.2s;
+    }
+
+    .process-step:hover .step-list li {
+      border-color: rgba(0,133,178,0.2);
+      color: var(--light-text);
+    }
+
+    /* ======================================================
+       CTA BANNER — dark
+    ====================================================== */
+    #process-cta {
+      background: var(--dark-bg);
+      border-top: 1px solid var(--dark-border);
+    }
+
+    #process-cta .section { padding: 80px 56px; }
+
+    .cta-banner {
+      max-width: 900px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 32px;
+      flex-wrap: wrap;
+    }
+
+    .cta-banner-text .cta-banner-title {
+      font-family: 'Bricolage Grotesque', sans-serif;
+      font-size: clamp(24px, 3vw, 36px);
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      color: var(--dark-fg);
+      margin-bottom: 8px;
+    }
+
+    .cta-banner-text .cta-banner-sub {
+      font-size: 15px;
+      color: var(--dark-fg-2);
+      line-height: 1.7;
+    }
+
+    .btn-primary {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 14px 32px;
+      background: var(--accent);
+      color: var(--dark-bg);
+      font-family: 'DM Sans', sans-serif;
+      font-size: 15px;
+      font-weight: 600;
+      border-radius: 6px;
+      text-decoration: none;
+      white-space: nowrap;
+      transition: opacity 0.2s, transform 0.2s;
+      flex-shrink: 0;
+    }
+
+    .btn-primary:hover { opacity: 0.88; transform: translateY(-2px); }
+
+    /* ======================================================
+       FOOTER
+    ====================================================== */
+    footer {
+      background: var(--dark-bg-2);
+      border-top: 1px solid var(--dark-border);
+      padding: 40px 56px;
+    }
+
+    .footer-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 20px;
+    }
+
+    .footer-copy { font-size: 13px; color: var(--dark-fg-3); }
+
+    .footer-links { display: flex; gap: 24px; list-style: none; }
+
+    .footer-links a {
+      font-size: 13px;
+      color: var(--dark-fg-3);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    .footer-links a:hover { color: var(--dark-fg-2); }
+
+    /* ======================================================
+       CURSOR GLOW
+    ====================================================== */
+    #cursor-glow {
+      position: fixed;
+      width: 320px; height: 320px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(62,201,255,0.035) 0%, transparent 70%);
+      pointer-events: none;
+      z-index: 9999;
+      transform: translate(-50%, -50%);
+      transition: opacity 0.3s;
+      opacity: 0;
+    }
+
+    /* ======================================================
+       RESPONSIVE
+    ====================================================== */
+    @media (max-width: 900px) {
+      .nav-links { display: none; }
+      .lang-toggle { display: none; }
+      .menu-btn { display: flex; }
+      #page-hero { padding: 160px 24px 80px; }
+    }
+
+    @media (max-width: 680px) {
+      .process-step { grid-template-columns: 1fr; padding: 36px 0; gap: 20px; }
+      .step-left { flex-direction: row; align-items: center; gap: 16px; }
+      .step-header-row { flex-direction: column; gap: 10px; }
+      .step-tag { align-self: flex-start; }
+      .section { padding: 80px 24px; }
+      footer { padding: 40px 24px; }
+      .cta-banner { flex-direction: column; align-items: flex-start; }
+      .footer-inner { flex-direction: column; text-align: center; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- Cursor glow -->
+<div id="cursor-glow"></div>
+
+<!-- ================================================================
+     NAVIGATION
+================================================================ -->
+<nav id="nav">
+  <a href="index.html" class="nav-logo">
+    <span class="logo-tutto">TUTTO</span>
+  </a>
+  <ul class="nav-links">
+    <li><a href="index.html#services">Services</a></li>
+    <li><a href="index.html#about">About</a></li>
+    <li><a href="how-we-work.html" class="active">How We Work</a></li>
+    <li><a href="team.html">Meet the Founders</a></li>
+    <li><a href="index.html#contact">Contact</a></li>
+    <li><a href="https://api.leadconnectorhq.com/widget/booking/slPBy6J3XUM8gpxPb1FL" target="_blank" rel="noopener" class="nav-cta">Book a Call</a></li>
+  </ul>
+  <button type="button" class="menu-btn" id="menu-btn" aria-label="Open menu" aria-expanded="false">
+    <span></span><span></span>
+  </button>
+</nav>
+
+<div class="nav-mobile" id="nav-mobile">
+  <a href="index.html#services" onclick="closeMenu()">Services</a>
+  <a href="index.html#about" onclick="closeMenu()">About</a>
+  <a href="how-we-work.html" onclick="closeMenu()">How We Work</a>
+  <a href="team.html" onclick="closeMenu()">Meet the Founders</a>
+  <a href="index.html#contact" onclick="closeMenu()">Contact</a>
+  <a href="https://api.leadconnectorhq.com/widget/booking/slPBy6J3XUM8gpxPb1FL" target="_blank" rel="noopener" onclick="closeMenu()">Book a Call</a>
+</div>
+
+<!-- ================================================================
+     PAGE HERO
+================================================================ -->
+<header id="page-hero">
+  <div class="page-hero-inner">
+    <span class="eyebrow">Our Approach</span>
+    <h1>From <span class="accent">idea</span> to<br>impact.</h1>
+    <p>Five focused steps. Zero guesswork. We work transparently alongside you — from the first conversation to long after launch.</p>
+  </div>
+</header>
+
+<!-- ================================================================
+     PROCESS STEPS — light
+================================================================ -->
+<section id="process-content">
+  <div class="section">
+
+    <div class="section-label label-light reveal">How We Work</div>
+    <h2 class="section-title reveal reveal-delay-1">From idea<br>to impact.</h2>
+
+    <div class="process-steps">
+
+      <div class="process-step">
+        <div class="step-left">
+          <span class="step-num">01</span>
+          <div class="step-icon">
+            <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.35-4.35"/></svg>
+          </div>
+        </div>
+        <div class="step-right">
+          <div class="step-header-row">
+            <div class="step-title" data-i18n="process.s1.title">Discovery &amp; Strategy</div>
+            <span class="step-tag" data-i18n="process.s1.tag">Week 1–2</span>
+          </div>
+          <div class="step-body" data-i18n="process.s1.body">We start by deeply understanding your business, competitive landscape, and target audience. Together we define exactly what success looks like and map the clearest route to get there — before a single pixel is drawn.</div>
+          <ul class="step-list" data-i18n-list="process.s1.list">
+            <li>Brand &amp; competitor audit</li>
+            <li>Target audience mapping</li>
+            <li>Scope &amp; success metrics</li>
+            <li>Technology stack recommendation</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="process-step">
+        <div class="step-left">
+          <span class="step-num">02</span>
+          <div class="step-icon">
+            <svg viewBox="0 0 24 24"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 013 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
+          </div>
+        </div>
+        <div class="step-right">
+          <div class="step-header-row">
+            <div class="step-title" data-i18n="process.s2.title">Design &amp; Prototype</div>
+            <span class="step-tag" data-i18n="process.s2.tag">Week 3–4</span>
+          </div>
+          <div class="step-body" data-i18n="process.s2.body">Our designers craft a bespoke visual identity and fully interactive prototype. You see and feel exactly what you're getting before a single line of code is written — revisions included until it's perfect.</div>
+          <ul class="step-list" data-i18n-list="process.s2.list">
+            <li>Visual identity &amp; colour system</li>
+            <li>Wireframes &amp; interactive prototype</li>
+            <li>Mobile-first responsive layouts</li>
+            <li>Design review &amp; sign-off</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="process-step">
+        <div class="step-left">
+          <span class="step-num">03</span>
+          <div class="step-icon">
+            <svg viewBox="0 0 24 24"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+          </div>
+        </div>
+        <div class="step-right">
+          <div class="step-header-row">
+            <div class="step-title" data-i18n="process.s3.title">Build &amp; Integrate</div>
+            <span class="step-tag" data-i18n="process.s3.tag">Week 5–8</span>
+          </div>
+          <div class="step-body" data-i18n="process.s3.body">We build your solution with performance, SEO, and long-term scalability in mind. AI and automation integrations are wired cleanly into your existing workflows — zero disruption, immediate impact.</div>
+          <ul class="step-list" data-i18n-list="process.s3.list">
+            <li>Production-grade development</li>
+            <li>CMS &amp; content setup</li>
+            <li>AI &amp; automation integration</li>
+            <li>Performance optimisation</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="process-step">
+        <div class="step-left">
+          <span class="step-num">04</span>
+          <div class="step-icon">
+            <svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="M9 12l2 2 4-4"/></svg>
+          </div>
+        </div>
+        <div class="step-right">
+          <div class="step-header-row">
+            <div class="step-title" data-i18n="process.s4.title">Test &amp; Refine</div>
+            <span class="step-tag" data-i18n="process.s4.tag">Week 9</span>
+          </div>
+          <div class="step-body" data-i18n="process.s4.body">Thorough quality assurance across all devices, browsers, and real-user scenarios. We stress-test every interaction and refine until every detail is exactly right — nothing ships until it's excellent.</div>
+          <ul class="step-list" data-i18n-list="process.s4.list">
+            <li>Cross-browser &amp; device testing</li>
+            <li>Accessibility audit (WCAG 2.1)</li>
+            <li>Load speed &amp; Core Web Vitals</li>
+            <li>Client acceptance testing</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="process-step">
+        <div class="step-left">
+          <span class="step-num">05</span>
+          <div class="step-icon">
+            <svg viewBox="0 0 24 24"><path d="M5 12l7-7 7 7"/><path d="M12 5v14"/></svg>
+          </div>
+        </div>
+        <div class="step-right">
+          <div class="step-header-row">
+            <div class="step-title" data-i18n="process.s5.title">Launch &amp; Grow</div>
+            <span class="step-tag" data-i18n="process.s5.tag">Week 10+</span>
+          </div>
+          <div class="step-body" data-i18n="process.s5.body">We handle the launch end-to-end and stay on as long-term partners. As your business evolves we optimise, expand, and adapt your digital presence — you focus on growth, we handle the technology.</div>
+          <ul class="step-list" data-i18n-list="process.s5.list">
+            <li>Managed deployment &amp; DNS</li>
+            <li>Analytics &amp; conversion tracking</li>
+            <li>Ongoing support &amp; maintenance</li>
+            <li>Quarterly performance reviews</li>
+          </ul>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ================================================================
+     CTA BANNER — dark
+================================================================ -->
+<section id="process-cta">
+  <div class="section">
+    <div class="cta-banner reveal">
+      <div class="cta-banner-text">
+        <div class="cta-banner-title" data-i18n="process.cta.title">Ready to get started?</div>
+        <div class="cta-banner-sub" data-i18n="process.cta.sub">Let's talk about your project and map out the path forward together.</div>
+      </div>
+      <a href="https://api.leadconnectorhq.com/widget/booking/slPBy6J3XUM8gpxPb1FL" target="_blank" rel="noopener" class="btn-primary">
+        <span>Book a Call</span>
+        <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M2 7h10M8 3l4 4-4 4"/></svg>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ================================================================
+     FOOTER
+================================================================ -->
+<footer>
+  <div class="footer-inner">
+    <a href="index.html" class="nav-logo">
+      <span class="logo-tutto">TUTTO</span>
+    </a>
+    <span class="footer-copy">© 2025–2026 Tutto Solutions. All rights reserved.</span>
+    <ul class="footer-links">
+      <li><a href="index.html#services">Services</a></li>
+      <li><a href="index.html#about">About</a></li>
+      <li><a href="team.html">Meet the Founders</a></li>
+      <li><a href="how-we-work.html">How We Work</a></li>
+      <li><a href="index.html#contact">Contact</a></li>
+    </ul>
+  </div>
+</footer>
+
+<!-- ================================================================
+     JAVASCRIPT
+================================================================ -->
+<script>
+  /* NAV scroll */
+  const nav = document.getElementById('nav');
+  window.addEventListener('scroll', () => {
+    nav.classList.toggle('scrolled', window.scrollY > 60);
+  });
+
+  /* MOBILE MENU */
+  const menuBtn   = document.getElementById('menu-btn');
+  const navMobile = document.getElementById('nav-mobile');
+  let menuOpen = false;
+
+  menuBtn.addEventListener('click', () => {
+    menuOpen = !menuOpen;
+    navMobile.classList.toggle('open', menuOpen);
+    document.body.style.overflow = menuOpen ? 'hidden' : '';
+    const [s1, s2] = menuBtn.querySelectorAll('span');
+    s1.style.transform = menuOpen ? 'rotate(45deg) translate(3px, 3px)'  : '';
+    s2.style.transform = menuOpen ? 'rotate(-45deg) translate(3px, -3px)' : '';
+  });
+
+  function closeMenu() {
+    menuOpen = false;
+    navMobile.classList.remove('open');
+    document.body.style.overflow = '';
+    menuBtn.querySelectorAll('span').forEach(s => s.style.transform = '');
+  }
+
+  /* SCROLL REVEAL */
+  const revealObs = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) { e.target.classList.add('visible'); revealObs.unobserve(e.target); }
+    });
+  }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
+
+  document.querySelectorAll('.reveal').forEach(el => revealObs.observe(el));
+
+  /* PROCESS STEPS — slide in from left */
+  const stepObs = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('slide-in');
+        stepObs.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.12, rootMargin: '0px 0px -48px 0px' });
+
+  document.querySelectorAll('.process-step').forEach((step, i) => {
+    step.style.transitionDelay = `${i * 0.08}s`;
+    stepObs.observe(step);
+  });
+
+  /* CURSOR GLOW */
+  const cursorGlow = document.getElementById('cursor-glow');
+  document.addEventListener('mousemove', e => {
+    cursorGlow.style.opacity = '1';
+    cursorGlow.style.left = e.clientX + 'px';
+    cursorGlow.style.top  = e.clientY + 'px';
+  });
+
+  /* ============================================================
+     LANGUAGE SWITCHER
+  ============================================================ */
+  const translations = {
+    en: {
+      'nav.services': 'Services',
+      'nav.about':    'About',
+      'nav.team':     'Team',
+      'nav.process':  'Process',
+      'nav.cta':      'Get Started',
+      'footer.contact': 'Contact',
+      'footer.copy':  '© 2024 Clearpath Solutions AS. All rights reserved.',
+
+      'process.eyebrow': 'Our Approach',
+      'process.h1':      'A <span class="accent">clear</span> path from<br>idea to impact.',
+      'process.intro':   'Five focused steps. Zero guesswork. We work transparently alongside you — from the first conversation to long after launch.',
+
+      'process.label': 'How We Work',
+      'process.title': 'A clear path from<br>idea to impact.',
+
+      'process.s1.title': 'Discovery &amp; Strategy',
+      'process.s1.tag': 'Week 1–2',
+      'process.s1.body': 'We start by deeply understanding your business, competitive landscape, and target audience. Together we define exactly what success looks like and map the clearest route to get there — before a single pixel is drawn.',
+      'process.s1.list': ['Brand &amp; competitor audit', 'Target audience mapping', 'Scope &amp; success metrics', 'Technology stack recommendation'],
+      'process.s2.title': 'Design &amp; Prototype',
+      'process.s2.tag': 'Week 3–4',
+      'process.s2.body': 'Our designers craft a bespoke visual identity and fully interactive prototype. You see and feel exactly what you\'re getting before a single line of code is written — revisions included until it\'s perfect.',
+      'process.s2.list': ['Visual identity &amp; colour system', 'Wireframes &amp; interactive prototype', 'Mobile-first responsive layouts', 'Design review &amp; sign-off'],
+      'process.s3.title': 'Build &amp; Integrate',
+      'process.s3.tag': 'Week 5–8',
+      'process.s3.body': 'We build your solution with performance, SEO, and long-term scalability in mind. AI and automation integrations are wired cleanly into your existing workflows — zero disruption, immediate impact.',
+      'process.s3.list': ['Production-grade development', 'CMS &amp; content setup', 'AI &amp; automation integration', 'Performance optimisation'],
+      'process.s4.title': 'Test &amp; Refine',
+      'process.s4.tag': 'Week 9',
+      'process.s4.body': 'Thorough quality assurance across all devices, browsers, and real-user scenarios. We stress-test every interaction and refine until every detail is exactly right — nothing ships until it\'s excellent.',
+      'process.s4.list': ['Cross-browser &amp; device testing', 'Accessibility audit (WCAG 2.1)', 'Load speed &amp; Core Web Vitals', 'Client acceptance testing'],
+      'process.s5.title': 'Launch &amp; Grow',
+      'process.s5.tag': 'Week 10+',
+      'process.s5.body': 'We handle the launch end-to-end and stay on as long-term partners. As your business evolves we optimise, expand, and adapt your digital presence — you focus on growth, we handle the technology.',
+      'process.s5.list': ['Managed deployment &amp; DNS', 'Analytics &amp; conversion tracking', 'Ongoing support &amp; maintenance', 'Quarterly performance reviews'],
+
+      'process.cta.title': 'Ready to get started?',
+      'process.cta.sub':   "Let's talk about your project and map out the path forward together.",
+    },
+    no: {
+      'nav.services': 'Tjenester',
+      'nav.about':    'Om oss',
+      'nav.team':     'Team',
+      'nav.process':  'Prosess',
+      'nav.cta':      'Kom i gang',
+      'footer.contact': 'Kontakt',
+      'footer.copy':  '© 2024 Clearpath Solutions AS. Alle rettigheter forbeholdt.',
+
+      'process.eyebrow': 'Vår tilnærming',
+      'process.h1':      'En <span class="accent">tydelig</span> vei fra<br>idé til resultat.',
+      'process.intro':   'Fem fokuserte steg. Ingen gjetning. Vi jobber transparent side om side med deg — fra første samtale til lenge etter lansering.',
+
+      'process.label': 'Slik jobber vi',
+      'process.title': 'En tydelig vei fra<br>idé til resultat.',
+
+      'process.s1.title': 'Oppdagelse &amp; Strategi',
+      'process.s1.tag': 'Uke 1–2',
+      'process.s1.body': 'Vi starter med å forstå din bedrift, konkurranselandskapet og målgruppen i dybden. Sammen definerer vi nøyaktig hva suksess betyr og kartlegger den klareste veien dit — før en eneste piksel er tegnet.',
+      'process.s1.list': ['Merkevare- &amp; konkurrentanalyse', 'Kartlegging av målgruppe', 'Omfang &amp; suksessmål', 'Anbefaling av teknologistack'],
+      'process.s2.title': 'Design &amp; Prototype',
+      'process.s2.tag': 'Uke 3–4',
+      'process.s2.body': 'Våre designere lager en skreddersydd visuell identitet og en fullt interaktiv prototype. Du ser og føler nøyaktig hva du får før en eneste kodelinje er skrevet — revisjoner inkludert til det er perfekt.',
+      'process.s2.list': ['Visuell identitet &amp; fargesystem', 'Wireframes &amp; interaktiv prototype', 'Mobilfirst responsivt design', 'Designgjennomgang &amp; godkjenning'],
+      'process.s3.title': 'Bygg &amp; Integrer',
+      'process.s3.tag': 'Uke 5–8',
+      'process.s3.body': 'Vi bygger løsningen din med ytelse, SEO og langsiktig skalerbarhet i tankene. AI og automatiseringsintegrasjoner kobles ryddig inn i din eksisterende arbeidsflyt — null forstyrrelse, umiddelbar effekt.',
+      'process.s3.list': ['Produksjonsklar utvikling', 'CMS &amp; innholdsoppsett', 'AI &amp; automatiseringsintegrasjon', 'Ytelsesoptimalisering'],
+      'process.s4.title': 'Test &amp; Finjuster',
+      'process.s4.tag': 'Uke 9',
+      'process.s4.body': 'Grundig kvalitetssikring på tvers av alle enheter, nettlesere og virkelige brukersituasjoner. Vi stresstester hver interaksjon og finjusterer til alle detaljer er nøyaktig riktige — ingenting sendes ut før det er utmerket.',
+      'process.s4.list': ['Testing på tvers av nettlesere &amp; enheter', 'Tilgjengelighetsrevisjon (WCAG 2.1)', 'Lastehastighet &amp; Core Web Vitals', 'Kundeakseptansetesting'],
+      'process.s5.title': 'Lansering &amp; Vekst',
+      'process.s5.tag': 'Uke 10+',
+      'process.s5.body': 'Vi håndterer lanseringen fra A til Å og forblir langsiktige partnere. Etter hvert som bedriften din utvikler seg, optimaliserer, utvider og tilpasser vi din digitale tilstedeværelse — du fokuserer på vekst, vi tar oss av teknologien.',
+      'process.s5.list': ['Administrert utrulling &amp; DNS', 'Analyse &amp; konverteringssporing', 'Løpende support &amp; vedlikehold', 'Kvartalsvise ytelsesgjennomganger'],
+
+      'process.cta.title': 'Klar til å komme i gang?',
+      'process.cta.sub':   'La oss snakke om prosjektet ditt og kartlegge veien videre sammen.',
+    }
+  };
+
+  function setLang(lang) {
+    const t = translations[lang];
+    document.getElementById('lang-en').classList.toggle('active', lang === 'en');
+    document.getElementById('lang-no').classList.toggle('active', lang === 'no');
+    document.documentElement.lang = lang;
+
+    document.querySelectorAll('[data-i18n]').forEach(el => {
+      const key = el.dataset.i18n;
+      if (t[key] !== undefined) el.innerHTML = t[key];
+    });
+
+    document.querySelectorAll('[data-i18n-list]').forEach(el => {
+      const key = el.dataset.i18nList;
+      if (t[key] !== undefined) {
+        el.innerHTML = t[key].map(item => `<li>${item}</li>`).join('');
+      }
+    });
+  }
+</script>
+</body>
+</html>

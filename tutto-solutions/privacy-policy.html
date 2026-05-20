@@ -1,0 +1,719 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Privacy Policy — Clearpath Solutions</title>
+  <link rel="icon" href="/clearpath-mark.svg" type="image/svg+xml">
+  <meta name="description" content="Privacy Policy for Clearpath Solutions AS. Learn how we collect, use, and safeguard your personal data in compliance with GDPR.">
+  <link rel="canonical" href="https://clearpathai.tech/privacy-policy.html">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://clearpathai.tech/privacy-policy.html">
+  <meta property="og:site_name" content="Clearpath Solutions">
+  <meta property="og:title" content="Privacy Policy — Clearpath Solutions">
+  <meta property="og:description" content="Privacy Policy for Clearpath Solutions AS. Learn how we collect, use, and safeguard your personal data in compliance with GDPR.">
+  <meta property="og:image" content="https://clearpathai.tech/og-image.png">
+  <meta property="og:locale" content="en_GB">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Privacy Policy — Clearpath Solutions">
+  <meta name="twitter:description" content="Privacy Policy for Clearpath Solutions AS. Learn how we collect, use, and safeguard your personal data in compliance with GDPR.">
+  <meta name="twitter:image" content="https://clearpathai.tech/og-image.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="dns-prefetch" href="https://www.googletagmanager.com">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,300;12..96,400;12..96,500;12..96,700;12..96,800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&family=DM+Mono:wght@300;400&display=swap" media="print" onload="this.media='all'">
+  <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,300;12..96,400;12..96,500;12..96,700;12..96,800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&family=DM+Mono:wght@300;400&display=swap"></noscript>
+
+  <style>
+    /* ======================================================
+       RESET & BASE
+    ====================================================== */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --dark-bg:    #0E1B2E;
+      --dark-bg-2:  #162540;
+      --dark-fg:    #EEF2FF;
+      --dark-fg-2:  #7A93B8;
+      --dark-fg-3:  #3A5070;
+      --dark-border:rgba(255,255,255,0.08);
+      --light-bg:   #FFFFFF;
+      --light-bg-2: #F4F7FF;
+      --light-text: #0D1B2E;
+      --light-text-2:#4A5E78;
+      --light-border:rgba(13,27,46,0.09);
+      --accent:     #3EC9FF;
+      --accent-ink: #0085B2;
+      --accent-low: rgba(62,201,255,0.10);
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: var(--dark-bg);
+      color: var(--dark-fg);
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ======================================================
+       NAVIGATION
+    ====================================================== */
+    #nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      padding: 28px 56px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: rgba(14, 27, 46, 0.88);
+      -webkit-backdrop-filter: blur(20px);
+      backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--dark-border);
+      transition: padding 0.4s ease;
+    }
+
+    #nav.scrolled { padding: 18px 56px; }
+
+    .nav-logo {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      text-decoration: none;
+      color: var(--dark-fg);
+    }
+
+    .logo-mark {
+      width: 36px; height: 36px;
+      background: var(--accent);
+      color: var(--dark-bg);
+      font-family: 'Bricolage Grotesque', sans-serif;
+      font-weight: 800;
+      font-size: 13px;
+      letter-spacing: 0.04em;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+      flex-shrink: 0;
+    }
+
+    .logo-text {
+      font-family: 'Bricolage Grotesque', sans-serif;
+      font-weight: 700;
+      font-size: 16px;
+      letter-spacing: -0.02em;
+    }
+
+    .logo-text em { font-style: normal; color: var(--accent); }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 40px;
+      list-style: none;
+    }
+
+    .nav-links a {
+      font-size: 14px;
+      font-weight: 400;
+      color: var(--dark-fg-2);
+      text-decoration: none;
+      transition: color 0.2s;
+      position: relative;
+    }
+
+    .nav-links a::after {
+      content: '';
+      position: absolute;
+      bottom: -3px; left: 0;
+      width: 0%; height: 1px;
+      background: var(--accent);
+      transition: width 0.3s ease;
+    }
+
+    .nav-links a:hover { color: var(--dark-fg); }
+    .nav-links a:hover::after { width: 100%; }
+
+    .nav-cta {
+      padding: 10px 26px;
+      border: 1px solid var(--accent) !important;
+      border-radius: 4px;
+      color: var(--accent) !important;
+      font-weight: 500 !important;
+      transition: background 0.2s, color 0.2s !important;
+    }
+
+    .nav-cta::after { display: none !important; }
+
+    .nav-cta:hover {
+      background: var(--accent) !important;
+      color: var(--dark-bg) !important;
+    }
+
+    .lang-toggle {
+      display: flex;
+      align-items: center;
+      border: 1px solid rgba(255,255,255,0.18);
+      border-radius: 4px;
+      overflow: hidden;
+      flex-shrink: 0;
+    }
+
+    .lang-toggle button {
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 7px 13px;
+      font-family: 'DM Mono', monospace;
+      font-size: 11px;
+      font-weight: 400;
+      letter-spacing: 0.08em;
+      color: var(--dark-fg-2);
+      transition: background 0.2s, color 0.2s;
+    }
+
+    .lang-toggle button.active {
+      background: rgba(62,201,255,0.15);
+      color: var(--accent);
+    }
+
+    .lang-toggle button:hover:not(.active) { color: var(--dark-fg); }
+
+    .lang-sep {
+      width: 1px;
+      height: 28px;
+      background: rgba(255,255,255,0.18);
+      flex-shrink: 0;
+    }
+
+    .menu-btn {
+      display: none;
+      background: none;
+      border: none;
+      cursor: pointer;
+      flex-direction: column;
+      gap: 5px;
+      padding: 4px;
+    }
+
+    .menu-btn span {
+      display: block;
+      width: 24px; height: 1.5px;
+      background: var(--dark-fg);
+      transition: transform 0.3s, opacity 0.3s;
+    }
+
+    .nav-mobile {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: var(--light-bg);
+      z-index: 99;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 36px;
+    }
+
+    .nav-mobile.open { display: flex; }
+
+    .nav-mobile a {
+      font-family: 'Bricolage Grotesque', sans-serif;
+      font-size: 36px;
+      font-weight: 700;
+      color: var(--light-text);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    .nav-mobile a:hover { color: var(--accent-ink); }
+
+    /* ======================================================
+       PAGE HERO
+    ====================================================== */
+    #page-hero {
+      background: var(--dark-bg);
+      padding: 180px 56px 100px;
+      position: relative;
+      overflow: hidden;
+      text-align: center;
+    }
+
+    #page-hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(ellipse 60% 50% at 50% 0%, rgba(62,201,255,0.10) 0%, transparent 70%),
+        radial-gradient(ellipse 40% 40% at 20% 80%, rgba(110,58,240,0.08) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .page-hero-inner {
+      max-width: 700px;
+      margin: 0 auto;
+      position: relative;
+      z-index: 1;
+    }
+
+    .page-hero-inner .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      font-family: 'DM Mono', monospace;
+      font-size: 11px;
+      letter-spacing: 0.28em;
+      color: var(--accent);
+      text-transform: uppercase;
+      margin-bottom: 28px;
+    }
+
+    .page-hero-inner .eyebrow::before {
+      content: '';
+      width: 32px; height: 1px;
+      background: var(--accent);
+    }
+
+    .page-hero-inner h1 {
+      font-family: 'Bricolage Grotesque', sans-serif;
+      font-size: clamp(42px, 6vw, 72px);
+      font-weight: 800;
+      letter-spacing: -0.04em;
+      line-height: 1.0;
+      color: var(--dark-fg);
+      margin-bottom: 28px;
+    }
+
+    .page-hero-inner p {
+      font-size: 16px;
+      font-weight: 300;
+      color: var(--dark-fg-2);
+      line-height: 1.75;
+      max-width: 480px;
+      margin: 0 auto;
+    }
+
+    /* ======================================================
+       LEGAL CONTENT
+    ====================================================== */
+    #legal-content {
+      background: var(--dark-bg);
+      padding-bottom: 120px;
+    }
+
+    .legal-inner {
+      max-width: 760px;
+      margin: 0 auto;
+      padding: 0 56px;
+    }
+
+    .legal-section {
+      border-top: 1px solid var(--dark-border);
+      padding: 48px 0;
+    }
+
+    .legal-section:last-child {
+      border-bottom: 1px solid var(--dark-border);
+    }
+
+    .legal-num {
+      font-family: 'DM Mono', monospace;
+      font-size: 11px;
+      letter-spacing: 0.28em;
+      color: var(--accent);
+      text-transform: uppercase;
+      margin-bottom: 12px;
+    }
+
+    .legal-section h2 {
+      font-family: 'Bricolage Grotesque', sans-serif;
+      font-size: 22px;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      color: var(--dark-fg);
+      margin-bottom: 20px;
+    }
+
+    .legal-section p {
+      font-size: 15px;
+      font-weight: 300;
+      color: var(--dark-fg-2);
+      line-height: 1.8;
+      margin-bottom: 16px;
+    }
+
+    .legal-section p:last-child { margin-bottom: 0; }
+
+    .legal-section h3 {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 13px;
+      font-weight: 500;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--dark-fg-3);
+      margin: 24px 0 12px;
+    }
+
+    .legal-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .legal-list li {
+      font-size: 15px;
+      font-weight: 300;
+      color: var(--dark-fg-2);
+      line-height: 1.7;
+      padding-left: 20px;
+      position: relative;
+    }
+
+    .legal-list li::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 11px;
+      width: 6px; height: 1px;
+      background: var(--accent);
+    }
+
+    .legal-contact-link {
+      color: var(--accent);
+      text-decoration: none;
+      border-bottom: 1px solid rgba(62,201,255,0.3);
+      transition: border-color 0.2s;
+    }
+
+    .legal-contact-link:hover { border-color: var(--accent); }
+
+    /* ======================================================
+       FOOTER
+    ====================================================== */
+    footer {
+      background: var(--dark-bg-2);
+      border-top: 1px solid var(--dark-border);
+      padding: 40px 56px;
+    }
+
+    .footer-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 20px;
+    }
+
+    .footer-copy { font-size: 13px; color: var(--dark-fg-3); }
+
+    .footer-links { display: flex; gap: 24px; list-style: none; }
+
+    .footer-links a {
+      font-size: 13px;
+      color: var(--dark-fg-3);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    .footer-links a:hover { color: var(--dark-fg-2); }
+
+    /* ======================================================
+       CURSOR GLOW
+    ====================================================== */
+    #cursor-glow {
+      position: fixed;
+      width: 320px; height: 320px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(62,201,255,0.035) 0%, transparent 70%);
+      pointer-events: none;
+      z-index: 9999;
+      transform: translate(-50%, -50%);
+      transition: opacity 0.3s;
+      opacity: 0;
+    }
+
+    /* ======================================================
+       RESPONSIVE
+    ====================================================== */
+    @media (max-width: 900px) {
+      .nav-links { display: none; }
+      .lang-toggle { display: none; }
+      .menu-btn { display: flex; }
+      #page-hero { padding: 160px 24px 80px; }
+    }
+
+    @media (max-width: 680px) {
+      .legal-inner { padding: 0 24px; }
+      footer { padding: 40px 24px; }
+      .footer-inner { flex-direction: column; text-align: center; }
+      .footer-links { flex-wrap: wrap; justify-content: center; }
+    }
+  </style>
+
+  <!-- Google Consent Mode v2 — defaults denied until user accepts -->
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('consent', 'default', { analytics_storage: 'denied', ad_storage: 'denied' });
+  </script>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-DCVLEVPL5B"></script>
+  <script>
+    gtag('js', new Date());
+    gtag('config', 'G-DCVLEVPL5B');
+  </script>
+</head>
+<body>
+
+<div id="cursor-glow"></div>
+
+<!-- ================================================================
+     NAVIGATION
+================================================================ -->
+<nav id="nav">
+  <a href="/" class="nav-logo">
+    <div class="logo-mark">CS</div>
+    <span class="logo-text">Clearpath <em>Solutions</em></span>
+  </a>
+  <ul class="nav-links">
+    <li><a href="/#services">Services</a></li>
+    <li><a href="/#about">About</a></li>
+    <li><a href="/team.html">Team</a></li>
+    <li><a href="/how-we-work.html">Process</a></li>
+    <li><a href="/#contact" class="nav-cta">Get Started</a></li>
+  </ul>
+  <div class="lang-toggle" id="lang-toggle">
+    <button type="button" id="lang-en" class="active" onclick="setLang('en')">EN</button>
+    <div class="lang-sep"></div>
+    <button type="button" id="lang-no" onclick="setLang('no')">NO</button>
+  </div>
+  <button type="button" class="menu-btn" id="menu-btn" aria-label="Open menu">
+    <span></span><span></span>
+  </button>
+</nav>
+
+<div class="nav-mobile" id="nav-mobile">
+  <a href="/#services" onclick="closeMenu()">Services</a>
+  <a href="/#about" onclick="closeMenu()">About</a>
+  <a href="/team.html" onclick="closeMenu()">Team</a>
+  <a href="/how-we-work.html" onclick="closeMenu()">Process</a>
+  <a href="/#contact" onclick="closeMenu()">Get Started</a>
+</div>
+
+<!-- ================================================================
+     PAGE HERO
+================================================================ -->
+<header id="page-hero">
+  <div class="page-hero-inner">
+    <span class="eyebrow">Legal</span>
+    <h1>Privacy Policy</h1>
+    <p>Last updated: March 25, 2026. We are committed to protecting your personal data and complying with GDPR.</p>
+  </div>
+</header>
+
+<!-- ================================================================
+     LEGAL CONTENT
+================================================================ -->
+<main id="legal-content">
+  <div class="legal-inner">
+
+    <div class="legal-section">
+      <div class="legal-num">01</div>
+      <h2>Introduction</h2>
+      <p>Clear Path Solutions ("we", "us", "our") respects your privacy and is committed to protecting your personal data. This Privacy Policy explains how we collect, use, and safeguard your information when you visit our website <a href="https://clearpathai.tech" class="legal-contact-link">clearpathai.tech</a> or interact with our services.</p>
+      <p>We are based in Norway and comply with applicable data protection laws, including the General Data Protection Regulation (GDPR).</p>
+    </div>
+
+    <div class="legal-section">
+      <div class="legal-num">02</div>
+      <h2>Information We Collect</h2>
+      <p>We only collect personal data when it is voluntarily provided by you in connection with contacting us or requesting our services.</p>
+      <h3>Personal data we may collect</h3>
+      <ul class="legal-list">
+        <li>Name</li>
+        <li>Email address</li>
+        <li>Phone number</li>
+        <li>Business information</li>
+      </ul>
+      <h3>Automatically collected data</h3>
+      <ul class="legal-list">
+        <li>Analytics data (e.g., website usage statistics)</li>
+      </ul>
+      <h3>We do not collect</h3>
+      <ul class="legal-list">
+        <li>Cookies for marketing purposes</li>
+        <li>AI input data from users</li>
+        <li>Call recordings</li>
+        <li>Chat logs</li>
+      </ul>
+    </div>
+
+    <div class="legal-section">
+      <div class="legal-num">03</div>
+      <h2>How We Use Your Data</h2>
+      <p>We use your personal data for the following purposes:</p>
+      <ul class="legal-list">
+        <li>To respond to inquiries and communicate with you</li>
+        <li>To provide and deliver our services</li>
+        <li>To manage client relationships</li>
+        <li>To improve our website and services through analytics</li>
+      </ul>
+      <p style="margin-top: 20px;">We do not use personal data to train AI models.</p>
+    </div>
+
+    <div class="legal-section">
+      <div class="legal-num">04</div>
+      <h2>Legal Basis for Processing (GDPR)</h2>
+      <p>We process personal data based on:</p>
+      <ul class="legal-list">
+        <li>Consent</li>
+        <li>Legitimate interest</li>
+        <li>Contractual necessity</li>
+      </ul>
+    </div>
+
+    <div class="legal-section">
+      <div class="legal-num">05</div>
+      <h2>Third-Party Services</h2>
+      <p>We use trusted third-party providers to deliver our services:</p>
+      <ul class="legal-list">
+        <li>Stripe</li>
+        <li>OpenAI</li>
+        <li>n8n</li>
+        <li>GoHighLevel</li>
+        <li>Google Analytics</li>
+        <li>Hostinger</li>
+      </ul>
+    </div>
+
+    <div class="legal-section">
+      <div class="legal-num">06</div>
+      <h2>International Data Transfers</h2>
+      <p>Your data may be transferred outside the EU/EEA, including to the United States, with appropriate safeguards in place.</p>
+    </div>
+
+    <div class="legal-section">
+      <div class="legal-num">07</div>
+      <h2>Data Retention</h2>
+      <p>We retain personal data for up to 6 months unless required otherwise by law.</p>
+    </div>
+
+    <div class="legal-section">
+      <div class="legal-num">08</div>
+      <h2>Your Rights</h2>
+      <p>Under GDPR, you have the right to:</p>
+      <ul class="legal-list">
+        <li>Access your personal data</li>
+        <li>Correct inaccurate data</li>
+        <li>Request deletion of your data</li>
+        <li>Restrict processing</li>
+        <li>Data portability</li>
+        <li>Withdraw consent at any time</li>
+      </ul>
+    </div>
+
+    <div class="legal-section">
+      <div class="legal-num">09</div>
+      <h2>Data Security</h2>
+      <p>We use encryption, secure servers, and access control to protect your personal data.</p>
+    </div>
+
+    <div class="legal-section">
+      <div class="legal-num">10</div>
+      <h2>AI and Automation</h2>
+      <p>We only process data to deliver services and do not train AI models on personal data.</p>
+    </div>
+
+    <div class="legal-section">
+      <div class="legal-num">11</div>
+      <h2>Contact Information</h2>
+      <p>For any privacy-related questions or requests, please contact us:</p>
+      <p>Email: <a href="mailto:herman@clearpath.no" class="legal-contact-link">herman@clearpath.no</a><br>Address: Hafrsfjordgata 5, Norway</p>
+    </div>
+
+    <div class="legal-section">
+      <div class="legal-num">12</div>
+      <h2>Changes to This Policy</h2>
+      <p>We may update this Privacy Policy from time to time. When we do, we will revise the "Last updated" date at the top of this page.</p>
+    </div>
+
+  </div>
+</main>
+
+<!-- ================================================================
+     FOOTER
+================================================================ -->
+<footer>
+  <div class="footer-inner">
+    <a href="/" class="nav-logo">
+      <div class="logo-mark">CS</div>
+      <span class="logo-text">Clearpath <em>Solutions</em></span>
+    </a>
+    <span class="footer-copy">© 2024 Clearpath Solutions AS. All rights reserved.</span>
+    <ul class="footer-links">
+      <li><a href="/#services">Services</a></li>
+      <li><a href="/#about">About</a></li>
+      <li><a href="/team.html">Team</a></li>
+      <li><a href="/how-we-work.html">Process</a></li>
+      <li><a href="/privacy-policy.html">Privacy Policy</a></li>
+      <li><a href="/terms-of-service.html">Terms</a></li>
+    </ul>
+  </div>
+</footer>
+
+<!-- ================================================================
+     JAVASCRIPT
+================================================================ -->
+<script>
+  /* NAV scroll */
+  const nav = document.getElementById('nav');
+  window.addEventListener('scroll', () => {
+    nav.classList.toggle('scrolled', window.scrollY > 60);
+  });
+
+  /* MOBILE MENU */
+  const menuBtn   = document.getElementById('menu-btn');
+  const navMobile = document.getElementById('nav-mobile');
+  let menuOpen = false;
+
+  menuBtn.addEventListener('click', () => {
+    menuOpen = !menuOpen;
+    navMobile.classList.toggle('open', menuOpen);
+    document.body.style.overflow = menuOpen ? 'hidden' : '';
+    const [s1, s2] = menuBtn.querySelectorAll('span');
+    s1.style.transform = menuOpen ? 'rotate(45deg) translate(3px, 3px)'  : '';
+    s2.style.transform = menuOpen ? 'rotate(-45deg) translate(3px, -3px)' : '';
+  });
+
+  function closeMenu() {
+    menuOpen = false;
+    navMobile.classList.remove('open');
+    document.body.style.overflow = '';
+    menuBtn.querySelectorAll('span').forEach(s => s.style.transform = '');
+  }
+
+  /* CURSOR GLOW */
+  const cursorGlow = document.getElementById('cursor-glow');
+  document.addEventListener('mousemove', e => {
+    cursorGlow.style.opacity = '1';
+    cursorGlow.style.left = e.clientX + 'px';
+    cursorGlow.style.top  = e.clientY + 'px';
+  });
+
+  /* LANG TOGGLE (no-op for legal pages — content is English only) */
+  function setLang(lang) {
+    document.getElementById('lang-en').classList.toggle('active', lang === 'en');
+    document.getElementById('lang-no').classList.toggle('active', lang === 'no');
+    document.documentElement.lang = lang;
+  }
+</script>
+
+<!-- Cookie consent -->
+<script src="/cookie-consent.js"></script>
+</body>
+</html>
