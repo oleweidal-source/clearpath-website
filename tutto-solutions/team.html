@@ -3,9 +3,24 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Meet the Founders — Tutto Solutions</title>
+  <title>Grunnleggerne — Digitalt Byrå i Norge | Tutto Solutions</title>
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='6' fill='%233EC9FF'/><text x='16' y='23' text-anchor='middle' font-family='sans-serif' font-size='20' font-weight='800' fill='%230E1B2E'>T</text></svg>" type="image/svg+xml">
-  <meta name="description" content="Meet Ole Wilhelm Weidal and Herman Malme, the founders of Tutto Solutions.">
+  <meta name="description" content="Herman Malme (CFO) og Ole Wilhelm Weidal (CSO) grunnla Tutto Solutions — et norsk digitalt byrå spesialisert i nettside-utvikling og AI-automatisering for bedrifter.">
+  <link rel="canonical" href="https://tuttoai.tech/team.html" />
+  <link rel="alternate" hreflang="nb" href="https://tuttoai.tech/team.html">
+  <link rel="alternate" hreflang="en" href="https://tuttoai.tech/team.html">
+  <link rel="alternate" hreflang="x-default" href="https://tuttoai.tech/team.html">
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="Tutto Solutions" />
+  <meta property="og:url" content="https://tuttoai.tech/team.html" />
+  <meta property="og:title" content="Grunnleggerne — Digitalt Byrå i Norge | Tutto Solutions" />
+  <meta property="og:description" content="Herman Malme og Ole Wilhelm Weidal grunnla Tutto Solutions — et norsk digitalt byrå for nettside-utvikling og AI-automatisering." />
+  <meta property="og:image" content="https://tuttoai.tech/og-image.png" />
+  <meta property="og:locale" content="nb_NO" />
+  <meta property="og:locale:alternate" content="en_GB" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Grunnleggerne — Digitalt Byrå i Norge | Tutto Solutions" />
+  <meta name="twitter:description" content="Herman Malme og Ole Wilhelm Weidal grunnla Tutto Solutions — et norsk digitalt byrå for nettside-utvikling og AI-automatisering." />
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,300;12..96,400;12..96,500;12..96,700;12..96,800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&family=DM+Mono:wght@300;400&display=swap" media="print" onload="this.media='all'">
@@ -111,6 +126,20 @@
 
     .nav-cta::after { display: none !important; }
     .nav-cta:hover { background: var(--accent) !important; color: var(--dark-bg) !important; }
+    .lang-toggle {
+      display: flex; align-items: center;
+      border: 1px solid rgba(255,255,255,0.18);
+      border-radius: 4px; overflow: hidden; flex-shrink: 0;
+    }
+    .lang-toggle button {
+      background: none; border: none; cursor: pointer;
+      padding: 7px 13px; font-family: 'DM Mono', monospace;
+      font-size: 11px; font-weight: 400; letter-spacing: 0.08em;
+      color: var(--dark-fg-2); transition: background 0.2s, color 0.2s;
+    }
+    .lang-toggle button.active { background: rgba(62,201,255,0.15); color: var(--accent); }
+    .lang-toggle button:hover:not(.active) { color: var(--dark-fg); }
+    .lang-sep { width: 1px; height: 28px; background: rgba(255,255,255,0.18); flex-shrink: 0; }
 
     .menu-btn {
       display: none;
@@ -467,6 +496,7 @@
     @media (max-width: 900px) {
       #nav { padding: 20px 24px; }
       .nav-links { display: none; }
+      .lang-toggle { display: none; }
       .menu-btn { display: flex; }
       .page-hero { padding: 140px 24px 72px; }
       .team-inner { padding: 0 24px; }
@@ -517,7 +547,7 @@
     <li><a href="index.html#about">About</a></li>
     <li><a href="index.html#process">Process</a></li>
     <li><a href="index.html#contact">Contact</a></li>
-    <li><a href="https://api.leadconnectorhq.com/widget/booking/slPBy6J3XUM8gpxPb1FL" target="_blank" rel="noopener" class="nav-cta">Book a Call</a></li>
+    <li><a href="/#contact" target="_blank" rel="noopener" class="nav-cta">Book a Call</a></li>
   </ul>
   <button type="button" class="menu-btn" id="menu-btn" aria-label="Open menu" aria-expanded="false">
     <span></span><span></span>
@@ -529,16 +559,16 @@
   <a href="index.html#about" onclick="closeMenu()">About</a>
   <a href="index.html#process" onclick="closeMenu()">Process</a>
   <a href="index.html#contact" onclick="closeMenu()">Contact</a>
-  <a href="https://api.leadconnectorhq.com/widget/booking/slPBy6J3XUM8gpxPb1FL" target="_blank" rel="noopener" onclick="closeMenu()">Book a Call</a>
+  <a href="/#contact" target="_blank" rel="noopener" onclick="closeMenu()">Book a Call</a>
 </div>
 
 <!-- PAGE HERO -->
 <div class="page-hero-wrapper">
   <canvas id="hero-canvas" aria-hidden="true"></canvas>
   <div class="page-hero">
-    <div class="page-label">The Team</div>
-    <h1 class="reveal">The people<br>behind Tutto.</h1>
-    <p class="reveal reveal-delay-1">Two founders. One shared obsession with doing digital work properly — no bloat, no shortcuts, just results.</p>
+    <div class="page-label" data-i18n="hero.label">Teamet</div>
+    <h1 class="reveal" data-i18n="hero.h1">Menneskene<br>bak Tutto.</h1>
+    <p class="reveal reveal-delay-1" data-i18n="hero.sub">To grunnleggere. Én felles besettelse med å gjøre digitalt arbeid ordentlig — ingen bloat, ingen snarveier, bare resultater.</p>
   </div>
 </div>
 
@@ -547,37 +577,37 @@
   <div class="team-inner">
     <div class="team-grid">
 
-      <!-- Ole -->
+      <!-- Herman -->
       <div class="founder-card reveal-scale">
-        <div class="founder-avatar">OW</div>
-        <div class="founder-name">Ole Wilhelm Weidal</div>
-        <div class="founder-title">Co-Founder &amp; CEO</div>
-        <p class="founder-bio">Ole drives the strategic vision and client relationships at Tutto. With a background spanning business development and digital growth, he ensures every project delivers measurable results and lasting impact.</p>
+        <div class="founder-avatar">HM</div>
+        <div class="founder-name">Herman Malme</div>
+        <div class="founder-title" data-i18n="h.title">Co-Founder &amp; CFO</div>
+        <p class="founder-bio" data-i18n="h.bio">Herman leder forretningssiden av Tutto. Som CFO har han ansvar for drift, økonomi og strategisk retning — og sørger for at selskapet er bygget på solid grunn og er posisjonert for å vokse riktig.</p>
         <div class="founder-tags">
-          <span class="founder-tag">Strategy</span>
-          <span class="founder-tag">Growth</span>
-          <span class="founder-tag">Client Relations</span>
+          <span class="founder-tag" data-i18n="h.t1">Finans</span>
+          <span class="founder-tag" data-i18n="h.t2">Drift</span>
+          <span class="founder-tag" data-i18n="h.t3">Strategi</span>
         </div>
-        <a href="mailto:ole@tuttosolutions.io" class="founder-email">
+        <a href="mailto:herman@tuttoai.no" class="founder-email">
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-10 7L2 7"/></svg>
-          ole@tuttosolutions.io
+          herman@tuttoai.no
         </a>
       </div>
 
-      <!-- Herman -->
+      <!-- Ole -->
       <div class="founder-card reveal-scale reveal-delay-1">
-        <div class="founder-avatar">HM</div>
-        <div class="founder-name">Herman Malme</div>
-        <div class="founder-title">Co-Founder &amp; CTO</div>
-        <p class="founder-bio">Herman leads the technical and design side of Tutto. He architects scalable web solutions and AI integrations with a focus on precision, performance, and clean design principles that make every product feel effortless.</p>
+        <div class="founder-avatar">OW</div>
+        <div class="founder-name">Ole Wilhelm Weidal</div>
+        <div class="founder-title" data-i18n="o.title">Co-Founder &amp; CSO</div>
+        <p class="founder-bio" data-i18n="o.bio">Ole eier kundeutvikling og klientvekst hos Tutto. Han leder salg, bygger varige klientrelasjoner og driver nettsidedesignprosessen — og sikrer at hvert prosjekt er riktig match og leveres til en standard som får klientene til å komme tilbake.</p>
         <div class="founder-tags">
-          <span class="founder-tag">Design</span>
-          <span class="founder-tag">AI &amp; Automation</span>
-          <span class="founder-tag">Development</span>
+          <span class="founder-tag" data-i18n="o.t1">Salg</span>
+          <span class="founder-tag" data-i18n="o.t2">Kundeutvikling</span>
+          <span class="founder-tag" data-i18n="o.t3">Nettside Design</span>
         </div>
-        <a href="mailto:herman@tuttosolutions.io" class="founder-email">
+        <a href="mailto:ole@tuttoai.no" class="founder-email">
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-10 7L2 7"/></svg>
-          herman@tuttosolutions.io
+          ole@tuttoai.no
         </a>
       </div>
 
@@ -587,11 +617,11 @@
 
 <!-- CTA -->
 <div class="team-cta">
-  <h2 class="reveal">Have a question?</h2>
-  <p class="reveal reveal-delay-1">Reach out to either of us directly and we'll get back to you shortly.</p>
+  <h2 class="reveal" data-i18n="cta.title">Har du et spørsmål?</h2>
+  <p class="reveal reveal-delay-1" data-i18n="cta.sub">Kontakt en av oss direkte og vi svarer deg snart.</p>
   <div class="cta-buttons reveal reveal-delay-2">
-    <a href="https://api.leadconnectorhq.com/widget/booking/slPBy6J3XUM8gpxPb1FL" target="_blank" rel="noopener" class="btn-primary">Book a Call</a>
-    <a href="index.html#contact" class="btn-ghost">Send a Message</a>
+    <a href="/#contact" target="_blank" rel="noopener" class="btn-primary" data-i18n="cta.btn1">Book en samtale</a>
+    <a href="index.html#contact" class="btn-ghost" data-i18n="cta.btn2">Send en melding</a>
   </div>
 </div>
 
@@ -599,11 +629,11 @@
 <footer>
   <div class="footer-inner">
     <a href="index.html" class="footer-logo">TUTTO</a>
-    <span class="footer-copy">© 2025–2026 Tutto Solutions. All rights reserved.</span>
+    <span class="footer-copy" data-i18n="footer.copy">© 2025–2026 Tutto Solutions. Alle rettigheter forbeholdt.</span>
     <ul class="footer-links">
-      <li><a href="index.html#services">Services</a></li>
-      <li><a href="index.html#contact">Contact</a></li>
-      <li><a href="privacy.html">Privacy Policy</a></li>
+      <li><a href="index.html#services" data-i18n="footer.services">Tjenester</a></li>
+      <li><a href="index.html#contact" data-i18n="footer.contact">Kontakt</a></li>
+      <li><a href="privacy-policy.html" data-i18n="footer.privacy">Personvern</a></li>
     </ul>
   </div>
 </footer>
@@ -818,5 +848,33 @@
   })();
 </script>
 
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-R7B67B1SWH"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-R7B67B1SWH');
+  </script>
+
+<script>
+  window.LANG_TRANSLATIONS = {
+    no: {
+      'nav.services':'Tjenester','nav.about':'Om oss','nav.process':'Slik jobber vi',
+      'nav.team':'Møt grunnleggerne','nav.contact':'Kontakt','nav.cta':'Book en samtale',
+      'footer.services':'Tjenester','footer.contact':'Kontakt','footer.privacy':'Personvern',
+      'footer.copy':'© 2025–2026 Tutto Solutions. Alle rettigheter forbeholdt.',
+      'hero.label':'Teamet','hero.h1':'Menneskene<br>bak Tutto.','hero.sub':'To grunnleggere. Én felles besettelse med å gjøre digitalt arbeid ordentlig — ingen bloat, ingen snarveier, bare resultater.','h.title':'Co-Founder &amp; CFO','h.bio':'Herman leder forretningssiden av Tutto. Som CFO har han ansvar for drift, økonomi og strategisk retning — og sørger for at selskapet er bygget på solid grunn og er posisjonert for å vokse riktig.','h.t1':'Finans','h.t2':'Drift','h.t3':'Strategi','o.title':'Co-Founder &amp; CSO','o.bio':'Ole eier kundeutvikling og klientvekst hos Tutto. Han leder salg, bygger varige klientrelasjoner og driver nettsidedesignprosessen — og sikrer at hvert prosjekt er riktig match og leveres til en standard som får klientene til å komme tilbake.','o.t1':'Salg','o.t2':'Kundeutvikling','o.t3':'Nettside Design','cta.title':'Har du et spørsmål?','cta.sub':'Kontakt en av oss direkte og vi svarer deg snart.','cta.btn1':'Book en samtale','cta.btn2':'Send en melding'
+    },
+    en: {
+      'nav.services':'Services','nav.about':'About','nav.process':'How We Work',
+      'nav.team':'Meet the Founders','nav.contact':'Contact','nav.cta':'Book a Call',
+      'footer.services':'Services','footer.contact':'Contact','footer.privacy':'Privacy Policy',
+      'footer.copy':'© 2025–2026 Tutto Solutions. All rights reserved.',
+      'hero.label':'The Team','hero.h1':'The people<br>behind Tutto.','hero.sub':'Two founders. One shared obsession with doing digital work properly — no bloat, no shortcuts, just results.','h.title':'Co-Founder &amp; CFO','h.bio':'Herman runs the business side of Tutto. As CFO, he oversees company operations, finances, and strategic direction — making sure the company is built on solid ground and positioned to grow the right way.','h.t1':'Finance','h.t2':'Operations','h.t3':'Strategy','o.title':'Co-Founder &amp; CSO','o.bio':'Ole owns customer development and client growth at Tutto. He leads sales, builds lasting client relationships, and drives the website design process — ensuring every project is the right fit and delivered to a standard that keeps clients coming back.','o.t1':'Sales','o.t2':'Customer Development','o.t3':'Web Design','cta.title':'Have a question?','cta.sub':"Reach out to either of us directly and we'll get back to you shortly.",'cta.btn1':'Book a Call','cta.btn2':'Send a Message'
+    }
+  };
+</script>
+<script src="lang.js"></script>
 </body>
 </html>

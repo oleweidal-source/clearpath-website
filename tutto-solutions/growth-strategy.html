@@ -3,14 +3,28 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Digital Growth Strategy — Tutto Solutions</title>
+  <title>Digital Markedsføring & Vekststrategi i Norge | Tutto Solutions</title>
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='6' fill='%233EC9FF'/><text x='16' y='23' text-anchor='middle' font-family='sans-serif' font-size='20' font-weight='800' fill='%230E1B2E'>T</text></svg>" type="image/svg+xml">
-  <meta name="description" content="Data-driven SEO, conversion optimisation, and strategic direction to accelerate your growth online. Book a free strategy call with Tutto Solutions.">
+  <meta name="description" content="Datadrevet SEO, konverteringsoptimalisering og digital strategi for norske bedrifter. Tutto Solutions hjelper deg å vokse raskere på nett. Book en gratis strategisamtale.">
+  <link rel="canonical" href="https://tuttoai.tech/growth-strategy.html" />
+  <link rel="alternate" hreflang="nb" href="https://tuttoai.tech/growth-strategy.html">
+  <link rel="alternate" hreflang="en" href="https://tuttoai.tech/growth-strategy.html">
+  <link rel="alternate" hreflang="x-default" href="https://tuttoai.tech/growth-strategy.html">
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="Tutto Solutions" />
+  <meta property="og:url" content="https://tuttoai.tech/growth-strategy.html" />
+  <meta property="og:title" content="Digital Markedsføring & Vekststrategi i Norge | Tutto Solutions" />
+  <meta property="og:description" content="Datadrevet SEO, konverteringsoptimalisering og digital strategi for norske bedrifter. Vokst raskere på nett med Tutto Solutions." />
+  <meta property="og:image" content="https://tuttoai.tech/og-image.png" />
+  <meta property="og:locale" content="nb_NO" />
+  <meta property="og:locale:alternate" content="en_GB" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Digital Markedsføring & Vekststrategi i Norge | Tutto Solutions" />
+  <meta name="twitter:description" content="Datadrevet SEO, konverteringsoptimalisering og digital strategi for norske bedrifter. Vokst raskere på nett med Tutto Solutions." />
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,300;12..96,400;12..96,500;12..96,700;12..96,800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&family=DM+Mono:wght@300;400&display=swap" media="print" onload="this.media='all'">
   <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,300;12..96,400;12..96,500;12..96,700;12..96,800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&family=DM+Mono:wght@300;400&display=swap"></noscript>
-  <script defer src="https://link.msgsndr.com/js/form_embed.js"></script>
 
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -108,6 +122,20 @@
 
     .nav-cta::after { display: none !important; }
     .nav-cta:hover { background: var(--accent) !important; color: var(--dark-bg) !important; }
+    .lang-toggle {
+      display: flex; align-items: center;
+      border: 1px solid rgba(255,255,255,0.18);
+      border-radius: 4px; overflow: hidden; flex-shrink: 0;
+    }
+    .lang-toggle button {
+      background: none; border: none; cursor: pointer;
+      padding: 7px 13px; font-family: 'DM Mono', monospace;
+      font-size: 11px; font-weight: 400; letter-spacing: 0.08em;
+      color: var(--dark-fg-2); transition: background 0.2s, color 0.2s;
+    }
+    .lang-toggle button.active { background: rgba(62,201,255,0.15); color: var(--accent); }
+    .lang-toggle button:hover:not(.active) { color: var(--dark-fg); }
+    .lang-sep { width: 1px; height: 28px; background: rgba(255,255,255,0.18); flex-shrink: 0; }
 
     .menu-btn {
       display: none;
@@ -324,19 +352,25 @@
     }
 
     .booking-frame-wrap {
-      background: var(--light-bg-2);
-      border: 1px solid var(--light-border);
-      border-radius: 20px;
-      overflow: hidden;
-      min-height: 600px;
+      display: flex;
+      justify-content: center;
+      padding: 16px 0 8px;
     }
 
-    .booking-frame-wrap iframe {
-      width: 100%;
-      min-height: 600px;
-      border: none;
-      display: block;
+    .booking-cal-btn {
+      display: inline-block;
+      padding: 18px 48px;
+      background: var(--accent);
+      color: var(--dark-bg);
+      font-family: 'DM Sans', sans-serif;
+      font-size: 16px;
+      font-weight: 600;
+      border-radius: 6px;
+      text-decoration: none;
+      transition: opacity 0.2s;
     }
+
+    .booking-cal-btn:hover { opacity: 0.88; }
 
     /* ── FOOTER ── */
     footer {
@@ -412,6 +446,7 @@
     @media (max-width: 900px) {
       #nav { padding: 20px 24px; }
       .nav-links { display: none; }
+      .lang-toggle { display: none; }
       .menu-btn { display: flex; }
       .page-hero { padding: 140px 24px 72px; }
       .pillars-inner { grid-template-columns: 1fr; padding: 56px 24px; }
@@ -428,33 +463,38 @@
     <span class="logo-tutto">TUTTO</span>
   </a>
   <ul class="nav-links">
-    <li><a href="index.html#services">Services</a></li>
-    <li><a href="index.html#about">About</a></li>
-    <li><a href="how-we-work.html">How We Work</a></li>
-    <li><a href="team.html">Meet the Founders</a></li>
-    <li><a href="index.html#contact">Contact</a></li>
-    <li><a href="https://api.leadconnectorhq.com/widget/booking/slPBy6J3XUM8gpxPb1FL" target="_blank" rel="noopener" class="nav-cta">Book a Call</a></li>
+    <li><a href="index.html#services" data-i18n="nav.services">Tjenester</a></li>
+    <li><a href="index.html#about" data-i18n="nav.about">Om oss</a></li>
+    <li><a href="how-we-work.html" data-i18n="nav.process">Slik jobber vi</a></li>
+    <li><a href="team.html" data-i18n="nav.team">Møt grunnleggerne</a></li>
+    <li><a href="index.html#contact" data-i18n="nav.contact">Kontakt</a></li>
+    <li><a href="/#contact" target="_blank" rel="noopener" class="nav-cta" data-i18n="nav.cta">Book en samtale</a></li>
   </ul>
+  <div class="lang-toggle">
+    <button class="lang-btn" data-lang="no">NO</button>
+    <div class="lang-sep"></div>
+    <button class="lang-btn" data-lang="en">EN</button>
+  </div>
   <button type="button" class="menu-btn" id="menu-btn" aria-label="Open menu" aria-expanded="false">
     <span></span><span></span>
   </button>
 </nav>
 
 <div class="nav-mobile" id="nav-mobile">
-  <a href="index.html#services" onclick="closeMenu()">Services</a>
-  <a href="index.html#about" onclick="closeMenu()">About</a>
-  <a href="how-we-work.html" onclick="closeMenu()">How We Work</a>
-  <a href="team.html" onclick="closeMenu()">Meet the Founders</a>
-  <a href="index.html#contact" onclick="closeMenu()">Contact</a>
-  <a href="https://api.leadconnectorhq.com/widget/booking/slPBy6J3XUM8gpxPb1FL" target="_blank" rel="noopener" onclick="closeMenu()">Book a Call</a>
+  <a href="index.html#services" onclick="closeMenu()" data-i18n="nav.services">Tjenester</a>
+  <a href="index.html#about" onclick="closeMenu()" data-i18n="nav.about">Om oss</a>
+  <a href="how-we-work.html" onclick="closeMenu()" data-i18n="nav.process">Slik jobber vi</a>
+  <a href="team.html" onclick="closeMenu()" data-i18n="nav.team">Møt grunnleggerne</a>
+  <a href="index.html#contact" onclick="closeMenu()" data-i18n="nav.contact">Kontakt</a>
+  <a href="/#contact" target="_blank" rel="noopener" onclick="closeMenu()" data-i18n="nav.cta">Book en samtale</a>
 </div>
 
 <!-- HERO -->
 <div class="page-hero-wrapper">
   <div class="page-hero">
-    <div class="page-label">Digital Growth Strategy</div>
-    <h1 class="reveal">Grow faster<br>with a <span class="accent">clear plan.</span></h1>
-    <p class="reveal reveal-delay-1">We map out exactly where your online growth is being limited — then build a data-driven strategy to fix it. SEO, conversion, and digital direction, all in one session.</p>
+    <div class="page-label" data-i18n="hero.label">Digital Vekststrategi</div>
+    <h1 class="reveal" data-i18n="hero.h1">Vokst raskere<br>med en <span class="accent">tydelig plan.</span></h1>
+    <p class="reveal reveal-delay-1" data-i18n="hero.sub">Vi kartlegger nøyaktig hva som begrenser den digitale veksten din — og bygger en datadrevet strategi for å fikse det. SEO, konvertering og digital retning, alt i én økt.</p>
   </div>
 </div>
 
@@ -466,24 +506,24 @@
       <div class="pillar-icon">
         <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.35-4.35"/></svg>
       </div>
-      <div class="pillar-title">SEO Audit &amp; Strategy</div>
-      <p class="pillar-desc">We find exactly why you're not ranking and build a realistic, prioritised roadmap to fix it — technical issues, content gaps, and link opportunities.</p>
+      <div class="pillar-title" data-i18n="p1.title">SEO-revisjon &amp; Strategi</div>
+      <p class="pillar-desc" data-i18n="p1.desc">Vi finner nøyaktig hvorfor du ikke rangerer og bygger en realistisk, prioritert plan for å fikse det — tekniske problemer, innhullsgap og lenkemuligheter.</p>
     </div>
 
     <div class="pillar reveal-scale reveal-delay-2">
       <div class="pillar-icon">
         <svg viewBox="0 0 24 24"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
       </div>
-      <div class="pillar-title">Conversion Optimisation</div>
-      <p class="pillar-desc">More traffic is worthless without conversion. We identify the drop-off points in your funnel and fix them — so more visitors become customers.</p>
+      <div class="pillar-title" data-i18n="p2.title">Konverteringsoptimalisering</div>
+      <p class="pillar-desc" data-i18n="p2.desc">Mer trafikk er verdiløst uten konvertering. Vi identifiserer frafallspunktene i trakten din og fikser dem — slik at flere besøkende blir kunder.</p>
     </div>
 
     <div class="pillar reveal-scale reveal-delay-3">
       <div class="pillar-icon">
         <svg viewBox="0 0 24 24"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
       </div>
-      <div class="pillar-title">Analytics &amp; Direction</div>
-      <p class="pillar-desc">Set up proper tracking, understand what's actually working, and get a clear strategic direction for the next 6–12 months of digital growth.</p>
+      <div class="pillar-title" data-i18n="p3.title">Analyse &amp; Retning</div>
+      <p class="pillar-desc" data-i18n="p3.desc">Sett opp ordentlig sporing, forstå hva som faktisk fungerer, og få en tydelig strategisk retning for de neste 6–12 månedene med digital vekst.</p>
     </div>
 
   </div>
@@ -492,16 +532,11 @@
 <!-- BOOKING -->
 <section id="booking">
   <div class="booking-inner">
-    <div class="booking-label">Book Your Strategy Session</div>
-    <h2 class="booking-title reveal">30 minutes.<br>A clearer growth path.</h2>
-    <p class="booking-sub reveal reveal-delay-1">Pick a time that works for you. We'll come prepared with an initial audit of your online presence — so the call is immediately useful.</p>
+    <div class="booking-label" data-i18n="book.label">Book din strategiøkt</div>
+    <h2 class="booking-title reveal" data-i18n="book.title">30 minutter.<br>En klarere vekstvei.</h2>
+    <p class="booking-sub reveal reveal-delay-1" data-i18n="book.sub">Velg et tidspunkt som passer for deg. Vi møter opp forberedt med en innledende revisjon av din digitale tilstedeværelse — slik at samtalen er umiddelbart nyttig.</p>
     <div class="booking-frame-wrap reveal reveal-delay-2">
-      <iframe
-        src="https://api.leadconnectorhq.com/widget/form/g4yeUjLnidn4HImGAZKj"
-        id="booking-form"
-        title="Book a Strategy Session"
-        scrolling="no">
-      </iframe>
+      <a href="/#contact" target="_blank" rel="noopener" class="btn-primary booking-cal-btn" data-i18n="book.btn">Book din gratis økt →</a>
     </div>
   </div>
 </section>
@@ -510,11 +545,11 @@
 <footer>
   <div class="footer-inner">
     <a href="index.html" class="footer-logo">TUTTO</a>
-    <span class="footer-copy">© 2025–2026 Tutto Solutions. All rights reserved.</span>
+    <span class="footer-copy" data-i18n="footer.copy">© 2025–2026 Tutto Solutions. Alle rettigheter forbeholdt.</span>
     <ul class="footer-links">
-      <li><a href="index.html#services">Services</a></li>
-      <li><a href="index.html#contact">Contact</a></li>
-      <li><a href="privacy-policy.html">Privacy Policy</a></li>
+      <li><a href="index.html#services" data-i18n="footer.services">Tjenester</a></li>
+      <li><a href="index.html#contact" data-i18n="footer.contact">Kontakt</a></li>
+      <li><a href="privacy-policy.html" data-i18n="footer.privacy">Personvern</a></li>
     </ul>
   </div>
 </footer>
@@ -561,5 +596,33 @@
   }, 4000);
 </script>
 
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-R7B67B1SWH"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-R7B67B1SWH');
+  </script>
+
+<script>
+  window.LANG_TRANSLATIONS = {
+    no: {
+      'nav.services':'Tjenester','nav.about':'Om oss','nav.process':'Slik jobber vi',
+      'nav.team':'Møt grunnleggerne','nav.contact':'Kontakt','nav.cta':'Book en samtale',
+      'footer.services':'Tjenester','footer.contact':'Kontakt','footer.privacy':'Personvern',
+      'footer.copy':'© 2025–2026 Tutto Solutions. Alle rettigheter forbeholdt.',
+      'hero.label':'Digital Vekststrategi','hero.h1':'Vokst raskere<br>med en <span class="accent">tydelig plan.</span>','hero.sub':'Vi kartlegger nøyaktig hva som begrenser den digitale veksten din — og bygger en datadrevet strategi for å fikse det. SEO, konvertering og digital retning, alt i én økt.','p1.title':'SEO-revisjon &amp; Strategi','p1.desc':'Vi finner nøyaktig hvorfor du ikke rangerer og bygger en realistisk, prioritert plan for å fikse det — tekniske problemer, innhullsgap og lenkemuligheter.','p2.title':'Konverteringsoptimalisering','p2.desc':'Mer trafikk er verdiløst uten konvertering. Vi identifiserer frafallspunktene i trakten din og fikser dem — slik at flere besøkende blir kunder.','p3.title':'Analyse &amp; Retning','p3.desc':'Sett opp ordentlig sporing, forstå hva som faktisk fungerer, og få en tydelig strategisk retning for de neste 6–12 månedene med digital vekst.','book.label':'Book din strategiøkt','book.title':'30 minutter.<br>En klarere vekstvei.','book.sub':'Velg et tidspunkt som passer for deg. Vi møter opp forberedt med en innledende revisjon av din digitale tilstedeværelse — slik at samtalen er umiddelbart nyttig.','book.btn':'Book din gratis økt →'
+    },
+    en: {
+      'nav.services':'Services','nav.about':'About','nav.process':'How We Work',
+      'nav.team':'Meet the Founders','nav.contact':'Contact','nav.cta':'Book a Call',
+      'footer.services':'Services','footer.contact':'Contact','footer.privacy':'Privacy Policy',
+      'footer.copy':'© 2025–2026 Tutto Solutions. All rights reserved.',
+      'hero.label':'Digital Growth Strategy','hero.h1':'Grow faster<br>with a <span class="accent">clear plan.</span>','hero.sub':'We map out exactly where your online growth is being limited — then build a data-driven strategy to fix it. SEO, conversion, and digital direction, all in one session.','p1.title':'SEO Audit &amp; Strategy','p1.desc':"We find exactly why you're not ranking and build a realistic, prioritised roadmap to fix it — technical issues, content gaps, and link opportunities.",'p2.title':'Conversion Optimisation','p2.desc':'More traffic is worthless without conversion. We identify the drop-off points in your funnel and fix them — so more visitors become customers.','p3.title':'Analytics &amp; Direction','p3.desc':"Set up proper tracking, understand what's actually working, and get a clear strategic direction for the next 6–12 months of digital growth.",'book.label':'Book Your Strategy Session','book.title':'30 minutes.<br>A clearer growth path.','book.sub':"Pick a time that works for you. We'll come prepared with an initial audit of your online presence — so the call is immediately useful.",'book.btn':'Book Your Free Session →'
+    }
+  };
+</script>
+<script src="lang.js"></script>
 </body>
 </html>

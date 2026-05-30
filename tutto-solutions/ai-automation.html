@@ -3,9 +3,24 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>AI Integration & Automation — Tutto Solutions</title>
+  <title>AI-automatisering for Norske Bedrifter | Tutto Solutions</title>
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='6' fill='%233EC9FF'/><text x='16' y='23' text-anchor='middle' font-family='sans-serif' font-size='20' font-weight='800' fill='%230E1B2E'>T</text></svg>" type="image/svg+xml">
-  <meta name="description" content="We identify where AI can save your business time and increase revenue, then implement it cleanly — no complexity, just results.">
+  <meta name="description" content="Vi implementerer AI-automatisering som sparer tid og øker omsetning for norske bedrifter. Ingen kompleksitet — bare resultater. Book en gratis konsultasjon hos Tutto Solutions.">
+  <link rel="canonical" href="https://tuttoai.tech/ai-automation.html" />
+  <link rel="alternate" hreflang="nb" href="https://tuttoai.tech/ai-automation.html">
+  <link rel="alternate" hreflang="en" href="https://tuttoai.tech/ai-automation.html">
+  <link rel="alternate" hreflang="x-default" href="https://tuttoai.tech/ai-automation.html">
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="Tutto Solutions" />
+  <meta property="og:url" content="https://tuttoai.tech/ai-automation.html" />
+  <meta property="og:title" content="AI-automatisering for Norske Bedrifter | Tutto Solutions" />
+  <meta property="og:description" content="AI-automatisering som sparer tid og øker omsetning for norske bedrifter. Ingen kompleksitet — bare resultater." />
+  <meta property="og:image" content="https://tuttoai.tech/og-image.png" />
+  <meta property="og:locale" content="nb_NO" />
+  <meta property="og:locale:alternate" content="en_GB" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="AI-automatisering for Norske Bedrifter | Tutto Solutions" />
+  <meta name="twitter:description" content="AI-automatisering som sparer tid og øker omsetning for norske bedrifter. Ingen kompleksitet — bare resultater." />
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,300;12..96,400;12..96,500;12..96,700;12..96,800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&family=DM+Mono:wght@300;400&display=swap" media="print" onload="this.media='all'">
@@ -107,6 +122,20 @@
 
     .nav-cta::after { display: none !important; }
     .nav-cta:hover { background: var(--accent) !important; color: var(--dark-bg) !important; }
+    .lang-toggle {
+      display: flex; align-items: center;
+      border: 1px solid rgba(255,255,255,0.18);
+      border-radius: 4px; overflow: hidden; flex-shrink: 0;
+    }
+    .lang-toggle button {
+      background: none; border: none; cursor: pointer;
+      padding: 7px 13px; font-family: 'DM Mono', monospace;
+      font-size: 11px; font-weight: 400; letter-spacing: 0.08em;
+      color: var(--dark-fg-2); transition: background 0.2s, color 0.2s;
+    }
+    .lang-toggle button.active { background: rgba(62,201,255,0.15); color: var(--accent); }
+    .lang-toggle button:hover:not(.active) { color: var(--dark-fg); }
+    .lang-sep { width: 1px; height: 28px; background: rgba(255,255,255,0.18); flex-shrink: 0; }
 
     .menu-btn {
       display: none;
@@ -579,6 +608,7 @@
     @media (max-width: 900px) {
       #nav { padding: 20px 24px; }
       .nav-links { display: none; }
+      .lang-toggle { display: none; }
       .menu-btn { display: flex; }
       .page-hero { grid-template-columns: 1fr; padding: 140px 24px 72px; gap: 40px; }
       .features-grid { grid-template-columns: 1fr 1fr; }
@@ -604,37 +634,42 @@
     <span class="logo-tutto">TUTTO</span>
   </a>
   <ul class="nav-links">
-    <li><a href="index.html#services">Services</a></li>
-    <li><a href="index.html#about">About</a></li>
-    <li><a href="how-we-work.html">How We Work</a></li>
-    <li><a href="team.html">Meet the Founders</a></li>
-    <li><a href="index.html#contact">Contact</a></li>
-    <li><a href="https://api.leadconnectorhq.com/widget/booking/slPBy6J3XUM8gpxPb1FL" target="_blank" rel="noopener" class="nav-cta">Book a Call</a></li>
+    <li><a href="index.html#services" data-i18n="nav.services">Tjenester</a></li>
+    <li><a href="index.html#about" data-i18n="nav.about">Om oss</a></li>
+    <li><a href="how-we-work.html" data-i18n="nav.process">Slik jobber vi</a></li>
+    <li><a href="team.html" data-i18n="nav.team">Møt grunnleggerne</a></li>
+    <li><a href="index.html#contact" data-i18n="nav.contact">Kontakt</a></li>
+    <li><a href="/#contact" target="_blank" rel="noopener" class="nav-cta" data-i18n="nav.cta">Book en samtale</a></li>
   </ul>
+  <div class="lang-toggle">
+    <button class="lang-btn" data-lang="no">NO</button>
+    <div class="lang-sep"></div>
+    <button class="lang-btn" data-lang="en">EN</button>
+  </div>
   <button type="button" class="menu-btn" id="menu-btn" aria-label="Open menu" aria-expanded="false">
     <span></span><span></span>
   </button>
 </nav>
 
 <div class="nav-mobile" id="nav-mobile">
-  <a href="index.html#services" onclick="closeMenu()">Services</a>
-  <a href="index.html#about" onclick="closeMenu()">About</a>
-  <a href="how-we-work.html" onclick="closeMenu()">How We Work</a>
-  <a href="team.html" onclick="closeMenu()">Meet the Founders</a>
-  <a href="index.html#contact" onclick="closeMenu()">Contact</a>
-  <a href="https://api.leadconnectorhq.com/widget/booking/slPBy6J3XUM8gpxPb1FL" target="_blank" rel="noopener" onclick="closeMenu()">Book a Call</a>
+  <a href="index.html#services" onclick="closeMenu()" data-i18n="nav.services">Tjenester</a>
+  <a href="index.html#about" onclick="closeMenu()" data-i18n="nav.about">Om oss</a>
+  <a href="how-we-work.html" onclick="closeMenu()" data-i18n="nav.process">Slik jobber vi</a>
+  <a href="team.html" onclick="closeMenu()" data-i18n="nav.team">Møt grunnleggerne</a>
+  <a href="index.html#contact" onclick="closeMenu()" data-i18n="nav.contact">Kontakt</a>
+  <a href="/#contact" target="_blank" rel="noopener" onclick="closeMenu()" data-i18n="nav.cta">Book en samtale</a>
 </div>
 
 <!-- HERO -->
 <div class="page-hero-wrapper">
   <div class="page-hero">
     <div>
-      <div class="page-label">AI Integration &amp; Automation</div>
-      <h1 class="reveal">Work smarter.<br><span class="accent">Automate</span> the rest.</h1>
-      <p class="reveal reveal-delay-1">We identify exactly where AI can save your business time and increase revenue — then implement it cleanly into your workflow with zero disruption.</p>
+      <div class="page-label" data-i18n="hero.label">AI-integrasjon &amp; Automatisering</div>
+      <h1 class="reveal" data-i18n="hero.h1">Jobb smartere.<br><span class="accent">Automatiser</span> resten.</h1>
+      <p class="reveal reveal-delay-1" data-i18n="hero.sub">Vi identifiserer nøyaktig hvor AI kan spare bedriften din tid og øke inntektene — og implementerer det sømløst i arbeidsflyten din uten forstyrrelser.</p>
       <div class="hero-cta-row reveal reveal-delay-2">
-        <a href="https://api.leadconnectorhq.com/widget/booking/slPBy6J3XUM8gpxPb1FL" target="_blank" rel="noopener" class="btn-primary">Book a Free Call</a>
-        <a href="how-we-work.html" class="btn-ghost">Our Process</a>
+        <a href="/#contact" target="_blank" rel="noopener" class="btn-primary" data-i18n="hero.cta1">Book en gratis samtale</a>
+        <a href="how-we-work.html" class="btn-ghost" data-i18n="hero.cta2">Vår prosess</a>
       </div>
     </div>
     <div class="hero-visual reveal reveal-delay-1">
@@ -678,8 +713,8 @@
 <!-- FEATURES -->
 <section id="features">
   <div class="section">
-    <div class="section-label">What We Implement</div>
-    <h2 class="section-title reveal">AI that fits your<br>business, not the other way.</h2>
+    <div class="section-label" data-i18n="feat.label">Hva vi implementerer</div>
+    <h2 class="section-title reveal" data-i18n="feat.title">AI som passer din<br>bedrift, ikke omvendt.</h2>
     <p class="section-sub reveal reveal-delay-1">We don't recommend AI tools at random. We audit your workflow, find the gaps, and build solutions that pay for themselves fast.</p>
     <div class="features-grid">
 
@@ -687,48 +722,48 @@
         <div class="feature-icon">
           <svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>
         </div>
-        <div class="feature-title">AI Customer Support</div>
-        <p class="feature-desc">Chatbots and automated responders trained on your products and FAQs — handle enquiries 24/7 without extra headcount.</p>
+        <div class="feature-title" data-i18n="feat.f1.title">AI-kundesupport</div>
+        <p class="feature-desc" data-i18n="feat.f1.desc">Chatboter og automatiserte svar trent på produktene og spørsmålene dine — håndter henvendelser 24/7 uten ekstra ansatte.</p>
       </div>
 
       <div class="feature-card reveal-scale reveal-delay-2">
         <div class="feature-icon">
           <svg viewBox="0 0 24 24"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
         </div>
-        <div class="feature-title">Workflow Automation</div>
-        <p class="feature-desc">Eliminate repetitive manual tasks with smart triggers and integrations — from lead follow-ups to invoice processing.</p>
+        <div class="feature-title" data-i18n="feat.f2.title">Arbeidsflytautomatisering</div>
+        <p class="feature-desc" data-i18n="feat.f2.desc">Eliminer repeterende manuelle oppgaver med smarte triggere og integrasjoner — fra lead-oppfølging til fakturering.</p>
       </div>
 
       <div class="feature-card reveal-scale reveal-delay-3">
         <div class="feature-icon">
           <svg viewBox="0 0 24 24"><polyline points="17 1 21 5 17 9"/><path d="M3 11V9a4 4 0 014-4h14"/><polyline points="7 23 3 19 7 15"/><path d="M21 13v2a4 4 0 01-4 4H3"/></svg>
         </div>
-        <div class="feature-title">Lead Reactivation</div>
-        <p class="feature-desc">AI-powered follow-up sequences that re-engage cold prospects and dormant contacts — turning past leads into new revenue.</p>
+        <div class="feature-title" data-i18n="feat.f3.title">Lead-reaktivering</div>
+        <p class="feature-desc" data-i18n="feat.f3.desc">AI-drevne oppfølgingssekvenser som reaktiverer kalde prospekter og sovende kontakter — gjør gamle leads til ny omsetning.</p>
       </div>
 
       <div class="feature-card reveal-scale reveal-delay-1">
         <div class="feature-icon">
           <svg viewBox="0 0 24 24"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
         </div>
-        <div class="feature-title">Data Analysis &amp; Insights</div>
-        <p class="feature-desc">Surface patterns in your business data that are impossible to see manually — smarter decisions, faster.</p>
+        <div class="feature-title" data-i18n="feat.f4.title">Dataanalyse &amp; Innsikt</div>
+        <p class="feature-desc" data-i18n="feat.f4.desc">Avdekk mønstre i bedriftsdataene dine som er umulig å se manuelt — smartere beslutninger, raskere.</p>
       </div>
 
       <div class="feature-card reveal-scale reveal-delay-2">
         <div class="feature-icon">
           <svg viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/><path d="M7 8l2 2-2 2M12 13h4"/></svg>
         </div>
-        <div class="feature-title">Custom AI Tooling</div>
-        <p class="feature-desc">Purpose-built tools for your specific industry and processes — not off-the-shelf software with 90% you'll never use.</p>
+        <div class="feature-title" data-i18n="feat.f5.title">Skreddersydde AI-verktøy</div>
+        <p class="feature-desc" data-i18n="feat.f5.desc">Verktøy bygget for din spesifikke bransje og dine prosesser — ikke hyllevare med 90% du aldri bruker.</p>
       </div>
 
       <div class="feature-card reveal-scale reveal-delay-3">
         <div class="feature-icon">
           <svg viewBox="0 0 24 24"><circle cx="12" cy="5" r="2"/><circle cx="5" cy="12" r="2"/><circle cx="19" cy="12" r="2"/><line x1="7" y1="12" x2="17" y2="12"/><line x1="6.8" y1="6.8" x2="10" y2="10"/><line x1="17.2" y1="6.8" x2="14" y2="10"/></svg>
         </div>
-        <div class="feature-title">CRM &amp; Systems Integration</div>
-        <p class="feature-desc">Connect AI to your existing stack — CRM, email, calendar, and more — so everything works together seamlessly.</p>
+        <div class="feature-title" data-i18n="feat.f6.title">CRM &amp; Systemintegrasjon</div>
+        <p class="feature-desc" data-i18n="feat.f6.desc">Koble AI til din eksisterende stack — CRM, e-post, kalender og mer — slik at alt fungerer sømløst sammen.</p>
       </div>
 
     </div>
@@ -756,39 +791,39 @@
 <!-- USE CASES -->
 <section id="usecases">
   <div class="section">
-    <div class="section-label">Real-World Use Cases</div>
-    <h2 class="section-title reveal">What AI actually<br>looks like in practice.</h2>
+    <div class="section-label" data-i18n="uc.label">Virkelige eksempler</div>
+    <h2 class="section-title reveal" data-i18n="uc.title">Hva AI faktisk<br>ser ut som i praksis.</h2>
     <div class="usecase-grid">
 
       <div class="usecase-card reveal reveal-delay-1">
         <div class="usecase-num">01</div>
         <div>
-          <div class="usecase-title">Automated appointment booking</div>
-          <p class="usecase-desc">A customer messages your chatbot after hours — it books a meeting, sends a confirmation, and updates your CRM. No human needed.</p>
+          <div class="usecase-title" data-i18n="uc.u1.title">Automatisk timebestilling</div>
+          <p class="usecase-desc" data-i18n="uc.u1.desc">En kunde skriver til chatboten din etter åpningstid — den booker et møte, sender en bekreftelse og oppdaterer CRM-et. Ingen mennesker nødvendig.</p>
         </div>
       </div>
 
       <div class="usecase-card reveal reveal-delay-2">
         <div class="usecase-num">02</div>
         <div>
-          <div class="usecase-title">Lead follow-up sequences</div>
-          <p class="usecase-desc">New enquiry arrives — AI sends a personalised response within 2 minutes, then follows up daily for a week if there's no reply.</p>
+          <div class="usecase-title" data-i18n="uc.u2.title">Lead-oppfølgingssekvenser</div>
+          <p class="usecase-desc" data-i18n="uc.u2.desc">Ny henvendelse ankommer — AI sender et personlig svar innen 2 minutter og følger opp daglig i en uke hvis det ikke kommer svar.</p>
         </div>
       </div>
 
       <div class="usecase-card reveal reveal-delay-1">
         <div class="usecase-num">03</div>
         <div>
-          <div class="usecase-title">Invoice &amp; admin automation</div>
-          <p class="usecase-desc">Completed jobs automatically trigger invoice creation, client email, and accounting entry — zero manual admin.</p>
+          <div class="usecase-title" data-i18n="uc.u3.title">Faktura &amp; admin-automatisering</div>
+          <p class="usecase-desc" data-i18n="uc.u3.desc">Fullførte oppdrag utløser automatisk fakturagenerering, klient-e-post og regnskapsregistrering — null manuell admin.</p>
         </div>
       </div>
 
       <div class="usecase-card reveal reveal-delay-2">
         <div class="usecase-num">04</div>
         <div>
-          <div class="usecase-title">Reactivating cold contacts</div>
-          <p class="usecase-desc">AI identifies leads that went quiet 30–90 days ago and sends a personalised re-engagement message at the right time.</p>
+          <div class="usecase-title" data-i18n="uc.u4.title">Reaktivering av kalde kontakter</div>
+          <p class="usecase-desc" data-i18n="uc.u4.desc">AI identifiserer leads som stilnet for 30–90 dager siden og sender en personlig reaktiveringsbeskjed til rett tid.</p>
         </div>
       </div>
 
@@ -799,11 +834,11 @@
 <!-- CTA -->
 <section id="cta">
   <div class="cta-inner">
-    <h2 class="reveal">Find out where AI<br>can help your business.</h2>
-    <p class="reveal reveal-delay-1">Book a free 30-minute call. We'll audit your current workflow and show you exactly what could be automated — no obligation.</p>
+    <h2 class="reveal" data-i18n="cta.title">Finn ut hvor AI<br>kan hjelpe bedriften din.</h2>
+    <p class="reveal reveal-delay-1" data-i18n="cta.sub">Book en gratis 30-minutters samtale. Vi gjennomgår arbeidsflyten din og viser deg nøyaktig hva som kan automatiseres — uforpliktende.</p>
     <div class="cta-btn-row reveal reveal-delay-2">
-      <a href="https://api.leadconnectorhq.com/widget/booking/slPBy6J3XUM8gpxPb1FL" target="_blank" rel="noopener" class="btn-primary">Book a Free Call</a>
-      <a href="how-we-work.html" class="btn-ghost">See Our Process</a>
+      <a href="/#contact" target="_blank" rel="noopener" class="btn-primary" data-i18n="cta.btn1">Book en gratis samtale</a>
+      <a href="how-we-work.html" class="btn-ghost" data-i18n="cta.btn2">Se vår prosess</a>
     </div>
   </div>
 </section>
@@ -812,11 +847,11 @@
 <footer>
   <div class="footer-inner">
     <a href="index.html" class="footer-logo">TUTTO</a>
-    <span class="footer-copy">© 2025–2026 Tutto Solutions. All rights reserved.</span>
+    <span class="footer-copy" data-i18n="footer.copy">© 2025–2026 Tutto Solutions. Alle rettigheter forbeholdt.</span>
     <ul class="footer-links">
-      <li><a href="index.html#services">Services</a></li>
-      <li><a href="index.html#contact">Contact</a></li>
-      <li><a href="privacy-policy.html">Privacy Policy</a></li>
+      <li><a href="index.html#services" data-i18n="footer.services">Tjenester</a></li>
+      <li><a href="index.html#contact" data-i18n="footer.contact">Kontakt</a></li>
+      <li><a href="privacy-policy.html" data-i18n="footer.privacy">Personvern</a></li>
     </ul>
   </div>
 </footer>
@@ -863,5 +898,33 @@
   }, 4000);
 </script>
 
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-R7B67B1SWH"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-R7B67B1SWH');
+  </script>
+
+<script>
+  window.LANG_TRANSLATIONS = {
+    no: {
+      'nav.services':'Tjenester','nav.about':'Om oss','nav.process':'Slik jobber vi',
+      'nav.team':'Møt grunnleggerne','nav.contact':'Kontakt','nav.cta':'Book en samtale',
+      'footer.services':'Tjenester','footer.contact':'Kontakt','footer.privacy':'Personvern',
+      'footer.copy':'© 2025–2026 Tutto Solutions. Alle rettigheter forbeholdt.',
+      'hero.label':'AI-integrasjon &amp; Automatisering','hero.h1':'Jobb smartere.<br><span class="accent">Automatiser</span> resten.','hero.sub':'Vi identifiserer nøyaktig hvor AI kan spare bedriften din tid og øke inntektene — og implementerer det sømløst i arbeidsflyten din uten forstyrrelser.','hero.cta1':'Book en gratis samtale','hero.cta2':'Vår prosess','feat.label':'Hva vi implementerer','feat.title':'AI som passer din<br>bedrift, ikke omvendt.','feat.f1.title':'AI-kundesupport','feat.f1.desc':'Chatboter og automatiserte svar trent på produktene og spørsmålene dine — håndter henvendelser 24/7 uten ekstra ansatte.','feat.f2.title':'Arbeidsflytautomatisering','feat.f2.desc':'Eliminer repeterende manuelle oppgaver med smarte triggere og integrasjoner — fra lead-oppfølging til fakturering.','feat.f3.title':'Lead-reaktivering','feat.f3.desc':'AI-drevne oppfølgingssekvenser som reaktiverer kalde prospekter og sovende kontakter — gjør gamle leads til ny omsetning.','feat.f4.title':'Dataanalyse &amp; Innsikt','feat.f4.desc':'Avdekk mønstre i bedriftsdataene dine som er umulig å se manuelt — smartere beslutninger, raskere.','feat.f5.title':'Skreddersydde AI-verktøy','feat.f5.desc':'Verktøy bygget for din spesifikke bransje og dine prosesser — ikke hyllevare med 90% du aldri bruker.','feat.f6.title':'CRM &amp; Systemintegrasjon','feat.f6.desc':'Koble AI til din eksisterende stack — CRM, e-post, kalender og mer — slik at alt fungerer sømløst sammen.','uc.label':'Virkelige eksempler','uc.title':'Hva AI faktisk<br>ser ut som i praksis.','uc.u1.title':'Automatisk timebestilling','uc.u1.desc':'En kunde skriver til chatboten din etter åpningstid — den booker et møte, sender en bekreftelse og oppdaterer CRM-et. Ingen mennesker nødvendig.','uc.u2.title':'Lead-oppfølgingssekvenser','uc.u2.desc':'Ny henvendelse ankommer — AI sender et personlig svar innen 2 minutter og følger opp daglig i en uke hvis det ikke kommer svar.','uc.u3.title':'Faktura &amp; admin-automatisering','uc.u3.desc':'Fullførte oppdrag utløser automatisk fakturagenerering, klient-e-post og regnskapsregistrering — null manuell admin.','uc.u4.title':'Reaktivering av kalde kontakter','uc.u4.desc':'AI identifiserer leads som stilnet for 30–90 dager siden og sender en personlig reaktiveringsbeskjed til rett tid.','cta.title':'Finn ut hvor AI<br>kan hjelpe bedriften din.','cta.sub':'Book en gratis 30-minutters samtale. Vi gjennomgår arbeidsflyten din og viser deg nøyaktig hva som kan automatiseres — uforpliktende.','cta.btn1':'Book en gratis samtale','cta.btn2':'Se vår prosess'
+    },
+    en: {
+      'nav.services':'Services','nav.about':'About','nav.process':'How We Work',
+      'nav.team':'Meet the Founders','nav.contact':'Contact','nav.cta':'Book a Call',
+      'footer.services':'Services','footer.contact':'Contact','footer.privacy':'Privacy Policy',
+      'footer.copy':'© 2025–2026 Tutto Solutions. All rights reserved.',
+      'hero.label':'AI Integration &amp; Automation','hero.h1':'Work smarter.<br><span class="accent">Automate</span> the rest.','hero.sub':'We identify exactly where AI can save your business time and increase revenue — then implement it cleanly into your workflow with zero disruption.','hero.cta1':'Book a Free Call','hero.cta2':'Our Process','feat.label':'What We Implement','feat.title':'AI that fits your<br>business, not the other way.','feat.f1.title':'AI Customer Support','feat.f1.desc':'Chatbots and automated responders trained on your products and FAQs — handle enquiries 24/7 without extra headcount.','feat.f2.title':'Workflow Automation','feat.f2.desc':'Eliminate repetitive manual tasks with smart triggers and integrations — from lead follow-ups to invoice processing.','feat.f3.title':'Lead Reactivation','feat.f3.desc':'AI-powered follow-up sequences that re-engage cold prospects and dormant contacts — turning past leads into new revenue.','feat.f4.title':'Data Analysis &amp; Insights','feat.f4.desc':'Surface patterns in your business data that are impossible to see manually — smarter decisions, faster.','feat.f5.title':'Custom AI Tooling','feat.f5.desc':"Purpose-built tools for your specific industry and processes — not off-the-shelf software with 90% you'll never use.",'feat.f6.title':'CRM &amp; Systems Integration','feat.f6.desc':'Connect AI to your existing stack — CRM, email, calendar, and more — so everything works together seamlessly.','uc.label':'Real-World Use Cases','uc.title':'What AI actually<br>looks like in practice.','uc.u1.title':'Automated appointment booking','uc.u1.desc':'A customer messages your chatbot after hours — it books a meeting, sends a confirmation, and updates your CRM. No human needed.','uc.u2.title':'Lead follow-up sequences','uc.u2.desc':"New enquiry arrives — AI sends a personalised response within 2 minutes, then follows up daily for a week if there's no reply.",'uc.u3.title':'Invoice &amp; admin automation','uc.u3.desc':'Completed jobs automatically trigger invoice creation, client email, and accounting entry — zero manual admin.','uc.u4.title':'Reactivating cold contacts','uc.u4.desc':'AI identifies leads that went quiet 30–90 days ago and sends a personalised re-engagement message at the right time.','cta.title':'Find out where AI<br>can help your business.','cta.sub':"Book a free 30-minute call. We'll audit your current workflow and show you exactly what could be automated — no obligation.",'cta.btn1':'Book a Free Call','cta.btn2':'See Our Process'
+    }
+  };
+</script>
+<script src="lang.js"></script>
 </body>
 </html>

@@ -3,9 +3,24 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Web Design & Development — Tutto Solutions</title>
+  <title>Nettside & Webdesign for Norske Bedrifter | Tutto Solutions</title>
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='6' fill='%233EC9FF'/><text x='16' y='23' text-anchor='middle' font-family='sans-serif' font-size='20' font-weight='800' fill='%230E1B2E'>T</text></svg>" type="image/svg+xml">
-  <meta name="description" content="High-converting websites with clean, purposeful design. Tutto builds websites that look exceptional and drive real results.">
+  <meta name="description" content="Profesjonell nettside og webdesign for norske bedrifter. Tutto Solutions lager høy-konverterende nettsider med clean design, SEO-optimalisering og rask levering. Book gratis konsultasjon.">
+  <link rel="canonical" href="https://tuttoai.tech/web-design.html" />
+  <link rel="alternate" hreflang="nb" href="https://tuttoai.tech/web-design.html">
+  <link rel="alternate" hreflang="en" href="https://tuttoai.tech/web-design.html">
+  <link rel="alternate" hreflang="x-default" href="https://tuttoai.tech/web-design.html">
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="Tutto Solutions" />
+  <meta property="og:url" content="https://tuttoai.tech/web-design.html" />
+  <meta property="og:title" content="Nettside & Webdesign for Norske Bedrifter | Tutto Solutions" />
+  <meta property="og:description" content="Profesjonell nettside og webdesign for norske bedrifter. Høy-konverterende design, SEO-optimalisering og rask levering." />
+  <meta property="og:image" content="https://tuttoai.tech/og-image.png" />
+  <meta property="og:locale" content="nb_NO" />
+  <meta property="og:locale:alternate" content="en_GB" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Nettside & Webdesign for Norske Bedrifter | Tutto Solutions" />
+  <meta name="twitter:description" content="Profesjonell nettside og webdesign for norske bedrifter. Høy-konverterende design, SEO-optimalisering og rask levering." />
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,300;12..96,400;12..96,500;12..96,700;12..96,800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&family=DM+Mono:wght@300;400&display=swap" media="print" onload="this.media='all'">
@@ -108,6 +123,20 @@
 
     .nav-cta::after { display: none !important; }
     .nav-cta:hover { background: var(--accent) !important; color: var(--dark-bg) !important; }
+    .lang-toggle {
+      display: flex; align-items: center;
+      border: 1px solid rgba(255,255,255,0.18);
+      border-radius: 4px; overflow: hidden; flex-shrink: 0;
+    }
+    .lang-toggle button {
+      background: none; border: none; cursor: pointer;
+      padding: 7px 13px; font-family: 'DM Mono', monospace;
+      font-size: 11px; font-weight: 400; letter-spacing: 0.08em;
+      color: var(--dark-fg-2); transition: background 0.2s, color 0.2s;
+    }
+    .lang-toggle button.active { background: rgba(62,201,255,0.15); color: var(--accent); }
+    .lang-toggle button:hover:not(.active) { color: var(--dark-fg); }
+    .lang-sep { width: 1px; height: 28px; background: rgba(255,255,255,0.18); flex-shrink: 0; }
 
     .menu-btn {
       display: none;
@@ -580,6 +609,7 @@
     @media (max-width: 900px) {
       #nav { padding: 20px 24px; }
       .nav-links { display: none; }
+      .lang-toggle { display: none; }
       .menu-btn { display: flex; }
       .page-hero { grid-template-columns: 1fr; padding: 140px 24px 72px; gap: 40px; }
       .features-grid { grid-template-columns: 1fr 1fr; }
@@ -605,37 +635,42 @@
     <span class="logo-tutto">TUTTO</span>
   </a>
   <ul class="nav-links">
-    <li><a href="index.html#services">Services</a></li>
-    <li><a href="index.html#about">About</a></li>
-    <li><a href="how-we-work.html">How We Work</a></li>
-    <li><a href="team.html">Meet the Founders</a></li>
-    <li><a href="index.html#contact">Contact</a></li>
-    <li><a href="https://api.leadconnectorhq.com/widget/booking/slPBy6J3XUM8gpxPb1FL" target="_blank" rel="noopener" class="nav-cta">Book a Call</a></li>
+    <li><a href="index.html#services" data-i18n="nav.services">Tjenester</a></li>
+    <li><a href="index.html#about" data-i18n="nav.about">Om oss</a></li>
+    <li><a href="how-we-work.html" data-i18n="nav.process">Slik jobber vi</a></li>
+    <li><a href="team.html" data-i18n="nav.team">Møt grunnleggerne</a></li>
+    <li><a href="index.html#contact" data-i18n="nav.contact">Kontakt</a></li>
+    <li><a href="/#contact" target="_blank" rel="noopener" class="nav-cta" data-i18n="nav.cta">Book en samtale</a></li>
   </ul>
+  <div class="lang-toggle">
+    <button class="lang-btn" data-lang="no">NO</button>
+    <div class="lang-sep"></div>
+    <button class="lang-btn" data-lang="en">EN</button>
+  </div>
   <button type="button" class="menu-btn" id="menu-btn" aria-label="Open menu" aria-expanded="false">
     <span></span><span></span>
   </button>
 </nav>
 
 <div class="nav-mobile" id="nav-mobile">
-  <a href="index.html#services" onclick="closeMenu()">Services</a>
-  <a href="index.html#about" onclick="closeMenu()">About</a>
-  <a href="how-we-work.html" onclick="closeMenu()">How We Work</a>
-  <a href="team.html" onclick="closeMenu()">Meet the Founders</a>
-  <a href="index.html#contact" onclick="closeMenu()">Contact</a>
-  <a href="https://api.leadconnectorhq.com/widget/booking/slPBy6J3XUM8gpxPb1FL" target="_blank" rel="noopener" onclick="closeMenu()">Book a Call</a>
+  <a href="index.html#services" onclick="closeMenu()" data-i18n="nav.services">Tjenester</a>
+  <a href="index.html#about" onclick="closeMenu()" data-i18n="nav.about">Om oss</a>
+  <a href="how-we-work.html" onclick="closeMenu()" data-i18n="nav.process">Slik jobber vi</a>
+  <a href="team.html" onclick="closeMenu()" data-i18n="nav.team">Møt grunnleggerne</a>
+  <a href="index.html#contact" onclick="closeMenu()" data-i18n="nav.contact">Kontakt</a>
+  <a href="/#contact" target="_blank" rel="noopener" onclick="closeMenu()" data-i18n="nav.cta">Book en samtale</a>
 </div>
 
 <!-- HERO -->
 <div class="page-hero-wrapper">
   <div class="page-hero">
     <div class="page-hero-text">
-      <div class="page-label">Web Design &amp; Development</div>
-      <h1 class="reveal">Websites built to <span class="accent">convert.</span></h1>
-      <p class="reveal reveal-delay-1">Your website is your best salesperson. We build it to look exceptional, load fast, and turn visitors into customers — without bloat, without compromise.</p>
+      <div class="page-label" data-i18n="hero.label">Nettside &amp; Utvikling</div>
+      <h1 class="reveal" data-i18n="hero.h1">Nettsider bygget for å <span class="accent">konvertere.</span></h1>
+      <p class="reveal reveal-delay-1" data-i18n="hero.sub">Din nettside er din beste selger. Vi bygger den til å se eksepsjonell ut, laste raskt og gjøre besøkende til kunder — uten bloat, uten kompromisser.</p>
       <div class="hero-cta-row reveal reveal-delay-2">
-        <a href="https://api.leadconnectorhq.com/widget/booking/slPBy6J3XUM8gpxPb1FL" target="_blank" rel="noopener" class="btn-primary">Book a Free Call</a>
-        <a href="how-we-work.html" class="btn-ghost">Our Process</a>
+        <a href="/#contact" target="_blank" rel="noopener" class="btn-primary" data-i18n="hero.cta1">Book en gratis samtale</a>
+        <a href="how-we-work.html" class="btn-ghost" data-i18n="hero.cta2">Vår prosess</a>
       </div>
     </div>
     <div class="hero-visual reveal reveal-delay-1">
@@ -647,7 +682,7 @@
         <circle cx="72" cy="55" r="4.5" fill="#FFBD2E"/>
         <circle cx="88" cy="55" r="4.5" fill="#27C93F"/>
         <rect x="118" y="48" width="200" height="14" rx="7" fill="rgba(255,255,255,0.07)"/>
-        <text x="218" y="58.5" text-anchor="middle" font-family="'DM Mono',monospace" font-size="7" fill="rgba(255,255,255,0.30)">tuttosolutions.io</text>
+        <text x="218" y="58.5" text-anchor="middle" font-family="'DM Mono',monospace" font-size="7" fill="rgba(255,255,255,0.30)">tuttoai.tech</text>
         <rect x="36" y="70" width="408" height="24" fill="rgba(14,27,46,0.9)"/>
         <rect x="48" y="77" width="7" height="7" rx="1.5" fill="#3EC9FF"/>
         <rect x="59" y="79" width="44" height="4" rx="2" fill="rgba(255,255,255,0.55)"/>
@@ -690,57 +725,57 @@
 <!-- FEATURES -->
 <section id="features">
   <div class="section">
-    <div class="section-label">What We Build</div>
-    <h2 class="section-title reveal">Everything your site needs<br>to perform.</h2>
-    <p class="section-sub reveal reveal-delay-1">Every website we build is designed from the ground up around your goals — not a template, not a shortcut.</p>
+    <div class="section-label" data-i18n="feat.label">Hva vi bygger</div>
+    <h2 class="section-title reveal" data-i18n="feat.title">Alt nettstedet ditt trenger<br>for å prestere.</h2>
+    <p class="section-sub reveal reveal-delay-1" data-i18n="feat.sub">Hvert nettsted vi bygger er designet fra bunnen av rundt dine mål — ingen maler, ingen snarveier.</p>
     <div class="features-grid">
 
       <div class="feature-card reveal-scale reveal-delay-1">
         <div class="feature-icon">
           <svg viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
         </div>
-        <div class="feature-title">Custom Design</div>
-        <p class="feature-desc">A unique visual identity built for your brand — no templates, no shortcuts. Every layout is purposeful.</p>
+        <div class="feature-title" data-i18n="feat.f1.title">Skreddersydd Design</div>
+        <p class="feature-desc" data-i18n="feat.f1.desc">En unik visuell identitet bygget for din merkevare — ingen maler, ingen snarveier. Hvert layout er gjennomtenkt.</p>
       </div>
 
       <div class="feature-card reveal-scale reveal-delay-2">
         <div class="feature-icon">
           <svg viewBox="0 0 24 24"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
         </div>
-        <div class="feature-title">Clean Development</div>
-        <p class="feature-desc">Fast, scalable code that loads in milliseconds. Built to last and easy to expand as your business grows.</p>
+        <div class="feature-title" data-i18n="feat.f2.title">Ren Utvikling</div>
+        <p class="feature-desc" data-i18n="feat.f2.desc">Rask, skalerbar kode som laster på millisekunder. Bygget for å vare og lett å utvide etter hvert som bedriften vokser.</p>
       </div>
 
       <div class="feature-card reveal-scale reveal-delay-3">
         <div class="feature-icon">
           <svg viewBox="0 0 24 24"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
         </div>
-        <div class="feature-title">Conversion Optimisation</div>
-        <p class="feature-desc">Layouts, copy, and flows structured to move visitors toward action — more leads, more sales.</p>
+        <div class="feature-title" data-i18n="feat.f3.title">Konverteringsoptimalisering</div>
+        <p class="feature-desc" data-i18n="feat.f3.desc">Layout, tekst og flyt strukturert for å drive besøkende mot handling — flere leads, mer salg.</p>
       </div>
 
       <div class="feature-card reveal-scale reveal-delay-1">
         <div class="feature-icon">
           <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.35-4.35"/></svg>
         </div>
-        <div class="feature-title">SEO-Ready Architecture</div>
-        <p class="feature-desc">Clean semantics, structured data, and Core Web Vitals baked in — so you rank without extra effort.</p>
+        <div class="feature-title" data-i18n="feat.f4.title">SEO-klar Arkitektur</div>
+        <p class="feature-desc" data-i18n="feat.f4.desc">Ren semantikk, strukturerte data og Core Web Vitals innebygd — slik at du rangerer uten ekstra innsats.</p>
       </div>
 
       <div class="feature-card reveal-scale reveal-delay-2">
         <div class="feature-icon">
           <svg viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg>
         </div>
-        <div class="feature-title">Mobile-First &amp; Responsive</div>
-        <p class="feature-desc">Looks and works perfectly on every device — phones, tablets, and desktops, without compromise.</p>
+        <div class="feature-title" data-i18n="feat.f5.title">Mobilfirst &amp; Responsivt</div>
+        <p class="feature-desc" data-i18n="feat.f5.desc">Ser ut og fungerer perfekt på alle enheter — mobil, nettbrett og desktop, uten kompromisser.</p>
       </div>
 
       <div class="feature-card reveal-scale reveal-delay-3">
         <div class="feature-icon">
           <svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
         </div>
-        <div class="feature-title">Ongoing Support</div>
-        <p class="feature-desc">Monthly maintenance, content updates, and performance monitoring — we stay on long after launch.</p>
+        <div class="feature-title" data-i18n="feat.f6.title">Løpende Support</div>
+        <p class="feature-desc" data-i18n="feat.f6.desc">Månedlig vedlikehold, innholdsoppdateringer og ytelsesovervåking — vi er med lenge etter lansering.</p>
       </div>
 
     </div>
@@ -752,15 +787,15 @@
   <div class="results-inner">
     <div class="result-item reveal">
       <div class="result-num">2–4</div>
-      <div class="result-label">week average<br>delivery time</div>
+      <div class="result-label" data-i18n="res.r1">gjennomsnittlig leveringstid<br>(uker)</div>
     </div>
     <div class="result-item reveal reveal-delay-1">
       <div class="result-num">100%</div>
-      <div class="result-label">custom — never<br>a template</div>
+      <div class="result-label" data-i18n="res.r2">skreddersydd — aldri<br>en mal</div>
     </div>
     <div class="result-item reveal reveal-delay-2">
       <div class="result-num">90+</div>
-      <div class="result-label">Lighthouse score<br>target on every build</div>
+      <div class="result-label" data-i18n="res.r3">Lighthouse-score mål<br>på hvert prosjekt</div>
     </div>
   </div>
 </section>
@@ -768,35 +803,35 @@
 <!-- HOW IT WORKS -->
 <section id="how">
   <div class="section">
-    <div class="section-label">The Process</div>
-    <h2 class="section-title reveal">How we go from<br>brief to live.</h2>
+    <div class="section-label" data-i18n="proc.label">Prosessen</div>
+    <h2 class="section-title reveal" data-i18n="proc.title">Fra brief<br>til lansering.</h2>
     <div class="steps-list">
       <div class="step-row reveal">
         <div class="step-num">01</div>
         <div>
-          <div class="step-content-title">Discovery call</div>
-          <p class="step-content-desc">We learn your business, goals, and target audience. You tell us what success looks like — we map the fastest route there.</p>
+          <div class="step-content-title" data-i18n="proc.s1.title">Innsiktssamtale</div>
+          <p class="step-content-desc" data-i18n="proc.s1.desc">Vi lærer om bedriften, målene og målgruppen din. Du forteller oss hva suksess betyr — vi kartlegger den raskeste veien dit.</p>
         </div>
       </div>
       <div class="step-row reveal reveal-delay-1">
         <div class="step-num">02</div>
         <div>
-          <div class="step-content-title">Design &amp; prototype</div>
-          <p class="step-content-desc">A fully interactive prototype so you see and feel exactly what you're getting — before a single line of code is written.</p>
+          <div class="step-content-title" data-i18n="proc.s2.title">Design &amp; prototype</div>
+          <p class="step-content-desc" data-i18n="proc.s2.desc">En fullt interaktiv prototype så du ser og føler nøyaktig hva du får — før en eneste kodelinje er skrevet.</p>
         </div>
       </div>
       <div class="step-row reveal reveal-delay-2">
         <div class="step-num">03</div>
         <div>
-          <div class="step-content-title">Build &amp; test</div>
-          <p class="step-content-desc">We build for performance, cross-browser compatibility, and accessibility — then stress-test every interaction.</p>
+          <div class="step-content-title" data-i18n="proc.s3.title">Bygg &amp; test</div>
+          <p class="step-content-desc" data-i18n="proc.s3.desc">Vi bygger for ytelse, kompatibilitet og tilgjengelighet — og stresstester hver interaksjon.</p>
         </div>
       </div>
       <div class="step-row reveal reveal-delay-3">
         <div class="step-num">04</div>
         <div>
-          <div class="step-content-title">Launch &amp; grow</div>
-          <p class="step-content-desc">We handle deployment, DNS, and analytics setup. Then we stay on to keep your site improving over time.</p>
+          <div class="step-content-title" data-i18n="proc.s4.title">Lansering &amp; vekst</div>
+          <p class="step-content-desc" data-i18n="proc.s4.desc">Vi håndterer utrulling, DNS og analyseoppsett. Deretter fortsetter vi å forbedre nettstedet ditt over tid.</p>
         </div>
       </div>
     </div>
@@ -806,11 +841,11 @@
 <!-- CTA -->
 <section id="cta">
   <div class="cta-inner">
-    <h2 class="reveal">Ready for a site<br>that actually works?</h2>
-    <p class="reveal reveal-delay-1">Book a free 30-minute call. We'll tell you exactly what your current site is leaving on the table — and how we'd fix it.</p>
+    <h2 class="reveal" data-i18n="cta.title">Klar for et nettsted<br>som faktisk fungerer?</h2>
+    <p class="reveal reveal-delay-1" data-i18n="cta.sub">Book en gratis 30-minutters samtale. Vi forteller deg nøyaktig hva det nåværende nettstedet ditt taper — og hvordan vi ville fikset det.</p>
     <div class="cta-btn-row reveal reveal-delay-2">
-      <a href="https://api.leadconnectorhq.com/widget/booking/slPBy6J3XUM8gpxPb1FL" target="_blank" rel="noopener" class="btn-primary">Book a Free Call</a>
-      <a href="how-we-work.html" class="btn-ghost">See Our Process</a>
+      <a href="/#contact" target="_blank" rel="noopener" class="btn-primary" data-i18n="cta.btn1">Book en gratis samtale</a>
+      <a href="how-we-work.html" class="btn-ghost" data-i18n="cta.btn2">Se vår prosess</a>
     </div>
   </div>
 </section>
@@ -819,11 +854,11 @@
 <footer>
   <div class="footer-inner">
     <a href="index.html" class="footer-logo">TUTTO</a>
-    <span class="footer-copy">© 2025–2026 Tutto Solutions. All rights reserved.</span>
+    <span class="footer-copy" data-i18n="footer.copy">© 2025–2026 Tutto Solutions. Alle rettigheter forbeholdt.</span>
     <ul class="footer-links">
-      <li><a href="index.html#services">Services</a></li>
-      <li><a href="index.html#contact">Contact</a></li>
-      <li><a href="privacy-policy.html">Privacy Policy</a></li>
+      <li><a href="index.html#services" data-i18n="footer.services">Tjenester</a></li>
+      <li><a href="index.html#contact" data-i18n="footer.contact">Kontakt</a></li>
+      <li><a href="privacy-policy.html" data-i18n="footer.privacy">Personvern</a></li>
     </ul>
   </div>
 </footer>
@@ -870,5 +905,33 @@
   }, 4000);
 </script>
 
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-R7B67B1SWH"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-R7B67B1SWH');
+  </script>
+
+<script>
+  window.LANG_TRANSLATIONS = {
+    no: {
+      'nav.services':'Tjenester','nav.about':'Om oss','nav.process':'Slik jobber vi',
+      'nav.team':'Møt grunnleggerne','nav.contact':'Kontakt','nav.cta':'Book en samtale',
+      'footer.services':'Tjenester','footer.contact':'Kontakt','footer.privacy':'Personvern',
+      'footer.copy':'© 2025–2026 Tutto Solutions. Alle rettigheter forbeholdt.',
+      'hero.label':'Nettside &amp; Utvikling','hero.h1':'Nettsider bygget for å <span class="accent">konvertere.</span>','hero.sub':'Din nettside er din beste selger. Vi bygger den til å se eksepsjonell ut, laste raskt og gjøre besøkende til kunder — uten bloat, uten kompromisser.','hero.cta1':'Book en gratis samtale','hero.cta2':'Vår prosess','feat.label':'Hva vi bygger','feat.title':'Alt nettstedet ditt trenger<br>for å prestere.','feat.sub':'Hvert nettsted vi bygger er designet fra bunnen av rundt dine mål — ingen maler, ingen snarveier.','feat.f1.title':'Skreddersydd Design','feat.f1.desc':'En unik visuell identitet bygget for din merkevare — ingen maler, ingen snarveier. Hvert layout er gjennomtenkt.','feat.f2.title':'Ren Utvikling','feat.f2.desc':'Rask, skalerbar kode som laster på millisekunder. Bygget for å vare og lett å utvide etter hvert som bedriften vokser.','feat.f3.title':'Konverteringsoptimalisering','feat.f3.desc':'Layout, tekst og flyt strukturert for å drive besøkende mot handling — flere leads, mer salg.','feat.f4.title':'SEO-klar Arkitektur','feat.f4.desc':'Ren semantikk, strukturerte data og Core Web Vitals innebygd — slik at du rangerer uten ekstra innsats.','feat.f5.title':'Mobilfirst &amp; Responsivt','feat.f5.desc':'Ser ut og fungerer perfekt på alle enheter — mobil, nettbrett og desktop, uten kompromisser.','feat.f6.title':'Løpende Support','feat.f6.desc':'Månedlig vedlikehold, innholdsoppdateringer og ytelsesovervåking — vi er med lenge etter lansering.','res.r1':'gjennomsnittlig leveringstid<br>(uker)','res.r2':'skreddersydd — aldri<br>en mal','res.r3':'Lighthouse-score mål<br>på hvert prosjekt','proc.label':'Prosessen','proc.title':'Fra brief<br>til lansering.','proc.s1.title':'Innsiktssamtale','proc.s1.desc':'Vi lærer om bedriften, målene og målgruppen din. Du forteller oss hva suksess betyr — vi kartlegger den raskeste veien dit.','proc.s2.title':'Design &amp; prototype','proc.s2.desc':'En fullt interaktiv prototype så du ser og føler nøyaktig hva du får — før en eneste kodelinje er skrevet.','proc.s3.title':'Bygg &amp; test','proc.s3.desc':'Vi bygger for ytelse, kompatibilitet og tilgjengelighet — og stresstester hver interaksjon.','proc.s4.title':'Lansering &amp; vekst','proc.s4.desc':'Vi håndterer utrulling, DNS og analyseoppsett. Deretter fortsetter vi å forbedre nettstedet ditt over tid.','cta.title':'Klar for et nettsted<br>som faktisk fungerer?','cta.sub':'Book en gratis 30-minutters samtale. Vi forteller deg nøyaktig hva det nåværende nettstedet ditt taper — og hvordan vi ville fikset det.','cta.btn1':'Book en gratis samtale','cta.btn2':'Se vår prosess'
+    },
+    en: {
+      'nav.services':'Services','nav.about':'About','nav.process':'How We Work',
+      'nav.team':'Meet the Founders','nav.contact':'Contact','nav.cta':'Book a Call',
+      'footer.services':'Services','footer.contact':'Contact','footer.privacy':'Privacy Policy',
+      'footer.copy':'© 2025–2026 Tutto Solutions. All rights reserved.',
+      'hero.label':'Web Design &amp; Development','hero.h1':'Websites built to <span class="accent">convert.</span>','hero.sub':'Your website is your best salesperson. We build it to look exceptional, load fast, and turn visitors into customers — without bloat, without compromise.','hero.cta1':'Book a Free Call','hero.cta2':'Our Process','feat.label':'What We Build','feat.title':'Everything your site needs<br>to perform.','feat.sub':'Every website we build is designed from the ground up around your goals — not a template, not a shortcut.','feat.f1.title':'Custom Design','feat.f1.desc':'A unique visual identity built for your brand — no templates, no shortcuts. Every layout is purposeful.','feat.f2.title':'Clean Development','feat.f2.desc':'Fast, scalable code that loads in milliseconds. Built to last and easy to expand as your business grows.','feat.f3.title':'Conversion Optimisation','feat.f3.desc':'Layouts, copy, and flows structured to move visitors toward action — more leads, more sales.','feat.f4.title':'SEO-Ready Architecture','feat.f4.desc':'Clean semantics, structured data, and Core Web Vitals baked in — so you rank without extra effort.','feat.f5.title':'Mobile-First &amp; Responsive','feat.f5.desc':'Looks and works perfectly on every device — phones, tablets, and desktops, without compromise.','feat.f6.title':'Ongoing Support','feat.f6.desc':'Monthly maintenance, content updates, and performance monitoring — we stay on long after launch.','res.r1':'week average<br>delivery time','res.r2':'custom — never<br>a template','res.r3':'Lighthouse score target<br>on every build','proc.label':'The Process','proc.title':'How we go from<br>brief to live.','proc.s1.title':'Discovery call','proc.s1.desc':'We learn your business, goals, and target audience. You tell us what success looks like — we map the fastest route there.','proc.s2.title':'Design &amp; prototype','proc.s2.desc':"A fully interactive prototype so you see and feel exactly what you're getting — before a single line of code is written.",'proc.s3.title':'Build &amp; test','proc.s3.desc':'We build for performance, cross-browser compatibility, and accessibility — then stress-test every interaction.','proc.s4.title':'Launch &amp; grow','proc.s4.desc':'We handle deployment, DNS, and analytics setup. Then we stay on to keep your site improving over time.','cta.title':'Ready for a site<br>that actually works?','cta.sub':"Book a free 30-minute call. We'll tell you exactly what your current site is leaving on the table — and how we'd fix it.",'cta.btn1':'Book a Free Call','cta.btn2':'See Our Process'
+    }
+  };
+</script>
+<script src="lang.js"></script>
 </body>
 </html>

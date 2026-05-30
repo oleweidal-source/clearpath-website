@@ -1,11 +1,10 @@
 /**
- * Cookie Consent — Clearpath Solutions
+ * Cookie Consent — Tutto Solutions
  * Injects a GDPR-compliant banner and gates Google Analytics on user choice.
- * Replace GA_MEASUREMENT_ID with the real ID when Analytics is set up.
  */
 
 (function () {
-  const STORAGE_KEY = 'clearpath_cookie_consent';
+  const STORAGE_KEY = 'tutto_cookie_consent';
 
   /* ── Inject styles ─────────────────────────────────────────────── */
   const style = document.createElement('style');
